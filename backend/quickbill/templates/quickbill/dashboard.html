@@ -3,141 +3,331 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuickBill — SaaS Dashboard</title>
+  <title>Smart Grocery POS — Master Admin & Visitor Monitoring Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #090e17;
-      --card-bg: rgba(19, 31, 51, 0.8);
+      --bg: #070d18;
+      --card-bg: rgba(16, 26, 43, 0.9);
+      --card-border: rgba(56, 189, 248, 0.2);
       --primary: #38bdf8;
-      --accent: #25d366;
-      --border: rgba(56, 189, 248, 0.2);
+      --accent: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
     }
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { margin: 0; background: var(--bg); color: #f8fafc; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding-bottom: 50px; line-height: 1.6; }
 
+    /* Top Navigation */
     nav {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 14px 28px; border-bottom: 1px solid var(--border);
-      background: rgba(9, 14, 23, 0.9); backdrop-filter: blur(10px);
+      padding: 14px 30px; border-bottom: 1px solid var(--card-border);
+      background: rgba(8, 14, 25, 0.95); backdrop-filter: blur(14px); position: sticky; top: 0; z-index: 100;
     }
-    .logo { font-size: 20px; font-weight: 900; color: #fff; }
-    .logo span { color: var(--primary); }
-    .nav-btn {
-      background: #0284c7; color: white; text-decoration: none; padding: 7px 16px;
-      border-radius: 8px; font-weight: 800; font-size: 13px;
+    .brand { font-size: 20px; font-weight: 900; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .brand span.badge { background: linear-gradient(135deg, #0284c7, #38bdf8); color: #040914; padding: 3px 8px; border-radius: 6px; font-size: 13px; }
+    .nav-links { display: flex; gap: 12px; align-items: center; }
+    .btn-nav {
+      background: #14243b; color: #cbd5e1; text-decoration: none; padding: 8px 16px; border-radius: 8px;
+      font-weight: 700; font-size: 13px; border: 1px solid rgba(56, 189, 248, 0.3); transition: all 0.2s;
     }
+    .btn-nav:hover { background: var(--primary); color: #040914; }
+    .btn-nav-pos {
+      background: linear-gradient(135deg, #10b981, #059669); color: white; border: none;
+    }
+    .btn-nav-pos:hover { opacity: 0.9; }
 
-    .container { max-width: 1100px; margin: 30px auto; padding: 0 16px; }
+    .container { max-width: 1320px; margin: 30px auto; padding: 0 20px; }
 
-    /* Top Stats Grid */
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    /* Page Header */
+    .header-banner {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;
+    }
+    .header-banner h1 { font-size: 28px; font-weight: 900; }
+    .header-banner p { color: var(--text-muted); font-size: 14px; }
+
+    /* Analytics Stat Grid */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-bottom: 30px; }
     .stat-card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 14px; padding: 18px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      background: var(--card-bg); border: 1.5px solid var(--card-border);
+      border-radius: 14px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; overflow: hidden;
     }
-    .stat-label { font-size: 13px; color: #94a3b8; font-weight: 700; margin-bottom: 6px; }
-    .stat-value { font-size: 24px; font-weight: 900; }
+    .stat-card::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--primary);
+    }
+    .stat-card.accent::before { background: var(--accent); }
+    .stat-card.warning::before { background: var(--warning); }
+    .stat-card.danger::before { background: #ec4899; }
 
-    /* Table Card */
-    .table-card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 14px; padding: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-      overflow-x: auto;
+    .stat-label { font-size: 13px; color: var(--text-muted); font-weight: 700; margin-bottom: 6px; }
+    .stat-value { font-size: 28px; font-weight: 900; }
+    .stat-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+    /* Tab Switcher */
+    .section-tabs {
+      display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1.5px solid rgba(255,255,255,0.08); padding-bottom: 12px;
     }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    .tab-btn {
+      background: #111e33; color: var(--text-muted); border: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 9px 20px; border-radius: 8px; font-size: 13.5px; font-weight: 800; cursor: pointer; transition: all 0.2s;
+    }
+    .tab-btn.active { background: var(--primary); color: #040914; border-color: var(--primary); }
+
+    /* Tables */
+    .panel-card {
+      background: var(--card-bg); border: 1.5px solid var(--card-border);
+      border-radius: 16px; padding: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); margin-bottom: 30px;
+    }
+    .panel-card h3 { font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+    
+    .data-table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
     th {
-      text-align: left; background: #0f1c30; color: var(--primary);
-      padding: 12px 10px; font-size: 13px; font-weight: 800; border-bottom: 2px solid #1e293b;
+      text-align: left; background: #0c1524; color: var(--primary);
+      padding: 12px 10px; font-weight: 800; border-bottom: 2px solid #1e2c44; white-space: nowrap;
     }
     td {
-      padding: 12px 10px; border-bottom: 1px solid #172439; font-size: 14px; font-weight: 600; text-align: left;
+      padding: 11px 10px; border-bottom: 1px solid #162438; color: #e2e8f0; font-weight: 600;
     }
-    .badge {
-      display: inline-block; padding: 4px 10px; border-radius: 20px; font-weight: 800; font-size: 12px;
-    }
-    .badge-paid { background: rgba(37, 211, 102, 0.2); color: #4ade80; }
-    .badge-unpaid { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-    .btn-view {
-      background: #0284c7; color: white; padding: 4px 10px; border-radius: 6px;
-      text-decoration: none; font-size: 12px; font-weight: bold;
-    }
+    tr:hover td { background: rgba(56, 189, 248, 0.04); }
 
-    @media (max-width: 850px) {
-      .stats-grid { grid-template-columns: 1fr 1fr; }
+    .badge {
+      display: inline-block; padding: 3px 8px; border-radius: 12px; font-weight: 800; font-size: 11px;
     }
+    .badge-paid { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-unpaid { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .badge-device { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+    .badge-user { background: rgba(139, 92, 246, 0.2); color: #c084fc; }
+
+    .device-pills { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .device-pill {
+      background: #0d1728; border: 1px solid #1e2d44; border-radius: 8px; padding: 8px 14px;
+      font-size: 13px; display: flex; gap: 8px; align-items: center;
+    }
+    .device-pill strong { color: var(--primary); }
   </style>
 </head>
 <body>
 
   <nav>
-    <div class="logo">⚡ Quick<span>Bill</span> Dashboard</div>
-    <div style="display:flex; gap:10px;">
-      <a href="/" class="nav-btn">🛒 Open POS Counter</a>
+    <div class="brand">
+      <span class="badge">ADMIN</span>
+      <span>Smart POS Monitoring Center</span>
+    </div>
+    <div class="nav-links">
+      <a href="/" class="btn-nav">🌐 View Landing Page</a>
+      <a href="/pos/" class="btn-nav btn-nav-pos">🛒 Launch POS Counter</a>
+      <a href="/django-admin/" target="_blank" class="btn-nav">⚙️ Django System Admin</a>
     </div>
   </nav>
 
   <div class="container">
+    <div class="header-banner">
+      <div>
+        <h1>System Analytics & Real-Time Visitor Monitoring</h1>
+        <p>Live tracking of storefront traffic, merchant signups, active checkouts, and device analytics.</p>
+      </div>
+      <div>
+        <button onclick="location.reload()" class="btn-nav">🔄 Refresh Live Data</button>
+      </div>
+    </div>
+
+    <!-- Top Key Metrics -->
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-label">Total Invoices</div>
-        <div class="stat-value" style="color: #38bdf8;">{{ invoice_count }}</div>
+        <div class="stat-label">Total Visits Logged</div>
+        <div class="stat-value" style="color: #38bdf8;">{{ total_visitors_count }}</div>
+        <div class="stat-sub">{{ unique_ips_count }} Unique IP Addresses</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Total Billed</div>
-        <div class="stat-value" style="color: #fff;">{{ total_billed }}</div>
+      <div class="stat-card accent">
+        <div class="stat-label">Registered Merchants</div>
+        <div class="stat-value" style="color: #10b981;">{{ merchants_count }}</div>
+        <div class="stat-sub">Active Storefront Accounts</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Paid In Cash</div>
-        <div class="stat-value" style="color: #4ade80;">{{ total_paid }}</div>
+      <div class="stat-card warning">
+        <div class="stat-label">Invoices Created</div>
+        <div class="stat-value" style="color: #fbbf24;">{{ invoice_count }}</div>
+        <div class="stat-sub">{{ total_billed }} Billed Volume</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Pending Balance</div>
-        <div class="stat-value" style="color: #f87171;">{{ total_pending }}</div>
+      <div class="stat-card danger">
+        <div class="stat-label">Cash Collected</div>
+        <div class="stat-value" style="color: #f43f5e;">{{ total_paid }}</div>
+        <div class="stat-sub">{{ total_pending }} Remaining Receivables</div>
       </div>
     </div>
 
-    <div class="table-card">
-      <h3 style="margin: 0 0 12px 0; font-size: 18px; color: #fff;">Recent Digital Receipts (WhatsApp Billed)</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Invoice #</th>
-            <th>Customer</th>
-            <th>WhatsApp Phone</th>
-            <th>Date & Time</th>
-            <th>Total Amount</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for inv in invoices %}
-          <tr>
-            <td style="font-weight: 800; color: #38bdf8;">{{ inv.invoice_number }}</td>
-            <td>{{ inv.customer_name }}</td>
-            <td style="color: #94a3b8;">{{ inv.customer_phone }}</td>
-            <td style="color: #94a3b8;">{{ inv.created_at|date:"d M Y, h:i A" }}</td>
-            <td style="font-weight: 800;">{{ inv.business.currency }} {{ inv.total_amount }}</td>
-            <td>
-              {% if inv.status == 'paid' %}
-                <span class="badge badge-paid">PAID</span>
-              {% else %}
-                <span class="badge badge-unpaid">PENDING</span>
-              {% endif %}
-            </td>
-            <td>
-              <a href="/quickbill/view/{{ inv.access_token }}/" target="_blank" class="btn-view">View Receipt 👁️</a>
-            </td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="7" style="text-align: center; padding: 25px; color: #64748b;">No invoices generated yet.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+    <!-- Traffic Device Breakdown -->
+    <div class="device-pills">
+      <span style="font-size: 13px; font-weight: bold; color: var(--text-muted); align-self: center;">Visitor Devices:</span>
+      {% for dev in device_breakdown %}
+      <div class="device-pill">
+        <span>{{ dev.device_type }}:</span>
+        <strong>{{ dev.count }} hits</strong>
+      </div>
+      {% empty %}
+      <div class="device-pill">No device data yet</div>
+      {% endfor %}
     </div>
+
+    <!-- Navigation Tabs -->
+    <div class="section-tabs">
+      <button class="tab-btn active" onclick="switchSection('visitors')">👁️ Live Visitors Log (Real-Time)</button>
+      <button class="tab-btn" onclick="switchSection('merchants')">🏪 Registered Merchants (Signups)</button>
+      <button class="tab-btn" onclick="switchSection('invoices')">🧾 Invoices & Bills Generated</button>
+    </div>
+
+    <!-- Section 1: Visitors Log -->
+    <div id="section-visitors" class="panel-card">
+      <h3>
+        <span>Real-Time Visitor Log (Latest 60 Traffic Hits)</span>
+        <small style="font-size: 12px; color: var(--text-muted);">Auto-logged on every page load</small>
+      </h3>
+      <div class="data-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>IP Address</th>
+              <th>Requested Path</th>
+              <th>Device</th>
+              <th>User Account</th>
+              <th>User Agent Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for v in recent_visitors %}
+            <tr>
+              <td style="color: #94a3b8; font-family: monospace;">{{ v.visited_at|date:"d M Y, h:i:s A" }}</td>
+              <td style="font-family: monospace; font-weight: bold; color: #38bdf8;">{{ v.ip_address }}</td>
+              <td style="font-weight: 700; color: #fff;">{{ v.path }}</td>
+              <td><span class="badge badge-device">{{ v.device_type }}</span></td>
+              <td>
+                {% if v.user %}
+                  <span class="badge badge-user">👤 {{ v.user.username }}</span>
+                {% else %}
+                  <span style="color: #64748b;">Guest</span>
+                {% endif %}
+              </td>
+              <td style="color: #94a3b8; font-size: 12px; max-width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ v.user_agent }}">
+                {{ v.user_agent }}
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 25px; color: #64748b;">No visitors logged yet. Visit the landing page to start recording traffic!</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Section 2: Registered Merchants -->
+    <div id="section-merchants" class="panel-card" style="display: none;">
+      <h3>Registered Stores & Merchants (Accounts)</h3>
+      <div class="data-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Store Name</th>
+              <th>Username</th>
+              <th>Phone Number</th>
+              <th>Business Category</th>
+              <th>City & Country</th>
+              <th>Currency</th>
+              <th>Registered At</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for m in registered_merchants %}
+            <tr>
+              <td style="font-weight: 900; color: #38bdf8;">{{ m.store_name }}</td>
+              <td><span class="badge badge-user">@{{ m.user.username }}</span></td>
+              <td style="font-family: monospace;">{{ m.phone }}</td>
+              <td>{{ m.business_type }}</td>
+              <td>{{ m.city }}, {{ m.country }}</td>
+              <td><strong style="color: #10b981;">{{ m.currency }}</strong></td>
+              <td style="color: #94a3b8;">{{ m.created_at|date:"d M Y, h:i A" }}</td>
+              <td><span class="badge badge-paid">Active</span></td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="8" style="text-align: center; padding: 25px; color: #64748b;">No merchant signups yet. Sign up on the landing page to populate this list!</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Section 3: Invoices Generated -->
+    <div id="section-invoices" class="panel-card" style="display: none;">
+      <h3>Recent Customer Invoices & Digital Bills</h3>
+      <div class="data-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Invoice #</th>
+              <th>Customer Name</th>
+              <th>WhatsApp Phone</th>
+              <th>Date</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for inv in invoices %}
+            <tr>
+              <td style="font-weight: 800; color: #38bdf8;">{{ inv.invoice_number }}</td>
+              <td>{{ inv.customer_name }}</td>
+              <td style="color: #94a3b8; font-family: monospace;">{{ inv.customer_phone }}</td>
+              <td style="color: #94a3b8;">{{ inv.created_at|date:"d M Y, h:i A" }}</td>
+              <td style="font-weight: 800;">{{ inv.business.currency }} {{ inv.total_amount }}</td>
+              <td>
+                {% if inv.status == 'paid' %}
+                  <span class="badge badge-paid">PAID</span>
+                {% else %}
+                  <span class="badge badge-unpaid">UNPAID</span>
+                {% endif %}
+              </td>
+              <td>
+                <a href="/quickbill/view/{{ inv.access_token }}/" target="_blank" class="btn-nav" style="padding: 4px 10px; font-size: 12px;">View Bill 👁️</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 25px; color: #64748b;">No bills generated yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
+  <script>
+    function switchSection(sec) {
+      document.getElementById('section-visitors').style.display = (sec === 'visitors') ? 'block' : 'none';
+      document.getElementById('section-merchants').style.display = (sec === 'merchants') ? 'block' : 'none';
+      document.getElementById('section-invoices').style.display = (sec === 'invoices') ? 'block' : 'none';
+
+      const btns = document.querySelectorAll('.tab-btn');
+      btns.forEach((b, i) => {
+        if((sec === 'visitors' && i === 0) || (sec === 'merchants' && i === 1) || (sec === 'invoices' && i === 2)) {
+          b.classList.add('active');
+        } else {
+          b.classList.remove('active');
+        }
+      });
+    }
+  </script>
 </body>
 </html>

@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.laptop_pos_view, name='pos_home'),
+    path('pos-counter/', views.laptop_pos_view, name='pos_home'),
     
     # 1. Sales & Billing
     path('api/parse-preview/', views.parse_preview_api, name='parse_preview'),

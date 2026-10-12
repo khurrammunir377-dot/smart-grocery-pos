@@ -53,14 +53,21 @@
       transition: color 0.2s;
     }
     .nav-link:hover { color: var(--primary); }
-    .nav-actions { display: flex; gap: 12px; align-items: center; }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
     .btn-pos-launch {
       background: linear-gradient(135deg, #0284c7, #0369a1);
-      color: #fff; text-decoration: none; padding: 9px 20px; border-radius: 10px;
+      color: #fff; text-decoration: none; padding: 9px 18px; border-radius: 10px;
       font-weight: 800; font-size: 13.5px; display: flex; align-items: center; gap: 6px;
-      box-shadow: 0 4px 18px rgba(2, 132, 199, 0.4); transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 18px rgba(2, 132, 199, 0.4); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; border: none;
     }
     .btn-pos-launch:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(2, 132, 199, 0.6); }
+
+    .btn-admin-nav {
+      background: #14243b; color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 8px 14px; border-radius: 9px; font-weight: 700; font-size: 13px; text-decoration: none;
+      display: flex; align-items: center; gap: 5px; transition: all 0.2s;
+    }
+    .btn-admin-nav:hover { background: var(--primary); color: #040914; }
 
     /* Hero Section */
     .hero {
@@ -91,7 +98,7 @@
     .btn-main-cta {
       background: linear-gradient(135deg, #10b981, #059669);
       color: white; padding: 13px 26px; border-radius: 12px; font-size: 15px; font-weight: 900;
-      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      text-decoration: none; display: flex; align-items: center; gap: 8px; cursor: pointer; border: none;
       box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); transition: all 0.2s;
     }
     .btn-main-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(16, 185, 129, 0.6); }
@@ -151,9 +158,7 @@
       border-radius: 12px; padding: 16px; text-align: center;
     }
 
-    /* ==========================================
-       THE 7 POS MODULES SECTION (CRITICAL)
-       ========================================== */
+    /* 7 POS MODULES SECTION */
     .modules-section {
       max-width: 1280px; margin: 80px auto; padding: 0 24px;
     }
@@ -215,7 +220,7 @@
     .module-action-btn {
       background: #132238; color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3);
       padding: 9px 14px; border-radius: 8px; font-size: 13px; font-weight: 800;
-      text-decoration: none; text-align: center; transition: all 0.2s;
+      text-decoration: none; text-align: center; transition: all 0.2s; cursor: pointer;
     }
     .module-action-btn:hover { background: var(--primary); color: #040914; }
 
@@ -335,6 +340,47 @@
       text-align: center; color: var(--text-muted); font-size: 13px;
     }
 
+    /* ================= AUTH MODAL (SIGNUP / LOGIN) ================= */
+    .auth-modal {
+      display: none; position: fixed; inset: 0; z-index: 99999;
+      background: rgba(4, 9, 18, 0.88); backdrop-filter: blur(12px);
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .auth-box {
+      background: #0b1526; border: 2px solid var(--primary); border-radius: 20px;
+      width: 480px; max-width: 95%; padding: 30px 28px; box-shadow: 0 25px 70px rgba(0,0,0,0.9);
+      position: relative; color: #fff;
+    }
+    .auth-close {
+      position: absolute; top: 16px; right: 18px; background: none; border: none;
+      color: #94a3b8; font-size: 22px; font-weight: bold; cursor: pointer;
+    }
+    .auth-close:hover { color: #ef4444; }
+    .auth-toggle {
+      display: flex; gap: 6px; background: #060d1a; border: 1px solid #1e2c44;
+      padding: 4px; border-radius: 12px; margin-bottom: 22px;
+    }
+    .auth-toggle-btn {
+      flex: 1; padding: 9px; border: none; border-radius: 8px; font-weight: 800; font-size: 13.5px;
+      background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+    }
+    .auth-toggle-btn.active { background: var(--primary); color: #040914; }
+
+    .auth-form-row { margin-bottom: 14px; }
+    .auth-form-row label { display: block; font-size: 12.5px; font-weight: 800; color: #94a3b8; margin-bottom: 5px; }
+    .auth-form-row input, .auth-form-row select {
+      width: 100%; background: #060d19; border: 1.5px solid #1e2d47;
+      border-radius: 8px; padding: 10px 12px; color: #fff; font-size: 13.5px; font-weight: 600;
+    }
+    .auth-form-row input:focus, .auth-form-row select:focus { outline: none; border-color: var(--primary); }
+    .btn-auth-submit {
+      width: 100%; background: linear-gradient(135deg, #10b981, #059669);
+      color: white; border: none; padding: 12px; border-radius: 10px; font-size: 15px;
+      font-weight: 900; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    }
+    .btn-auth-submit:hover { opacity: 0.95; }
+    .auth-msg { margin-top: 12px; font-size: 13px; font-weight: bold; text-align: center; }
+
     @media (max-width: 950px) {
       .hero { grid-template-columns: 1fr; }
       .pricing-grid { grid-template-columns: 1fr; }
@@ -361,9 +407,25 @@
       </ul>
 
       <div class="nav-actions">
-        <a href="/" class="btn-pos-launch">
+        <!-- Monitoring Admin Panel Button -->
+        <a href="/admin-panel/" class="btn-admin-nav" title="Detailed Traffic & Merchant Tracking">
+          📊 Admin Panel
+        </a>
+
+        {% if is_logged_in %}
+        <span style="font-size: 13px; font-weight: 800; color: #10b981;">👤 {{ username }}</span>
+        <a href="/pos/" class="btn-pos-launch">
           <span>🛒</span> Open POS Counter
         </a>
+        <a href="/quickbill/logout/" style="color: #ef4444; font-size: 13px; text-decoration: none; font-weight: bold;">Logout</a>
+        {% else %}
+        <button onclick="openAuthModal('login')" class="btn-admin-nav" style="background:transparent; cursor:pointer;">
+          Login
+        </button>
+        <button onclick="openAuthModal('signup')" class="btn-pos-launch">
+          <span>⚡</span> Signup & Open POS
+        </button>
+        {% endif %}
       </div>
     </div>
   </header>
@@ -383,9 +445,16 @@
       </p>
 
       <div class="hero-cta-group">
-        <a href="/" class="btn-main-cta">
-          <span>🚀</span> Launch Live POS Counter
+        {% if is_logged_in %}
+        <a href="/pos/" class="btn-main-cta">
+          <span>🚀</span> Launch POS Counter Now
         </a>
+        {% else %}
+        <button onclick="openAuthModal('signup')" class="btn-main-cta">
+          <span>🚀</span> Signup & Launch POS Counter
+        </button>
+        {% endif %}
+
         <a href="#modules" class="btn-secondary-cta">
           <span>📋</span> Explore 7 Core Modules
         </a>
@@ -474,7 +543,7 @@
   </section>
 
   <!-- ==========================================
-       THE 7 POS MODULES SECTION (CRITICAL)
+       THE 7 POS MODULES SECTION
        ========================================== -->
   <section class="modules-section" id="modules">
     <div class="section-header">
@@ -496,7 +565,7 @@
           <li>Discounts, round-off, and customer refund processing</li>
           <li>Split payments (Cash, Card, Digital Khata Credit)</li>
         </ul>
-        <a href="/" class="module-action-btn">Open POS Counter →</a>
+        <button onclick="handlePosAccess()" class="module-action-btn">Open POS Counter →</button>
       </div>
 
       <!-- 2. Inventory -->
@@ -511,7 +580,7 @@
           <li>Expiry dates tracking with 7-day alert badges</li>
           <li>Damaged/spoilage stock write-offs and physical audit logs</li>
         </ul>
-        <a href="/" class="module-action-btn">Manage Inventory →</a>
+        <button onclick="handlePosAccess()" class="module-action-btn">Manage Inventory →</button>
       </div>
 
       <!-- 3. Purchase & Suppliers -->
@@ -526,7 +595,7 @@
           <li>Cost price tracking and margin calculations</li>
           <li>Supplier payments ledger & accounts payable balance</li>
         </ul>
-        <a href="/" class="module-action-btn">Manage Suppliers →</a>
+        <button onclick="handlePosAccess()" class="module-action-btn">Manage Suppliers →</button>
       </div>
 
       <!-- 4. Customers -->
@@ -541,7 +610,7 @@
           <li>Configurable credit limits to prevent unpaid risk</li>
           <li>Customer loyalty points and rewards tracking</li>
         </ul>
-        <a href="/" class="module-action-btn">Open Customer Khata →</a>
+        <button onclick="handlePosAccess()" class="module-action-btn">Open Customer Khata →</button>
       </div>
 
       <!-- 5. Accounts -->
@@ -556,7 +625,7 @@
           <li>Direct supplier cash payout logging</li>
           <li>Net cash flow and profit & loss (P&L) statements</li>
         </ul>
-        <a href="/" class="module-action-btn">View Drawer & Accounts →</a>
+        <button onclick="handlePosAccess()" class="module-action-btn">View Drawer & Accounts →</button>
       </div>
 
       <!-- 6. Reports -->
@@ -571,7 +640,7 @@
           <li>Automated gross margin and net profit calculation</li>
           <li>Staff & cashier sales performance metrics</li>
         </ul>
-        <a href="/" class="module-action-btn">View Analytics Dashboard →</a>
+        <button onclick="handlePosAccess()" class="module-action-btn">View Analytics Dashboard →</button>
       </div>
 
       <!-- 7. Users & Permissions -->
@@ -594,7 +663,7 @@
             <small style="color: #94a3b8; font-size:12px;">Fast checkout & cash/card collection only; restricted from profits and deletions</small>
           </div>
         </div>
-        <a href="/" class="module-action-btn">Test Staff Security →</a>
+        <button onclick="handlePosAccess()" class="module-action-btn">Test Staff Security →</button>
       </div>
     </div>
   </section>
@@ -623,7 +692,7 @@
             <span class="badge-pill">Cash + Card Split Billing</span>
             <span class="badge-pill">Offline-Resilient</span>
           </div>
-          <a href="/" class="btn-main-cta" style="display:inline-flex;">Test Counter Live ⚡</a>
+          <button onclick="handlePosAccess()" class="btn-main-cta" style="display:inline-flex;">Test Counter Live ⚡</button>
         </div>
         <div class="tab-mockup">
           <div class="mockup-header">
@@ -652,7 +721,7 @@
             <span class="badge-pill">Low Stock Alerts</span>
             <span class="badge-pill">Bulk Quick Stock In</span>
           </div>
-          <a href="/" class="btn-main-cta" style="display:inline-flex;">Check Stock Alerts 📦</a>
+          <button onclick="handlePosAccess()" class="btn-main-cta" style="display:inline-flex;">Check Stock Alerts 📦</button>
         </div>
         <div class="tab-mockup">
           <div class="mockup-header">
@@ -683,7 +752,7 @@
             <span class="badge-pill">Purchase Bills</span>
             <span class="badge-pill">Cost Price Margin</span>
           </div>
-          <a href="/" class="btn-main-cta" style="display:inline-flex;">Check Supplier Ledger 🚚</a>
+          <button onclick="handlePosAccess()" class="btn-main-cta" style="display:inline-flex;">Check Supplier Ledger 🚚</button>
         </div>
         <div class="tab-mockup">
           <div class="mockup-header">
@@ -714,7 +783,7 @@
             <span class="badge-pill">Credit Limits</span>
             <span class="badge-pill">Loyalty Points</span>
           </div>
-          <a href="/" class="btn-main-cta" style="display:inline-flex;">View Customer Khata 👥</a>
+          <button onclick="handlePosAccess()" class="btn-main-cta" style="display:inline-flex;">View Customer Khata 👥</button>
         </div>
         <div class="tab-mockup">
           <div class="mockup-header">
@@ -745,7 +814,7 @@
             <span class="badge-pill">Expense Vouchers</span>
             <span class="badge-pill">Discrepancy Check</span>
           </div>
-          <a href="/" class="btn-main-cta" style="display:inline-flex;">Check Cash Drawer 💰</a>
+          <button onclick="handlePosAccess()" class="btn-main-cta" style="display:inline-flex;">Check Cash Drawer 💰</button>
         </div>
         <div class="tab-mockup">
           <div class="mockup-header">
@@ -840,7 +909,7 @@
           <li>Online digital receipt web links</li>
           <li>Single user login</li>
         </ul>
-        <a href="/" class="btn-plan btn-plan-starter">Start Free →</a>
+        <button onclick="openAuthModal('signup')" class="btn-plan btn-plan-starter">Start Free →</button>
       </div>
 
       <!-- Pro Grocery Plan (Featured) -->
@@ -856,7 +925,7 @@
           <li><strong>Supplier POs & Customer Khata ledger</strong></li>
           <li><strong>Cash drawer shift audits & daily P&L reports</strong></li>
         </ul>
-        <a href="/" class="btn-plan btn-plan-pro">Activate Pro Now ⚡</a>
+        <button onclick="openAuthModal('signup')" class="btn-plan btn-plan-pro">Activate Pro Now ⚡</button>
       </div>
 
       <!-- Enterprise Suite -->
@@ -870,7 +939,7 @@
           <li>Bulk CSV product import & supplier export</li>
           <li>24/7 dedicated priority WhatsApp support</li>
         </ul>
-        <button class="btn-plan btn-plan-ent" onclick="alert('Enterprise inquiry submitted! Our team will contact you shortly.')">Get Enterprise 👑</button>
+        <button class="btn-plan btn-plan-ent" onclick="openAuthModal('signup')">Get Enterprise 👑</button>
       </div>
     </div>
   </section>
@@ -880,9 +949,9 @@
     <div class="cta-banner">
       <h2>Transform Your Store into a 100% Digital POS Today</h2>
       <p>No tedious installation. Run your checkout counter from any laptop, tablet, or PC and deliver professional digital WhatsApp receipts to your customers.</p>
-      <a href="/" class="btn-main-cta" style="display:inline-flex; font-size:17px; padding:15px 34px;">
+      <button onclick="handlePosAccess()" class="btn-main-cta" style="display:inline-flex; font-size:17px; padding:15px 34px; margin: 0 auto;">
         🛒 Open POS Counter Now
-      </a>
+      </button>
     </div>
   </section>
 
@@ -890,7 +959,170 @@
     <p>© 2026 Smart Grocery POS & QuickBill Suite — All-in-One Professional Retail Solution. All rights reserved.</p>
   </footer>
 
+  <!-- ================= AUTHENTICATION MODAL (SIGNUP & LOGIN) ================= -->
+  <div id="authModal" class="auth-modal">
+    <div class="auth-box">
+      <button class="auth-close" onclick="closeAuthModal()">✕</button>
+
+      <div class="auth-toggle">
+        <button id="tabSignupBtn" class="auth-toggle-btn active" onclick="switchAuthTab('signup')">Create Store Account (Signup)</button>
+        <button id="tabLoginBtn" class="auth-toggle-btn" onclick="switchAuthTab('login')">Existing Merchant Login</button>
+      </div>
+
+      <!-- Signup Form -->
+      <form id="signupForm" onsubmit="submitSignup(event)">
+        <div class="auth-form-row">
+          <label>Store / Supermarket Name:</label>
+          <input type="text" id="regStoreName" required placeholder="e.g. Al Madina Supermarket">
+        </div>
+        <div class="auth-form-row">
+          <label>Choose Username:</label>
+          <input type="text" id="regUsername" required placeholder="e.g. almadina_pos">
+        </div>
+        <div class="auth-form-row">
+          <label>Phone / WhatsApp Number:</label>
+          <input type="tel" id="regPhone" required placeholder="+971501234567">
+        </div>
+        <div class="auth-form-row">
+          <label>Account Password:</label>
+          <input type="password" id="regPassword" required placeholder="Create secure password">
+        </div>
+        <div class="auth-form-row">
+          <label>Primary Currency:</label>
+          <select id="regCurrency">
+            <option value="AED">AED (UAE Dirham)</option>
+            <option value="USD">USD ($)</option>
+            <option value="PKR">PKR (Pakistani Rupee)</option>
+            <option value="SAR">SAR (Saudi Riyal)</option>
+            <option value="OMR">OMR (Omani Rial)</option>
+            <option value="INR">INR (₹)</option>
+          </select>
+        </div>
+        <button type="submit" id="btnSubmitSignup" class="btn-auth-submit">
+          🚀 Complete Signup & Open POS Counter
+        </button>
+      </form>
+
+      <!-- Login Form -->
+      <form id="loginForm" style="display:none;" onsubmit="submitLogin(event)">
+        <div class="auth-form-row">
+          <label>Username:</label>
+          <input type="text" id="logUsername" required placeholder="Enter username">
+        </div>
+        <div class="auth-form-row">
+          <label>Password:</label>
+          <input type="password" id="logPassword" required placeholder="Enter password">
+        </div>
+        <button type="submit" id="btnSubmitLogin" class="btn-auth-submit">
+          🔐 Login to POS Counter
+        </button>
+      </form>
+
+      <div id="authStatusMsg" class="auth-msg"></div>
+    </div>
+  </div>
+
   <script>
+    const IS_LOGGED_IN = {{ is_logged_in|yesno:"true,false" }};
+
+    function handlePosAccess() {
+      if (IS_LOGGED_IN) {
+        window.location.href = '/pos/';
+      } else {
+        openAuthModal('signup');
+      }
+    }
+
+    function openAuthModal(mode) {
+      document.getElementById('authModal').style.display = 'flex';
+      switchAuthTab(mode || 'signup');
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').style.display = 'none';
+      document.getElementById('authStatusMsg').innerText = '';
+    }
+
+    function switchAuthTab(mode) {
+      const isSignup = (mode === 'signup');
+      document.getElementById('signupForm').style.display = isSignup ? 'block' : 'none';
+      document.getElementById('loginForm').style.display = isSignup ? 'none' : 'block';
+      document.getElementById('tabSignupBtn').classList.toggle('active', isSignup);
+      document.getElementById('tabLoginBtn').classList.toggle('active', !isSignup);
+      document.getElementById('authStatusMsg').innerText = '';
+    }
+
+    function submitSignup(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmitSignup');
+      const msg = document.getElementById('authStatusMsg');
+      btn.disabled = true;
+      btn.innerText = 'Creating Account & Preparing POS...';
+      msg.innerText = '';
+
+      const fd = new FormData();
+      fd.append('store_name', document.getElementById('regStoreName').value);
+      fd.append('username', document.getElementById('regUsername').value);
+      fd.append('phone', document.getElementById('regPhone').value);
+      fd.append('password', document.getElementById('regPassword').value);
+      fd.append('currency', document.getElementById('regCurrency').value);
+
+      fetch('/quickbill/api/register-merchant/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => {
+        btn.disabled = false;
+        btn.innerText = '🚀 Complete Signup & Open POS Counter';
+        if (d.success) {
+          msg.style.color = '#34d399';
+          msg.innerText = d.message;
+          setTimeout(() => { window.location.href = d.redirect_url; }, 900);
+        } else {
+          msg.style.color = '#f87171';
+          msg.innerText = d.error || 'Registration failed.';
+        }
+      })
+      .catch(err => {
+        btn.disabled = false;
+        btn.innerText = '🚀 Complete Signup & Open POS Counter';
+        msg.style.color = '#f87171';
+        msg.innerText = 'Error connecting to server. Please try again.';
+      });
+    }
+
+    function submitLogin(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmitLogin');
+      const msg = document.getElementById('authStatusMsg');
+      btn.disabled = true;
+      btn.innerText = 'Verifying credentials...';
+      msg.innerText = '';
+
+      const fd = new FormData();
+      fd.append('username', document.getElementById('logUsername').value);
+      fd.append('password', document.getElementById('logPassword').value);
+
+      fetch('/quickbill/api/login-merchant/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => {
+        btn.disabled = false;
+        btn.innerText = '🔐 Login to POS Counter';
+        if (d.success) {
+          msg.style.color = '#34d399';
+          msg.innerText = d.message;
+          setTimeout(() => { window.location.href = d.redirect_url; }, 800);
+        } else {
+          msg.style.color = '#f87171';
+          msg.innerText = d.error || 'Login failed.';
+        }
+      })
+      .catch(err => {
+        btn.disabled = false;
+        btn.innerText = '🔐 Login to POS Counter';
+        msg.style.color = '#f87171';
+        msg.innerText = 'Error connecting to server. Please try again.';
+      });
+    }
+
     function generateInstantBill() {
       const btn = document.getElementById("submitBtn");
       btn.disabled = true;
