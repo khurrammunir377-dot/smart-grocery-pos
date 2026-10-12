@@ -48,12 +48,26 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'grocery_core.wsgi.application'
+# Database setup: on Vercel/serverless environments, file system is read-only except /tmp
+import shutil
+IS_VERCEL = bool(os.environ.get('VERCEL'))
+if IS_VERCEL:
+    TMP_DB = Path('/tmp/db.sqlite3')
+    SEED_DB = BASE_DIR / 'db.sqlite3'
+    if not TMP_DB.exists():
+        if SEED_DB.exists():
+            try:
+                shutil.copy2(SEED_DB, TMP_DB)
+            except Exception:
+                pass
+    DB_PATH = TMP_DB
+else:
+    DB_PATH = BASE_DIR / 'db.sqlite3'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': DB_PATH,
     }
 }
 
