@@ -48,18 +48,24 @@ TEMPLATES = [
     },
 ]
 
-# Database setup: on Vercel/serverless environments, file system is read-only except /tmp
+# Database setup: detect if running in Vercel / AWS Lambda / Serverless (where /var/task exists or VERCEL env is set)
 import shutil
-IS_VERCEL = bool(os.environ.get('VERCEL'))
-if IS_VERCEL:
+IS_SERVERLESS = bool(
+    os.environ.get('VERCEL')
+    or os.environ.get('AWS_LAMBDA_FUNCTION_NAME')
+    or str(BASE_DIR).startswith('/var/task')
+    or os.path.exists('/var/task')
+)
+
+if IS_SERVERLESS:
     TMP_DB = Path('/tmp/db.sqlite3')
     SEED_DB = BASE_DIR / 'db.sqlite3'
     if not TMP_DB.exists():
         if SEED_DB.exists():
             try:
                 shutil.copy2(SEED_DB, TMP_DB)
-            except Exception:
-                pass
+            except Exception as e:
+                print("Failed to copy SEED_DB:", e)
     DB_PATH = TMP_DB
 else:
     DB_PATH = BASE_DIR / 'db.sqlite3'
