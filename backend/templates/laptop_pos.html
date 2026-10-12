@@ -697,8 +697,11 @@
         <span id="modalNetVal" style="font-size:20px; font-weight:900;">0.00</span>
       </div>
 
-      <div style="margin-top:14px; text-align:center;">
-        <button onclick="window.print()" class="btn-action-3d btn-cash" style="padding:8px 16px;">🖨️ پرنٹ رسید (Print Thermal)</button>
+      <div style="margin-top:14px; display:flex; justify-content:center; gap:8px;">
+        <button onclick="window.print()" class="btn-action-3d btn-cash" style="padding:8px 16px;">🖨️ پرنٹ رسید (Print)</button>
+        <button id="modalWaBtn" onclick="launchModalWhatsAppDirect()" style="background:#25D366; color:white; border:none; border-radius:8px; padding:8px 16px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 10px rgba(37,211,102,0.3);">
+          📲 واٹس ایپ (WhatsApp)
+        </button>
       </div>
     </div>
   </div>
@@ -1739,8 +1742,26 @@
         document.getElementById('modalRoundVal').innerText = `- ${currentCurrency} ${inv.round_off}`;
         document.getElementById('modalNetVal').innerText = `${currentCurrency} ${inv.grand_total}`;
 
+        window.currentModalInvoice = inv;
         document.getElementById('receiptViewerModal').style.display = 'flex';
       });
+    }
+
+    function launchModalWhatsAppDirect() {
+      const inv = window.currentModalInvoice;
+      if (!inv) return;
+      const phone = (inv.customer_phone || '').replace(/[^0-9]/g, '');
+      const store = currentStoreName || 'Al Madina Grocery';
+      const msg = `محترم ${inv.customer_name || 'گاہک'}!\nآپ کا گروسری بل تیار ہے (#${inv.id}) برائے ${store}\nصافی رقم: ${currentCurrency} ${inv.grand_total}\nآن لائن رسید دیکھیں:\n${window.location.origin}/bill/view/${inv.token}/\nخریداری کا شکریہ!`;
+      if (phone) {
+        window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
+      } else {
+        const askPhone = prompt("گاہک کا فون نمبر درج کریں (Enter Phone / WhatsApp):");
+        if (askPhone) {
+          const clean = askPhone.replace(/[^0-9]/g, '');
+          window.open(`https://api.whatsapp.com/send?phone=${clean}&text=${encodeURIComponent(msg)}`, '_blank');
+        }
+      }
     }
 
     function submitQuickStockIn() {

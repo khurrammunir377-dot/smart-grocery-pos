@@ -185,6 +185,11 @@ def create_invoice_api(request):
         except Exception:
             pass
 
+    import urllib.parse
+    wa_direct_link = ""
+    if norm_phone and msg:
+        wa_direct_link = f"https://api.whatsapp.com/send?phone={norm_phone}&text={urllib.parse.quote(msg)}"
+
     return JsonResponse({
         'success': True,
         'invoice_id': invoice.id,
@@ -192,7 +197,8 @@ def create_invoice_api(request):
         'grand_total': str(grand_total),
         'profit': str(profit),
         'share_url': share_url,
-        'wa_sent': wa_sent
+        'wa_sent': wa_sent,
+        'wa_direct_link': wa_direct_link
     })
 
 @csrf_exempt

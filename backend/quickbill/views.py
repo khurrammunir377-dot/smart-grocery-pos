@@ -217,8 +217,11 @@ def instant_invoice_create_api(request):
                 sent_silently = True
         except Exception as e:
             gateway_response = f"Connection failed to 127.0.0.1:5005: {str(e)}"
-    else:
-        gateway_response = "No valid phone number provided."
+    import urllib.parse
+    wa_direct_link = ""
+    if phone:
+        encoded_msg = urllib.parse.quote(wa_text)
+        wa_direct_link = f"https://api.whatsapp.com/send?phone={phone}&text={encoded_msg}"
 
     return JsonResponse({
         "success": True,
@@ -227,6 +230,7 @@ def instant_invoice_create_api(request):
         "token": str(invoice.access_token),
         "view_url": view_url,
         "sent_silently": sent_silently,
+        "wa_direct_link": wa_direct_link,
         "gateway_response": gateway_response
     })
 

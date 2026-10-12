@@ -1150,8 +1150,16 @@
           const statusDiv = document.getElementById("waStatus");
           if(data.sent_silently) {
             statusDiv.innerHTML = `<span style='color:#34d399;'>💬 WhatsApp message dispatched automatically to +${data.phone_used}!</span>`;
+          } else if(data.wa_direct_link) {
+            statusDiv.innerHTML = `
+              <div style="margin-top:10px;">
+                <span style='color:#facc15; font-size:13px;'>⚠️ Silent gateway not connected on cloud.</span><br/>
+                <a href="${data.wa_direct_link}" target="_blank" style="display:inline-flex; align-items:center; gap:6px; margin-top:8px; background:#25D366; color:white; padding:8px 14px; border-radius:8px; font-weight:700; text-decoration:none; box-shadow:0 4px 12px rgba(37,211,102,0.3);">
+                  📲 Click to Send WhatsApp Directly to +${data.phone_used} →
+                </a>
+              </div>`;
           } else {
-            statusDiv.innerHTML = `<span style='color:#f87171;'>⚠️ WhatsApp gateway pending connection (Receipt link ready online)</span>`;
+            statusDiv.innerHTML = `<span style='color:#f87171;'>⚠️ Receipt link generated online (No phone specified).</span>`;
           }
           document.getElementById("resultBox").style.display = "block";
         }
