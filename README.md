@@ -62,9 +62,20 @@ An intelligent, high-speed Point of Sale (POS) system designed for retail grocer
 
 ---
 
-## 💻 Quick Start & Setup
+## 💻 Quick Start & One-Click Launch
 
-### 1. Backend (Django)
+### Option A: One-Click Launcher (Recommended for Windows PC)
+Simply double-click:
+- **`START_POS.bat`** (Displays real-time server logs & launches browser)
+- **`START_POS_SILENT.vbs`** (Completely silent background launch, zero CMD popups)
+- **`STOP_POS.bat`** (Stops all background servers cleanly in one click)
+
+Both launchers automatically run any pending database migrations, start the WhatsApp gateway, launch the Django POS server, and automatically open your default browser to `http://127.0.0.1:8000/`.
+
+---
+
+### Option B: Manual Command Line Start
+#### 1. Backend (Django)
 ```bash
 # Navigate to backend directory
 cd backend
