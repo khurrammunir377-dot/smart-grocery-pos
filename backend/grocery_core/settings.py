@@ -48,16 +48,11 @@ TEMPLATES = [
     },
 ]
 
-# Database setup: detect if running in Vercel / AWS Lambda / Serverless (where /var/task exists or VERCEL env is set)
+# Database setup: On Linux/Vercel serverless environments (/tmp is writable, /var/task is read-only)
+import sys
 import shutil
-IS_SERVERLESS = bool(
-    os.environ.get('VERCEL')
-    or os.environ.get('AWS_LAMBDA_FUNCTION_NAME')
-    or str(BASE_DIR).startswith('/var/task')
-    or os.path.exists('/var/task')
-)
 
-if IS_SERVERLESS:
+if sys.platform != 'win32' or os.environ.get('VERCEL') or str(BASE_DIR).startswith('/var'):
     TMP_DB = Path('/tmp/db.sqlite3')
     SEED_DB = BASE_DIR / 'db.sqlite3'
     if not TMP_DB.exists():
