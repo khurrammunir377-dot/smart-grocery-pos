@@ -1,3 +1,4 @@
+import os
 import re
 import json
 import datetime
@@ -19,7 +20,9 @@ from .models import (
     ExpenseCategory, Expense, CashRegisterSession, UserProfile
 )
 
-GATEWAY_URL = "http://127.0.0.1:5005/send-message"
+# Read WA gateway base URL from Vercel service binding if provided, fallback to local port 5005
+WA_BASE_URL = os.environ.get("WA_GATEWAY_URL", "http://127.0.0.1:5005").rstrip('/')
+GATEWAY_URL = f"{WA_BASE_URL}/send-message"
 
 def normalize_whatsapp_phone(raw_phone):
     clean = "".join(filter(str.isdigit, raw_phone or ""))

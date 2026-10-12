@@ -1,9 +1,9 @@
-﻿const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require("@whiskeysockets/baileys");
+const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = require("@whiskeysockets/baileys");
 const qrcode = require("qrcode-terminal");
 const http = require("http");
 const pino = require("pino");
 
-const PORT = 5005;
+const PORT = process.env.PORT || 5005;
 let sock = null;
 let isConnected = false;
 

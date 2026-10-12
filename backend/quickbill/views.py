@@ -1,3 +1,4 @@
+import os
 import uuid
 import requests
 from decimal import Decimal
@@ -10,7 +11,9 @@ from django.db.models import Count, Sum
 from django.utils import timezone
 from .models import BusinessProfile, Invoice, InvoiceItem, VisitorLog, RegisteredMerchant
 
-GATEWAY_URL = "http://127.0.0.1:5005/send-message"
+# Read WA gateway base URL from Vercel service binding if provided, fallback to local port 5005
+WA_BASE_URL = os.environ.get("WA_GATEWAY_URL", "http://127.0.0.1:5005").rstrip('/')
+GATEWAY_URL = f"{WA_BASE_URL}/send-message"
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')

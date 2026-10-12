@@ -1,15 +1,29 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "backend/grocery_core/wsgi.py",
-      "use": "@vercel/python"
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "backend": {
+      "root": "backend",
+      "framework": "django",
+      "bindings": [
+        {
+          "type": "service",
+          "service": "wa_gateway",
+          "format": "url",
+          "env": "WA_GATEWAY_URL"
+        }
+      ]
+    },
+    "wa_gateway": {
+      "root": "wa_gateway",
+      "runtime": "node"
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "backend/grocery_core/wsgi.py"
+      "source": "/(.*)",
+      "destination": {
+        "service": "backend"
+      }
     }
   ]
 }
