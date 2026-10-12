@@ -48,29 +48,48 @@ TEMPLATES = [
     },
 ]
 
-# Database setup: On Linux/Vercel serverless environments (/tmp is writable, /var/task is read-only)
+# Database setup:
+# 1. If DATABASE_URL is set (Neon / Supabase / Postgres / MySQL cloud), use it.
+# 2. Otherwise on serverless (Linux/Vercel), use /tmp/db.sqlite3.
+# 3. Otherwise locally, use BASE_DIR / db.sqlite3.
 import sys
 import shutil
 
-if sys.platform != 'win32' or os.environ.get('VERCEL') or str(BASE_DIR).startswith('/var'):
-    TMP_DB = Path('/tmp/db.sqlite3')
-    SEED_DB = BASE_DIR / 'db.sqlite3'
-    if not TMP_DB.exists():
-        if SEED_DB.exists():
-            try:
-                shutil.copy2(SEED_DB, TMP_DB)
-            except Exception as e:
-                print("Failed to copy SEED_DB:", e)
-    DB_PATH = TMP_DB
+database_url = os.environ.get('DATABASE_URL')
+if database_url:
+    try:
+        import dj_database_url
+        DATABASES = {
+            'default': dj_database_url.parse(database_url, conn_max_age=600)
+        }
+    except ImportError:
+        # Fallback to sqlite if dj_database_url not installed
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': Path('/tmp/db.sqlite3') if sys.platform != 'win32' else BASE_DIR / 'db.sqlite3',
+            }
+        }
 else:
-    DB_PATH = BASE_DIR / 'db.sqlite3'
+    if sys.platform != 'win32' or os.environ.get('VERCEL') or str(BASE_DIR).startswith('/var'):
+        TMP_DB = Path('/tmp/db.sqlite3')
+        SEED_DB = BASE_DIR / 'db.sqlite3'
+        if not TMP_DB.exists():
+            if SEED_DB.exists():
+                try:
+                    shutil.copy2(SEED_DB, TMP_DB)
+                except Exception as e:
+                    print("Failed to copy SEED_DB:", e)
+        DB_PATH = TMP_DB
+    else:
+        DB_PATH = BASE_DIR / 'db.sqlite3'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': DB_PATH,
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': DB_PATH,
+        }
     }
-}
 
 AUTH_PASSWORD_VALIDATORS = []
 
