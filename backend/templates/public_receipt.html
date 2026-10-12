@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receipt #{{ invoice.id }} - {{ invoice.store_name }}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #0f172a; margin: 0; padding: 20px; }
+    .receipt { max-width: 480px; margin: 0 auto; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 6px solid #0284c7; }
+    .header { text-align: center; border-bottom: 2px dashed #cbd5e1; padding-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th { background: #f1f5f9; padding: 8px 6px; font-size: 12px; color: #475569; }
+    td { padding: 8px 6px; border-bottom: 1px solid #f1f5f9; font-size: 13px; color: #1e293b; }
+    .calc-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: #475569; }
+    .total-box { margin-top: 15px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 14px; text-align: center; color: #065f46; font-size: 22px; font-weight: bold; }
+    .viral-footer { margin-top: 20px; background: #eff6ff; border-radius: 8px; padding: 14px; text-align: center; font-size: 12px; color: #1e40af; }
+    .cta-btn { display: inline-block; background: #0284c7; color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="receipt">
+    <div class="header">
+      <h2 style="margin: 0; color: #0284c7;">{{ invoice.store_name }}</h2>
+      <p style="margin: 6px 0 0 0; color: #64748b; font-size: 12px;">Date & Time: {{ invoice.created_at|date:"d M Y, h:i A" }}</p>
+      <small style="color: #059669; font-weight: bold;">
+        {% if invoice.payment_mode == 'khata' %}
+        📒 Khata / Customer Credit
+        {% else %}
+        💵 Paid in Full
+        {% endif %}
+      </small>
+    </div>
+
+    {% if invoice.parsed_items %}
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align: left;">Item</th>
+          <th style="width: 45px; text-align: center;">Qty</th>
+          <th style="width: 60px; text-align: right;">Rate</th>
+          <th style="width: 70px; text-align: right;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in invoice.parsed_items %}
+        <tr>
+          <td><strong>{{ item.name }}</strong></td>
+          <td style="text-align: center;">{{ item.qty }}</td>
+          <td style="text-align: right;">{{ item.unit_price }}</td>
+          <td style="text-align: right;"><strong>{{ item.line_total }}</strong></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+
+    <div style="margin-top: 15px; border-top: 1px dashed #cbd5e1; padding-top: 8px;">
+      <div class="calc-row"><span>Subtotal:</span><span>AED {{ invoice.subtotal }}</span></div>
+      {% if invoice.discount > 0 %}
+      <div class="calc-row" style="color: #ef4444;"><span>Discount:</span><span>- AED {{ invoice.discount }}</span></div>
+      {% endif %}
+      {% if invoice.round_off > 0 %}
+      <div class="calc-row" style="color: #ef4444;"><span>Round Off:</span><span>- AED {{ invoice.round_off }}</span></div>
+      {% endif %}
+    </div>
+
+    <div class="total-box">
+      Net Payable:<br>AED {{ invoice.grand_total }}
+    </div>
+
+    <div class="viral-footer">
+      <p style="margin: 0;">Want to generate instant digital bills for your store?</p>
+      <a href="/" class="cta-btn">Open Free POS Counter</a>
+    </div>
+  </div>
+</body>
+</html>

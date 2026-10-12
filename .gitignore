@@ -1,0 +1,47 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+*.sqlite3-journal
+db.sqlite3
+/media/
+staticfiles/
+*.log
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Node / WhatsApp Gateway
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+wa_gateway/wa_auth_session/
+wa_gateway/node_modules/
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+android/.gradle
+android/captures/
+ios/.symlinks/
+
+# IDE & OS
+.vscode/
+.idea/
+*.swp
+*.swo
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Nested duplicate backup
+smart_grocery_pos/

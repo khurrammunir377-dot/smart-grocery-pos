@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Grocery POS — Tactical Multilingual Counter</title>
+  <style>
+    :root {
+      --bg: radial-gradient(circle at 50% 20%, #0d1527 0%, #050811 100%);
+      --card-bg: linear-gradient(145deg, rgba(20, 32, 53, 0.9), rgba(11, 18, 32, 0.98));
+      --primary: #38bdf8;
+      --accent: #0284c7;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --key-top: #2b4266;
+      --key-bottom: #16243b;
+      --key-border: #486694;
+      --key-shadow: #070d18;
+    }
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { 
+      margin: 0; background: var(--bg); color: var(--text); height: 100vh; 
+      overflow: hidden; display: flex; flex-direction: column; 
+    }
+    
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(15, 23, 42, 0.96); backdrop-filter: blur(10px);
+      padding: 6px 16px; border-bottom: 2px solid #1e293b; height: 56px; gap: 8px;
+    }
+    .store-branding-box { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .store-input-edit {
+      background: #080f1d; border: 1.5px solid #38bdf8; color: #38bdf8;
+      font-size: 16px; font-weight: 800; border-radius: 8px; padding: 4px 10px; width: 190px;
+    }
+    .header-controls { display: flex; align-items: center; gap: 6px; overflow-x: auto; flex: 1; justify-content: flex-end; }
+    .control-select-box {
+      background: #0f172a; border: 1.5px solid #0284c7; color: #38bdf8;
+      padding: 5px 8px; border-radius: 8px; font-weight: 800; font-size: 12.5px; cursor: pointer;
+    }
+    .top-nav-btn {
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      border: 1px solid #38bdf8; color: #38bdf8; padding: 5px 10px; border-radius: 8px;
+      font-weight: 800; cursor: pointer; font-size: 12px; transition: all 0.15s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4); white-space: nowrap; display: flex; align-items: center; gap: 4px;
+    }
+    .top-nav-btn:hover { background: #0284c7; color: white; transform: translateY(-1px); }
+    .btn-user-badge {
+      background: linear-gradient(135deg, #0284c7, #38bdf8) !important; color: #050b14 !important;
+      border: none !important; font-weight: 900 !important; cursor: pointer;
+    }
+
+    .container { 
+      display: grid; 
+      grid-template-columns: 1.38fr 0.82fr; 
+      flex: 1; 
+      gap: 12px; 
+      padding: 10px; 
+      overflow: hidden; 
+    }
+
+    .card-3d { 
+      background: var(--card-bg); border-radius: 14px; padding: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.25); box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+      display: flex; flex-direction: column; overflow: hidden; height: 100%;
+    }
+
+    .mode-bar { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+    .mode-btn {
+      flex: 1; padding: 7px; border: none; border-radius: 8px; font-weight: 900;
+      font-size: 13px; cursor: pointer; transition: all 0.1s ease;
+    }
+    .mode-btn.active-sales {
+      background: linear-gradient(135deg, #10b981, #059669); color: white;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+    .mode-btn.inactive { background: #1e293b; color: #94a3b8; border: 1px solid #334155; }
+    .mode-btn.active-stock {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white;
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    }
+
+    .barcode-input {
+      width: 100%; background: #080f1d; border: 2px solid #0284c7; color: #38bdf8;
+      border-radius: 10px; padding: 7px 12px; font-size: 14px; font-weight: bold; margin-bottom: 8px;
+    }
+
+    .quick-grid { 
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 8px; padding-bottom: 4px;
+      overflow-y: auto; max-height: 290px;
+    }
+    .btn-pos-key {
+      background: linear-gradient(180deg, #2b4266 0%, #16243b 100%);
+      border: 1.5px solid #486694; border-top: 2px solid rgba(255,255,255,0.3);
+      border-bottom: 5px solid #070d18; border-radius: 12px;
+      color: #fff; padding: 6px 5px; cursor: pointer; text-align: center;
+      display: flex; flex-direction: column; justify-content: space-between; align-items: center; 
+      user-select: none; box-shadow: 0 6px 14px rgba(0,0,0,0.6); 
+      transition: all 0.08s cubic-bezier(0.4, 0, 0.2, 1); height: 70px; width: 100%; position: relative;
+    }
+    .btn-pos-key:hover {
+      background: linear-gradient(180deg, #35517d 0%, #1b2d4a 100%);
+      border-color: #38bdf8; transform: translateY(-1px);
+    }
+    .btn-pos-key:active { transform: translateY(4px); border-bottom: 1px solid #070d18; }
+    .key-top-row { display: flex; align-items: center; justify-content: center; width: 100%; overflow: hidden; padding: 0 2px; gap: 4px; }
+    .key-icon { font-size: 13px; flex-shrink: 0; line-height: 1; }
+    .key-name-dual { font-size: 11.5px; font-weight: 800; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; direction: ltr; }
+    .key-bottom-row { display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; padding: 0 2px; }
+    .key-unit { font-size: 11px; font-weight: 700; color: #94a3b8; }
+    .key-sep { color: #475569; font-size: 11px; font-weight: bold; }
+    .key-price-badge { background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8; border-radius: 5px; padding: 1px 5px; font-size: 11px; font-weight: 900; color: #38bdf8; }
+
+    .cust-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .cust-row input {
+      background: #080f1d; border: 1px solid #1e293b; color: white;
+      border-radius: 8px; padding: 7px 10px; font-size: 13px; font-weight: 600; width: 100%;
+    }
+    .extended-textarea {
+      flex: 1; width: 100%; background: #080f1d; border: 1px solid #1e293b;
+      border-radius: 10px; color: #f8fafc; font-family: monospace; font-size: 13px;
+      padding: 9px; resize: none; min-height: 95px;
+    }
+    .extended-textarea:focus { outline: none; border-color: #38bdf8; }
+
+    /* Billing receipt panel */
+    .billing-panel { display: flex; flex-direction: column; height: 100%; }
+    .receipt-paper {
+      background: #ffffff; color: #0f172a; border-radius: 10px; padding: 12px;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.2); flex: 1; overflow-y: auto; font-family: monospace;
+    }
+    .receipt-paper table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .receipt-paper th { border-bottom: 1.5px solid #0f172a; padding: 4px 2px; text-align: left; }
+    .receipt-paper td { padding: 4px 2px; border-bottom: 1px dashed #cbd5e1; }
+
+    .billing-bottom-fixed {
+      background: #080f1d; border: 1px solid #1e293b; border-radius: 10px;
+      padding: 10px 12px; margin-top: 10px; display: flex; flex-direction: column; gap: 6px;
+    }
+    .calc-row-fixed { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #94a3b8; }
+    .calc-row-fixed input {
+      width: 70px; background: #0f172a; border: 1px solid #334155; color: white;
+      text-align: right; font-weight: bold; padding: 3px 6px; border-radius: 5px; font-size: 13px;
+    }
+    .net-banner-fixed {
+      background: linear-gradient(135deg, #0284c7, #0369a1); border-radius: 8px;
+      padding: 6px 12px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .net-banner-fixed span { font-size: 13px; font-weight: 800; color: #f0f9ff; }
+    .net-banner-fixed h2 { margin: 0; font-size: 22px; font-weight: 900; color: white; }
+
+    .action-btns-fixed { display: grid; grid-template-columns: 1.1fr 1fr 1fr 1fr; gap: 6px; margin-top: 4px; }
+    .btn-action-3d {
+      padding: 10px 4px; border-radius: 8px; font-size: 12px; font-weight: 900;
+      color: white; border: none; cursor: pointer; text-align: center;
+      transition: all 0.1s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    .btn-cash { background: linear-gradient(135deg, #10b981, #059669); }
+    .btn-card { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .btn-khata { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+    .btn-split { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+    .btn-action-3d:hover { transform: translateY(-1px); filter: brightness(1.1); }
+    .btn-action-3d:active { transform: translateY(2px); }
+
+    /* Modal System */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(4, 9, 20, 0.85); backdrop-filter: blur(10px);
+      z-index: 10000; align-items: center; justify-content: center;
+    }
+    .modal-content-fixed {
+      background: #0b1424; border: 1.5px solid #0284c7; border-radius: 16px;
+      width: 92vw; max-width: 1100px; height: 86vh; display: flex; flex-direction: column;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.9); overflow: hidden;
+    }
+    .modal-fixed-body { flex: 1; padding: 16px; overflow-y: auto; color: #f8fafc; }
+
+    .tab-btn {
+      background: #132238; color: #94a3b8; border: 1px solid #1e2c44;
+      padding: 7px 12px; border-radius: 8px; font-weight: 800; font-size: 12px;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .tab-btn.active {
+      background: #0284c7; color: white; border-color: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    }
+
+    .inv-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+    .inv-table th { background: #0f1c30; padding: 8px 6px; border-bottom: 2px solid #1e3a5f; color: #38bdf8; font-weight: 800; }
+    .inv-table td { padding: 7px 6px; border-bottom: 1px solid #17253d; color: #e2e8f0; }
+    .inv-field { background: #080f1d; border: 1px solid #1e2e47; color: white; padding: 4px 6px; border-radius: 5px; font-size: 12.5px; }
+
+    .badge-status { padding: 2px 7px; border-radius: 4px; font-weight: 800; font-size: 11px; }
+    .badge-success { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-warning { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .badge-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+    /* Compact Dialog Modals */
+    .dialog-box {
+      background: #0e172a; border: 2px solid #38bdf8; border-radius: 14px;
+      width: 440px; max-width: 90%; padding: 20px; color: white; box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+    }
+    .dialog-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
+    .dialog-header h3 { margin: 0; font-size: 16px; color: #38bdf8; }
+    .form-ctrl { margin-bottom: 10px; }
+    .form-ctrl label { display: block; font-size: 12px; font-weight: bold; color: #94a3b8; margin-bottom: 3px; }
+    .form-ctrl input, .form-ctrl select, .form-ctrl textarea {
+      width: 100%; background: #080f1d; border: 1px solid #1e2c44; border-radius: 6px; padding: 7px 9px; color: white; font-size: 13px;
+    }
+
+    /* Receipt popup */
+    .receipt-modal-box {
+      width: 500px; max-width: 95%; height: 90vh; background: #ffffff; color: #0f172a;
+      border-radius: 14px; padding: 20px; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+      border-top: 6px solid #0284c7;
+    }
+    .receipt-net-card {
+      margin-top: 12px; background: #ecfdf5; border: 2px solid #a7f3d0; border-radius: 8px; 
+      padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; color: #065f46;
+    }
+
+    /* Success 3D Modal */
+    .success-box-3d {
+      background: linear-gradient(145deg, #132238 0%, #091322 100%);
+      border: 2px solid #38bdf8; box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+      border-radius: 16px; width: 440px; max-width: 92%; padding: 24px; text-align: center; color: white;
+    }
+    .stock-summary-list {
+      background: #080f1d; border: 1px solid #1e293b; border-radius: 10px;
+      padding: 10px; margin: 14px 0 18px 0; max-height: 200px; overflow-y: auto; text-align: left;
+    }
+    .stock-summary-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 6px; border-bottom: 1px solid #172439; font-size: 13px;
+    }
+    .stock-tag-add { background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 2px 8px; border-radius: 6px; font-weight: 800; font-size: 12px; }
+    .stock-tag-total { background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 8px; border-radius: 6px; font-weight: 800; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+  <form style="display:none;">{% csrf_token %}</form>
+
+  <!-- ================= TOP NAVIGATION BAR (CURRENCIES, LANGUAGES, & 7 MODULES) ================= -->
+  <div class="top-bar">
+    <div class="store-branding-box">
+      <span style="font-size: 18px;">🏪</span>
+      <input type="text" id="storeNameInput" class="store-input-edit" value="Al Madina Grocery" oninput="updateStoreName(this.value)">
+    </div>
+
+    <div class="header-controls">
+      <!-- ALL 9 ORIGINAL CURRENCIES RESTORED -->
+      <label style="font-size: 12.5px; color: #94a3b8; font-weight: bold;">Currency:</label>
+      <select id="currencySelect" class="control-select-box" onchange="changeCurrency(this.value)">
+        <option value="AED">AED (درهم)</option>
+        <option value="PKR">PKR (روپے)</option>
+        <option value="SAR">SAR (ريال)</option>
+        <option value="OMR">OMR (ر.ع)</option>
+        <option value="QAR">QAR (ر.ق)</option>
+        <option value="KWD">KWD (د.ك)</option>
+        <option value="USD">USD ($)</option>
+        <option value="INR">INR (₹)</option>
+        <option value="LKR">LKR (Rs)</option>
+      </select>
+
+      <!-- ALL 6 ORIGINAL SECONDARY LANGUAGES RESTORED -->
+      <label style="font-size: 12.5px; color: #94a3b8; font-weight: bold;">Language 2:</label>
+      <select id="langSelect" class="control-select-box" onchange="changeSecondaryLanguage(this.value)">
+        <option value="ur">Urdu (اردو)</option>
+        <option value="ar">Arabic (العربية)</option>
+        <option value="hi">Hindi (हिन्दी)</option>
+        <option value="ro">Roman Urdu</option>
+        <option value="si">Sinhala (සිංහල)</option>
+        <option value="ta">Tamil (தமிழ்)</option>
+      </select>
+
+      <button class="top-nav-btn" onclick="openModularHub('sales')">🛒 Sales / سیلز</button>
+      <button class="top-nav-btn" onclick="openModularHub('profit')">📈 Profit / نفع</button>
+      <button class="top-nav-btn" onclick="openModularHub('inventory')">📦 Stock & Expiry / اسٹاک</button>
+      <button class="top-nav-btn" onclick="openModularHub('suppliers')">🚚 Suppliers / سپلائر</button>
+      <button class="top-nav-btn" onclick="openModularHub('khata')">📒 Khata / کھاتہ</button>
+      <button class="top-nav-btn" onclick="openModularHub('accounts')">💰 Drawer / دراز</button>
+      <a href="/landing/" target="_blank" class="top-nav-btn" style="text-decoration:none; display:inline-flex; align-items:center;">🌐 Landing Page</a>
+      <button class="top-nav-btn btn-user-badge" id="activeUserBadge" onclick="openPinModal()">👑 admin (PIN)</button>
+    </div>
+  </div>
+
+  <!-- ================= MAIN POS COUNTER WORKSPACE ================= -->
+  <div class="container">
+    <div class="card-3d">
+      <div class="mode-bar">
+        <button id="modeSalesBtn" class="mode-btn active-sales" onclick="setAppMode('sales')">
+          🛒 Customer Sales (بلنگ موڈ)
+        </button>
+        <button id="modeStockBtn" class="mode-btn inactive" onclick="setAppMode('stock')">
+          📥 Quick Stock In (نیا مال داخل کریں)
+        </button>
+      </div>
+
+      <input type="text" id="barcodeScanner" class="barcode-input" placeholder="🔍 Scan Barcode & Press Enter... / بارکوڈ اسکین کریں" onkeypress="handleBarcode(event)">
+
+      <!-- ALL 28 QUICK 3D BUTTONS WITH ENGLISH + SECONDARY LANGUAGE -->
+      <div class="quick-grid" id="quickButtonsContainer"></div>
+
+      <div class="cust-row" id="custRowBox">
+        <div>
+          <input list="custDatalist" id="custName" placeholder="Customer Name (Select or Type)... / گاہک کا نام" oninput="onCustomerInput(this.value)">
+          <datalist id="custDatalist"></datalist>
+        </div>
+        <input type="tel" id="custPhone" placeholder="Phone / WhatsApp / فون نمبر">
+      </div>
+
+      <textarea id="bulkInput" class="extended-textarea" placeholder="Paste or type items list freely, e.g.:&#10;1 Garlic, 2 Drink, 1 Eggs, Sugar 4.0&#10;یا اردو میں: 2 دودھ 6، 1 چینی 4" oninput="debounceParse()"></textarea>
+    </div>
+
+    <!-- Live Bilingual Receipt Preview -->
+    <div class="card-3d billing-panel">
+      <div class="receipt-paper">
+        <div style="text-align: center; border-bottom: 2px dashed #94a3b8; padding-bottom: 6px;">
+          <h2 style="margin: 0; color: #0284c7; font-size: 19px;" id="headerStoreName">Al Madina Grocery</h2>
+          <small style="color: #64748b; font-size: 11.5px; font-weight: bold;" id="headerPanelSubtitle">Instant Bilingual Receipt رسید</small>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 26px; text-align: center;">#</th>
+              <th id="thItem">Item / نام (Dual Name)</th>
+              <th style="width: 40px; text-align: center;" id="thQty">Qty</th>
+              <th style="width: 58px; text-align: center;" id="thSize">Size/Unit</th>
+              <th style="width: 50px; text-align: right;" id="thRate">Rate</th>
+              <th style="width: 60px; text-align: right;" id="thTotal">Total</th>
+            </tr>
+          </thead>
+          <tbody id="previewRows"></tbody>
+        </table>
+      </div>
+
+      <!-- Financial Calculation & Payment Action Strip -->
+      <div class="billing-bottom-fixed" id="salesFooterBox">
+        <div class="calc-row-fixed">
+          <span id="labelSubtotal">Subtotal / سب ٹوٹل:</span>
+          <strong id="subtotalDisplay" style="color: white; font-size: 14px;">AED 0.00</strong>
+        </div>
+
+        <div class="calc-row-fixed">
+          <span id="labelDiscount">Discount / ڈسکاؤنٹ:</span>
+          <div>
+            <input type="number" id="discount" value="0" step="0.5" oninput="recalcTotals()">
+            <span class="curr-unit" style="font-size: 12px; margin-left: 3px;">AED</span>
+          </div>
+        </div>
+
+        <div class="calc-row-fixed">
+          <span id="labelRoundOff">Round Off / راؤنڈ آف:</span>
+          <div>
+            <input type="number" id="roundOff" value="0" step="0.5" oninput="recalcTotals()">
+            <span class="curr-unit" style="font-size: 12px; margin-left: 3px;">AED</span>
+          </div>
+        </div>
+
+        <div class="net-banner-fixed">
+          <span id="labelNetTotal">Net Total / صافی رقم:</span>
+          <h2 id="grandTotalDisplay">AED 0.00</h2>
+        </div>
+
+        <!-- 4 BILINGUAL PAYMENT MODES (Cash, Card, Khata, Split) -->
+        <div class="action-btns-fixed">
+          <button class="btn-action-3d btn-cash" onclick="submitBill('paid_cash')" id="btnCashLabel">
+            💵 Cash / کیش بل
+          </button>
+          <button class="btn-action-3d btn-card" onclick="submitBill('paid_card')" id="btnCardLabel">
+            💳 Card / کارڈ بل
+          </button>
+          <button class="btn-action-3d btn-khata" onclick="submitBill('khata')" id="btnKhataLabel">
+            📒 Khata / کھاتہ
+          </button>
+          <button class="btn-action-3d btn-split" onclick="openSplitModal()" id="btnSplitLabel">
+            🔄 Split / اسپلٹ
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Stock In Save Strip -->
+      <div class="billing-bottom-fixed" id="stockFooterBox" style="display: none;">
+        <div style="background:#1e3a8a; padding:8px 12px; border-radius:8px; color:#93c5fd; font-size:12.5px; font-weight:bold;">
+          📦 Bulk Stock Replenish (سامان انوینٹری میں درج کریں)
+        </div>
+        <div style="margin-top: 4px;">
+          <button class="btn-action-3d btn-cash" style="width: 100%;" onclick="submitQuickStockIn()">
+            📥 Add to Inventory (نیا مال انوینٹری میں شامل کریں)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= UNIFIED 7-MODULES MODAL HUB ================= -->
+  <div id="reportsModal" class="modal">
+    <div class="modal-content-fixed">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding:12px 16px; background:#080f1d;">
+        <div style="display:flex; gap:8px; align-items:center; overflow-x:auto;">
+          <button class="tab-btn active" id="tabSalesBtn" onclick="switchReportTab('sales')">🛒 1. Sales & Bills</button>
+          <button class="tab-btn" id="tabProfitBtn" onclick="switchReportTab('profit')">📈 2. Profit & P&L</button>
+          <button class="tab-btn" id="tabInventoryBtn" onclick="switchReportTab('inventory')">📦 3. Stock & Expiry</button>
+          <button class="tab-btn" id="tabSuppliersBtn" onclick="switchReportTab('suppliers')">🚚 4. Purchases & Suppliers</button>
+          <button class="tab-btn" id="tabKhataBtn" onclick="switchReportTab('khata')">📒 5. Customers & Khata</button>
+          <button class="tab-btn" id="tabAccountsBtn" onclick="switchReportTab('accounts')">💰 6. Accounts & Drawer</button>
+          <button class="tab-btn" id="tabUsersBtn" onclick="switchReportTab('users')">🔐 7. Staff & Roles</button>
+        </div>
+        <button onclick="closeModal('reportsModal')" style="background:#ef4444; border:none; color:white; padding:6px 14px; border-radius:6px; font-weight:bold; cursor:pointer;">✕</button>
+      </div>
+
+      <div class="modal-fixed-body">
+        <div id="tabSalesView"></div>
+        <div id="tabProfitView" style="display:none;"></div>
+        <div id="tabInventoryView" style="display:none;"></div>
+        <div id="tabSuppliersView" style="display:none;"></div>
+        <div id="tabKhataView" style="display:none;"></div>
+        <div id="tabAccountsView" style="display:none;"></div>
+        <div id="tabUsersView" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SUB-MODALS ================= -->
+
+  <!-- Split Payment Modal -->
+  <div id="splitModal" class="modal">
+    <div class="dialog-box">
+      <div class="dialog-header">
+        <h3>🔄 اسپلٹ ادائیگی (Cash + Card Split)</h3>
+        <button onclick="closeModal('splitModal')" style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <p style="font-size:13px; color:#94a3b8; margin-bottom:12px;">صافی رقم: <strong id="splitTotalDue" style="color:#38bdf8; font-size:16px;">AED 0.00</strong></p>
+      <div class="form-ctrl">
+        <label>💵 نقد رقم (Cash Amount):</label>
+        <input type="number" id="splitCashInput" step="0.5" oninput="balanceSplit('cash')">
+      </div>
+      <div class="form-ctrl">
+        <label>💳 کارڈ رقم (Card Amount):</label>
+        <input type="number" id="splitCardInput" step="0.5" oninput="balanceSplit('card')">
+      </div>
+      <button class="btn-action-3d btn-cash" style="width:100%; margin-top:8px;" onclick="confirmSplitPayment()">بل مکمل کریں اور واٹس ایپ بھیجیں</button>
+    </div>
+  </div>
+
+  <!-- PIN Switch Modal -->
+  <div id="pinModal" class="modal">
+    <div class="dialog-box" style="width:360px;">
+      <div class="dialog-header">
+        <h3>🔐 ملازم / کیشیئر لاگ ان</h3>
+        <button onclick="closeModal('pinModal')" style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <p style="font-size:12.5px; color:#94a3b8; margin-bottom:12px;">اپنا 4 ہندسوں کا پن کوڈ درج کریں:<br><small style="color:#38bdf8;">Admin: 1122 | Manager: 2233 | Cashier: 1234</small></p>
+      <div class="form-ctrl">
+        <input type="password" id="userPinInput" maxlength="6" placeholder="Enter PIN..." style="font-size:20px; text-align:center; letter-spacing:5px;" onkeypress="if(event.key==='Enter') verifyPinCode()">
+      </div>
+      <button class="btn-action-3d btn-cash" style="width:100%;" onclick="verifyPinCode()">تصدیق کریں (Login)</button>
+    </div>
+  </div>
+
+  <!-- Stock Adjustment Modal -->
+  <div id="stockAdjustModal" class="modal">
+    <div class="dialog-box">
+      <div class="dialog-header">
+        <h3>📦 اسٹاک ایڈجسٹمنٹ (Stock Audit / Waste)</h3>
+        <button onclick="closeModal('stockAdjustModal')" style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div class="form-ctrl">
+        <label>پروڈکٹ منتخب کریں:</label>
+        <select id="adjProdSelect"></select>
+      </div>
+      <div class="form-ctrl">
+        <label>تبدیلی کی قسم (Type):</label>
+        <select id="adjTypeSelect">
+          <option value="in">Manual Stock In / اضافی مال</option>
+          <option value="out">Manual Stock Out / اخراج</option>
+          <option value="damage">Damaged / نقصان یا ٹوٹ پھوٹ</option>
+          <option value="expired">Expired Waste / ایکسپائر ضائع شدہ</option>
+          <option value="audit">Audit Replace / گنتی کی تصحیح</option>
+        </select>
+      </div>
+      <div class="form-ctrl">
+        <label>تعداد (Quantity):</label>
+        <input type="number" id="adjQtyInput" value="1" min="1">
+      </div>
+      <div class="form-ctrl">
+        <label>وجہ / تفصیل (Reason):</label>
+        <input type="text" id="adjReasonInput" placeholder="e.g. Broken packaging or manual count">
+      </div>
+      <button class="btn-action-3d btn-cash" style="width:100%;" onclick="submitStockAdjust()">محفوظ کریں (Apply Adjustment)</button>
+    </div>
+  </div>
+
+  <!-- Add Supplier Modal -->
+  <div id="addSupplierModal" class="modal">
+    <div class="dialog-box">
+      <div class="dialog-header">
+        <h3>🚚 نیا سپلائر شامل کریں</h3>
+        <button onclick="closeModal('addSupplierModal')" style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div class="form-ctrl">
+        <label>سپلائر / نمائندے کا نام:</label>
+        <input type="text" id="supName">
+      </div>
+      <div class="form-ctrl">
+        <label>کمپنی کا نام:</label>
+        <input type="text" id="supCompany" placeholder="e.g. Al Rawabi Dairy LLC">
+      </div>
+      <div class="form-ctrl">
+        <label>فون نمبر / واٹس ایپ:</label>
+        <input type="tel" id="supPhone" placeholder="+97150...">
+      </div>
+      <div class="form-ctrl">
+        <label>پہلے سے واجب الادا رقم (Opening Payable):</label>
+        <input type="number" id="supPayable" value="0.0">
+      </div>
+      <button class="btn-action-3d btn-cash" style="width:100%;" onclick="submitAddSupplier()">سپلائر محفوظ کریں</button>
+    </div>
+  </div>
+
+  <!-- Purchase Bill Modal -->
+  <div id="purchaseBillModal" class="modal">
+    <div class="dialog-box" style="width:500px;">
+      <div class="dialog-header">
+        <h3>📥 خریداری انوائس درج کریں (Stock In PO)</h3>
+        <button onclick="closeModal('purchaseBillModal')" style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div class="form-ctrl">
+        <label>سپلائر منتخب کریں:</label>
+        <select id="poSupplierSelect"></select>
+      </div>
+      <div class="form-ctrl">
+        <label>انوائس نمبر:</label>
+        <input type="text" id="poBillNo" placeholder="SUP-INV-101">
+      </div>
+      <div class="form-ctrl">
+        <label>پروڈکٹ کا نام:</label>
+        <input type="text" id="poItemName" placeholder="e.g. Fresh Milk">
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div class="form-ctrl">
+          <label>تعداد (Qty):</label>
+          <input type="number" id="poQty" value="20">
+        </div>
+        <div class="form-ctrl">
+          <label>خریداری ریٹ (Cost Price):</label>
+          <input type="number" id="poCost" step="0.1" value="4.5">
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div class="form-ctrl">
+          <label>بیچ نمبر (Batch #):</label>
+          <input type="text" id="poBatch" placeholder="B-12">
+        </div>
+        <div class="form-ctrl">
+          <label>ایکسپائری ڈیٹ:</label>
+          <input type="date" id="poExpiry">
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div class="form-ctrl">
+          <label>کل رقم (Total Amount):</label>
+          <input type="number" id="poTotalAmount" value="90.0">
+        </div>
+        <div class="form-ctrl">
+          <label>ادا شدہ رقم (Paid Amount):</label>
+          <input type="number" id="poPaidAmount" value="90.0">
+        </div>
+      </div>
+      <button class="btn-action-3d btn-cash" style="width:100%; margin-top:8px;" onclick="submitPurchaseBill()">اسٹاک داخل کریں اور بل محفوظ کریں</button>
+    </div>
+  </div>
+
+  <!-- Pay Supplier Modal -->
+  <div id="paySupplierModal" class="modal">
+    <div class="dialog-box">
+      <div class="dialog-header">
+        <h3>💳 سپلائر کو ادائیگی درج کریں</h3>
+        <button onclick="closeModal('paySupplierModal')" style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div class="form-ctrl">
+        <label>سپلائر:</label>
+        <select id="paySupSelect"></select>
+      </div>
+      <div class="form-ctrl">
+        <label>ادائیگی رقم (Amount):</label>
+        <input type="number" id="paySupAmount">
+      </div>
+      <div class="form-ctrl">
+        <label>طریقہ:</label>
+        <select id="paySupMode">
+          <option value="Cash">Cash / کیش</option>
+          <option value="Bank">Bank Transfer / بینک</option>
+          <option value="Card">Card / کارڈ</option>
+        </select>
+      </div>
+      <button class="btn-action-3d btn-cash" style="width:100%;" onclick="submitPaySupplier()">ادائیگی درج کریں</button>
+    </div>
+  </div>
+
+  <!-- Add Expense Modal -->
+  <div id="addExpenseModal" class="modal">
+    <div class="dialog-box">
+      <div class="dialog-header">
+        <h3>💸 نیا خرچہ واؤچر درج کریں (Expense)</h3>
+        <button onclick="closeModal('addExpenseModal')" style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div class="form-ctrl">
+        <label>کیٹیگری:</label>
+        <select id="expCatSelect"></select>
+      </div>
+      <div class="form-ctrl">
+        <label>تفصیل / مد (Title):</label>
+        <input type="text" id="expTitle" placeholder="e.g. Daily Tea or DEWA Bill">
+      </div>
+      <div class="form-ctrl">
+        <label>رقم (Amount):</label>
+        <input type="number" id="expAmount">
+      </div>
+      <div class="form-ctrl">
+        <label>طریقہ ادائیگی:</label>
+        <select id="expMode">
+          <option value="Cash">Cash (دراز سے نقد)</option>
+          <option value="Card">Card</option>
+          <option value="Bank">Bank</option>
+        </select>
+      </div>
+      <button class="btn-action-3d btn-cash" style="width:100%;" onclick="submitAddExpense()">واؤچر محفوظ کریں</button>
+    </div>
+  </div>
+
+  <!-- Collect Khata Payment Modal -->
+  <div id="khataPayModal" class="modal">
+    <div class="dialog-box">
+      <div class="dialog-header">
+        <h3>💵 کسٹمر ادھار وصولی (Settle Khata)</h3>
+        <button onclick="closeModal('khataPayModal')" style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div class="form-ctrl">
+        <label>کسٹمر کا فون یا نام:</label>
+        <input type="text" id="kpCustPhone" placeholder="Enter phone or select...">
+      </div>
+      <div class="form-ctrl">
+        <label>وصول شدہ رقم (Amount Paid):</label>
+        <input type="number" id="kpAmount">
+      </div>
+      <button class="btn-action-3d btn-cash" style="width:100%;" onclick="submitKhataPayment()">وصولی درج کریں اور واٹس ایپ بھیجیں</button>
+    </div>
+  </div>
+
+  <!-- Customer Statement Modal -->
+  <div id="statementModal" class="modal" style="z-index: 10500;">
+    <div class="modal-content-fixed" style="width: 80vw; max-width: 850px; height: 75vh;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding:10px 14px; background:#080f1d;">
+        <h2 id="stmtTitle" style="margin:0; color:#38bdf8; font-size:17px;">Customer Statement</h2>
+        <button onclick="closeModal('statementModal')" style="background:#ef4444; border:none; color:white; padding:6px 14px; border-radius:6px; font-weight:bold; cursor:pointer;">✕</button>
+      </div>
+      <div id="stmtBody" class="modal-fixed-body">Loading Statement...</div>
+    </div>
+  </div>
+
+  <!-- Receipt Viewer Modal -->
+  <div id="receiptViewerModal" class="modal" style="z-index: 99999;">
+    <div class="receipt-modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px dashed #94a3b8; padding-bottom:8px;">
+        <h3 id="rcptStore" style="margin:0; color:#0284c7;">Store Receipt</h3>
+        <button onclick="closeModal('receiptViewerModal')" style="background:#ef4444; color:white; border:none; border-radius:6px; padding:4px 10px; cursor:pointer; font-weight:bold;">✕</button>
+      </div>
+      <p id="rcptDate" style="font-size:12px; color:#64748b; margin:6px 0;"></p>
+      <div id="rcptModeBadge" style="margin-bottom:8px; font-weight:bold; color:#059669; font-size:13px;"></div>
+      
+      <table style="width:100%; border-collapse:collapse; font-size:12px; margin-top:10px;">
+        <thead>
+          <tr style="border-bottom:1.5px solid #0f172a;">
+            <th style="text-align:left;">Item / نام</th>
+            <th style="text-align:center;">Qty</th>
+            <th style="text-align:right;">Rate</th>
+            <th style="text-align:right;">Total</th>
+          </tr>
+        </thead>
+        <tbody id="modalReceiptRows"></tbody>
+      </table>
+
+      <div style="margin-top:12px; border-top:1px dashed #cbd5e1; padding-top:6px; font-size:13px;">
+        <div style="display:flex; justify-content:space-between;"><span>Subtotal:</span> <strong id="modalSubtotalVal">0.00</strong></div>
+        <div style="display:flex; justify-content:space-between; color:#ef4444;"><span>Discount:</span> <strong id="modalDiscountVal">0.00</strong></div>
+        <div style="display:flex; justify-content:space-between; color:#ef4444;"><span>Round Off:</span> <strong id="modalRoundVal">0.00</strong></div>
+      </div>
+
+      <div class="receipt-net-card">
+        <strong>Net Payable / صافی رقم:</strong>
+        <span id="modalNetVal" style="font-size:20px; font-weight:900;">0.00</span>
+      </div>
+
+      <div style="margin-top:14px; text-align:center;">
+        <button onclick="window.print()" class="btn-action-3d btn-cash" style="padding:8px 16px;">🖨️ پرنٹ رسید (Print Thermal)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Success Popup -->
+  <div id="customSuccessModal" class="modal" style="z-index: 100000;">
+    <div class="success-box-3d">
+      <div style="font-size:36px; margin-bottom:8px;">✅</div>
+      <h3 style="margin: 0; font-size: 19px; color: #38bdf8; font-weight: 900;">اسٹاک کامیابی سے اپڈیٹ ہو گیا!</h3>
+      <p style="margin: 4px 0 0 0; color: #94a3b8; font-size: 13px;">Stock In Inventory Updated Successfully</p>
+      <div class="stock-summary-list" id="stockSuccessList"></div>
+      <button onclick="closeModal('customSuccessModal')" class="btn-action-3d btn-cash" style="width: 100%; padding: 10px;">
+        سمجھ آ گیا (Continue) 👍
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= LOGIC & STATE SCRIPT ================= -->
+  <script>
+    let currentStoreName = localStorage.getItem('pos_store_name') || 'Al Madina Grocery';
+    let currentCurrency = localStorage.getItem('pos_currency') || 'AED';
+    let currentSecondaryLang = localStorage.getItem('pos_sec_lang') || 'ur';
+    let appMode = 'sales';
+
+    let currentUser = {
+      username: 'admin',
+      role: 'admin',
+      permissions: { can_manage_products: true, can_delete_products: true, can_view_profits: true, can_refund: true }
+    };
+
+    let khataData = [];
+    let allSuppliers = [];
+    let currentParsedData = [];
+    let parseTimeout = null;
+
+    // ================= ALL 28 CATALOG ITEMS WITH 6 LANGUAGES RESTORED =================
+    const catalogItems = [
+      { id: 'onion', icon: '&#129477;', en: 'Onion', unit: '1 Kg', price: 3.5, ur: 'پیاز', ar: 'بصل', hi: 'प्याज', ro: 'Pyaz', si: 'ලූනු', ta: 'வெங்காயம்' },
+      { id: 'tomato', icon: '&#127813;', en: 'Tomato', unit: '1 Kg', price: 4.0, ur: 'ٹماٹر', ar: 'طماطم', hi: 'टमाटर', ro: 'Tamatar', si: 'තක්කාලි', ta: 'தக்காளி' },
+      { id: 'potato', icon: '&#129364;', en: 'Potato', unit: '1 Kg', price: 2.5, ur: 'آلو', ar: 'بطاطس', hi: 'आलू', ro: 'Aloo', si: 'අර්තාපල්', ta: 'உருளை' },
+      { id: 'garlic', icon: '&#129476;', en: 'Garlic', unit: '500g', price: 6.0, ur: 'لہسن', ar: 'ثوم', hi: 'लहसुन', ro: 'Lehsan', si: 'සුදු ළූණු', ta: 'பூண்டு' },
+      { id: 'milk', icon: '&#129371;', en: 'Fresh Milk', unit: '1 L', price: 6.0, ur: 'دودھ', ar: 'حليب', hi: 'दूध', ro: 'Doodh', si: 'කිරි', ta: 'பால்' },
+      { id: 'bread', icon: '&#127838;', en: 'Bread', unit: '1 Pc', price: 4.5, ur: 'بریڈ', ar: 'خبز', hi: 'ब्रेड', ro: 'Bread', si: 'පාන්', ta: 'ரொட்டி' },
+      { id: 'eggs', icon: '&#129370;', en: 'Eggs', unit: '6 Pcs', price: 5.0, ur: 'انڈے', ar: 'بيض', hi: 'अंडे', ro: 'Anday', si: 'බිත්තර', ta: 'முட்டை' },
+      { id: 'yogurt', icon: '&#129379;', en: 'Yogurt', unit: '500g', price: 3.0, ur: 'دہی', ar: 'زبادي', hi: 'दही', ro: 'Dahi', si: 'යෝගට්', ta: 'தயிர்' },
+      { id: 'sugar', icon: '&#129474;', en: 'White Sugar', unit: '1 Kg', price: 4.0, ur: 'چینی', ar: 'سكر', hi: 'चीनी', ro: 'Cheeni', si: 'සීනි', ta: 'சர்க்கரை' },
+      { id: 'rice', icon: '&#127834;', en: 'Basmati Rice', unit: '1 Kg', price: 7.5, ur: 'چاول', ar: 'أرز', hi: 'चावल', ro: 'Chawal', si: 'සහල්', ta: 'அரிசி' },
+      { id: 'oil', icon: '&#129703;', en: 'Cooking Oil', unit: '1 L', price: 14.0, ur: 'تیل', ar: 'زيت', hi: 'तेल', ro: 'Oil', si: 'තෙල්', ta: 'எண்ணெய்' },
+      { id: 'ghee', icon: '&#129479;', en: 'Pure Ghee', unit: '1 Kg', price: 15.0, ur: 'گھی', ar: 'سمن', hi: 'घी', ro: 'Ghee', si: 'එළඟිතෙල්', ta: 'நெய்' },
+      { id: 'water', icon: '&#128167;', en: 'Water Bottle', unit: '1.5 L', price: 1.5, ur: 'پانی', ar: 'ماء', hi: 'पानी', ro: 'Pani', si: 'වතුර', ta: 'தண்ணீர்' },
+      { id: 'drink', icon: '&#129380;', en: 'Soft Drink', unit: '1.5 L', price: 2.5, ur: 'کولڈ ڈرنک', ar: 'مشروب', hi: 'कोल्ड ड्रिंक', ro: 'Cold Drink', si: 'බීම', ta: 'குளிர்பானம்' },
+      { id: 'tea', icon: '&#9749;', en: 'Tea Dust', unit: '400g', price: 12.0, ur: 'چائے', ar: 'شاي', hi: 'चाय', ro: 'Chai', si: 'තේ කොළ', ta: 'தேநீர்' },
+      { id: 'biscuits', icon: '&#127850;', en: 'Biscuits', unit: '1 Pack', price: 2.0, ur: 'بسکٹ', ar: 'بسكويت', hi: 'बिस्कुट', ro: 'Biscuit', si: 'බිස්කට්', ta: 'பிஸ்கட்' },
+      { id: 'chicken', icon: '&#127831;', en: 'Fresh Chicken', unit: '1 Kg', price: 15.0, ur: 'مرغی', ar: 'دجاج', hi: 'चिकन', ro: 'Murghi', si: 'කුකුල් මස්', ta: 'கோழி' },
+      { id: 'fish', icon: '&#128031;', en: 'Fresh Fish', unit: '1 Kg', price: 22.0, ur: 'مچھلی', ar: 'سمك', hi: 'माछली', ro: 'Machli', si: 'මාළු', ta: 'மீன்' },
+      { id: 'apple', icon: '&#127822;', en: 'Red Apples', unit: '1 Kg', price: 6.5, ur: 'سیب', ar: 'تفاح', hi: 'себ', ro: 'Seb', si: 'ඇපල්', ta: 'ஆப்பிள்' },
+      { id: 'banana', icon: '&#127820;', en: 'Bananas', unit: '1 Kg', price: 4.5, ur: 'کیلا', ar: 'موز', hi: 'केला', ro: 'Kela', si: 'කෙසෙල්', ta: 'வாழைப்பழம்' },
+      { id: 'soap', icon: '&#129524;', en: 'Bath Soap', unit: '1 Pc', price: 3.5, ur: 'صابن', ar: 'صابون', hi: 'साबुन', ro: 'Sabun', si: 'සබන්', ta: 'சோப்பு' },
+      { id: 'surf', icon: '&#129530;', en: 'Detergent', unit: '1 Pack', price: 8.5, ur: 'سرف', ar: 'مسحوق', hi: 'डिटर्जेंट', ro: 'Surf', si: 'රෙදි සෝදන කුඩු', ta: 'சலவை தூள்' },
+      { id: 'shampoo', icon: '&#129524;', en: 'Shampoo', unit: '200ml', price: 16.0, ur: 'شیمپو', ar: 'شامبو', hi: 'शैम्पू', ro: 'Shampoo', si: 'ෂැම්පු', ta: 'ஷாம்பு' },
+      { id: 'diaper', icon: '&#128118;', en: 'Baby Diapers', unit: '1 Pack', price: 35.0, ur: 'پیمپرز', ar: 'حفاضات', hi: 'डायपर', ro: 'Pampers', si: 'ඩයපර්', ta: 'டயப்பர்கள்' },
+      { id: 'daalmash', icon: '&#129379;', en: 'Daal Mash', unit: '1 Kg', price: 11.0, ur: 'دال ماش', ar: 'عدس ماش', hi: 'दाल उड़द', ro: 'Daal Mash', si: 'උඳු ධාන්‍ය', ta: 'உளுந்து' },
+      { id: 'daalchana', icon: '&#127858;', en: 'Daal Chana', unit: '1 Kg', price: 9.5, ur: 'دال چنا', ar: 'حمص مجروش', hi: 'दाल चना', ro: 'Daal Chana', si: 'කඩල පරිප්පු', ta: 'கடலை பருப்பு' },
+      { id: 'herbs', icon: '&#127807;', en: 'Coriander/Mint', unit: '1 Bunch', price: 1.5, ur: 'دھنیا پودینہ', ar: 'كزبرة ونعناع', hi: 'धनिया पुदीना', ro: 'Dhaniya Pudina', si: 'කොත්තමල්ලි', ta: 'கொத்தமல்லி' },
+      { id: 'eggtray', icon: '&#128230;', en: 'Egg Tray', unit: '30 Pcs', price: 22.0, ur: 'انڈے کریٹ', ar: 'طبق بيض', hi: 'अंडे की ट्रे', ro: 'Anday Tray', si: 'බිත්තර තට්ටුව', ta: 'முட்டை தட்டு' }
+    ];
+
+    // ================= FULL BILINGUAL UI STRINGS DICTIONARY =================
+    const i18n = {
+      ur: {
+        subtotal: "سب ٹوٹل:", discount: "ڈسکاؤنٹ:", round: "راؤنڈ آف:", net: "صافی رقم:",
+        cashBtn: "Cash / کیش بل", khataBtn: "Khata / کھاتہ", cardBtn: "Card / کارڈ بل", splitBtn: "Split / اسپلٹ",
+        thItem: "نام", thQty: "تعداد", thSize: "سائز", thRate: "ریٹ", thTotal: "ٹوٹل",
+        todaySales: "آج کی کل سیل", cashSales: "کیش وصولی", khataSales: "کھاتہ ادھار"
+      },
+      ar: {
+        subtotal: "المجموع الفرعي:", discount: "الخصم:", round: "التقريب:", net: "المبلغ الصافي:",
+        cashBtn: "Cash / نقداً", khataBtn: "Khata / آجل", cardBtn: "Card / بطاقة", splitBtn: "Split / مقسم",
+        thItem: "الصنف", thQty: "الكمية", thSize: "الحجم", thRate: "السعر", thTotal: "الإجمالي",
+        todaySales: "مبيعات اليوم", cashSales: "المقبوض النقدي", khataSales: "مبيعات الآجل"
+      },
+      hi: {
+        subtotal: "उप-कुल:", discount: "छूट:", round: "राउंड ऑफ:", net: "कुल राशि:",
+        cashBtn: "Cash / नकद बिल", khataBtn: "Khata / उधार खाता", cardBtn: "Card / कार्ड", splitBtn: "Split / मिश्रित",
+        thItem: "सामग्री", thQty: "मात्रा", thSize: "साइज", thRate: "दर", thTotal: "कुल",
+        todaySales: "आज की कुल बिक्री", cashSales: "नकद प्राप्ति", khataSales: "उधार बिक्री"
+      },
+      ro: {
+        subtotal: "Subtotal / Kul Bill:", discount: "Discount:", round: "Round Off:", net: "Net Total / Safi Raqam:",
+        cashBtn: "Cash / Cash Bill", khataBtn: "Khata / Udhaar", cardBtn: "Card / Card Bill", splitBtn: "Split / Mix",
+        thItem: "Item Name", thQty: "Qty", thSize: "Size", thRate: "Rate", thTotal: "Total",
+        todaySales: "Today Sales", cashSales: "Cash Collected", khataSales: "Khata Credit"
+      },
+      si: {
+        subtotal: "උප එකතුව:", discount: "වට්ටම්:", round: "වටකුරු කිරීම:", net: "ශුද්ධ එකතුව:",
+        cashBtn: "Cash / මුදල්", khataBtn: "Khata / ණය", cardBtn: "Card / කාඩ්පත", splitBtn: "Split / මිශ්‍ර",
+        thItem: "භාණ්ඩය", thQty: "ප්‍රමාණය", thSize: "ඒකකය", thRate: "මිල", thTotal: "එකතුව",
+        todaySales: "අද විකුණුම්", cashSales: "මුදල් ලැබීම්", khataSales: "ණය විකුණුම්"
+      },
+      ta: {
+        subtotal: "கூட்டுத்தொகை:", discount: "தள்ளுபடி:", round: "ரவுண்ட் ஆஃப்:", net: "நிகரத் தொகை:",
+        cashBtn: "Cash / ரொக்கம்", khataBtn: "Khata / கடன்", cardBtn: "Card / அட்டை", splitBtn: "Split / பகிர்வு",
+        thItem: "பொருள்", thQty: "எண்ணிக்கை", thSize: "அளவு", thRate: "விலை", thTotal: "மொத்தம்",
+        todaySales: "இன்றைய விற்பனை", cashSales: "ரொக்க வசூல்", khataSales: "கடன் விற்பனை"
+      }
+    };
+
+    function formatSystemDateTime(isoStr) {
+      if (!isoStr) return '';
+      const d = new Date(isoStr);
+      return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) + 
+             ', ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+
+    // ================= DOUBLE LANGUAGE WITH ENGLISH FORMATTER =================
+    function formatDualLanguageName(rawName) {
+      if (!rawName) return '';
+      const clean = rawName.trim().toLowerCase();
+      
+      const item = catalogItems.find(it => {
+        return it.en.toLowerCase() === clean ||
+               it.id === clean ||
+               clean.includes(it.en.toLowerCase()) ||
+               (it[currentSecondaryLang] && clean.includes(it[currentSecondaryLang].toLowerCase())) ||
+               (it.ur && clean.includes(it.ur.toLowerCase())) ||
+               (it.ro && clean.includes(it.ro.toLowerCase()));
+      });
+
+      if (item) {
+        const sec = item[currentSecondaryLang] || item['ur'];
+        return `${item.en} / ${sec}`;
+      }
+      return rawName;
+    }
+
+    function getItemUnit(rawName) {
+      if (!rawName) return '1 Pc';
+      const clean = rawName.trim().toLowerCase();
+      const item = catalogItems.find(it => {
+        return it.en.toLowerCase() === clean ||
+               it.id === clean ||
+               clean.includes(it.en.toLowerCase()) ||
+               (it[currentSecondaryLang] && clean.includes(it[currentSecondaryLang].toLowerCase())) ||
+               (it.ur && clean.includes(it.ur.toLowerCase()));
+      });
+      return item ? item.unit : '1 Pc';
+    }
+
+    function setAppMode(mode) {
+      appMode = mode;
+      const salesBtn = document.getElementById('modeSalesBtn');
+      const stockBtn = document.getElementById('modeStockBtn');
+      const salesFooter = document.getElementById('salesFooterBox');
+      const stockFooter = document.getElementById('stockFooterBox');
+      const custRow = document.getElementById('custRowBox');
+
+      if (mode === 'sales') {
+        salesBtn.className = 'mode-btn active-sales';
+        stockBtn.className = 'mode-btn inactive';
+        salesFooter.style.display = 'flex';
+        stockFooter.style.display = 'none';
+        custRow.style.display = 'grid';
+      } else {
+        stockBtn.className = 'mode-btn active-stock';
+        salesBtn.className = 'mode-btn inactive';
+        salesFooter.style.display = 'none';
+        stockFooter.style.display = 'flex';
+        custRow.style.display = 'none';
+      }
+    }
+
+    function updateStoreName(val) {
+      currentStoreName = val || 'Al Madina Grocery';
+      localStorage.setItem('pos_store_name', currentStoreName);
+      document.getElementById('headerStoreName').innerText = currentStoreName;
+    }
+
+    function changeCurrency(val) {
+      currentCurrency = val;
+      localStorage.setItem('pos_currency', val);
+      applyCurrencyToUI();
+    }
+
+    function applyCurrencyToUI() {
+      document.querySelectorAll('.curr-unit').forEach(el => el.innerText = currentCurrency);
+      renderQuickButtons();
+      recalcTotals();
+    }
+
+    function changeSecondaryLanguage(lang) {
+      currentSecondaryLang = lang;
+      localStorage.setItem('pos_sec_lang', lang);
+      applyLanguageLabels();
+    }
+
+    function applyLanguageLabels() {
+      const L = i18n[currentSecondaryLang] || i18n['ur'];
+      
+      const subTitle = document.getElementById('headerPanelSubtitle');
+      if (subTitle) subTitle.innerText = `Instant Bilingual Receipt / رسید (${currentSecondaryLang.toUpperCase()})`;
+
+      if (document.getElementById('thItem')) document.getElementById('thItem').innerText = `Item / ${L.thItem || 'نام'} (Dual Name)`;
+      if (document.getElementById('thQty')) document.getElementById('thQty').innerText = `Qty / ${L.thQty || 'تعداد'}`;
+      if (document.getElementById('thSize')) document.getElementById('thSize').innerText = `Size / ${L.thSize || 'سائز'}`;
+      if (document.getElementById('thRate')) document.getElementById('thRate').innerText = `Rate / ${L.thRate || 'ریٹ'}`;
+      if (document.getElementById('thTotal')) document.getElementById('thTotal').innerText = `Total / ${L.thTotal || 'ٹوٹل'}`;
+
+      if (document.getElementById('labelSubtotal')) document.getElementById('labelSubtotal').innerText = `Subtotal / ${L.subtotal || 'سب ٹوٹل'}`;
+      if (document.getElementById('labelDiscount')) document.getElementById('labelDiscount').innerText = `Discount / ${L.discount || 'ڈسکاؤنٹ'}`;
+      if (document.getElementById('labelRoundOff')) document.getElementById('labelRoundOff').innerText = `Round Off / ${L.round || 'راؤنڈ آف'}`;
+      if (document.getElementById('labelNetTotal')) document.getElementById('labelNetTotal').innerText = `Net Total / ${L.net || 'صافی رقم'}`;
+
+      if (document.getElementById('btnCashLabel')) document.getElementById('btnCashLabel').innerText = `💵 ${L.cashBtn || 'Cash / کیش بل'}`;
+      if (document.getElementById('btnCardLabel')) document.getElementById('btnCardLabel').innerText = `💳 ${L.cardBtn || 'Card / کارڈ بل'}`;
+      if (document.getElementById('btnKhataLabel')) document.getElementById('btnKhataLabel').innerText = `📒 ${L.khataBtn || 'Khata / کھاتہ'}`;
+      if (document.getElementById('btnSplitLabel')) document.getElementById('btnSplitLabel').innerText = `🔄 ${L.splitBtn || 'Split / اسپلٹ'}`;
+
+      renderQuickButtons();
+      renderReceiptRows(currentParsedData);
+    }
+
+    // ================= 3D BUTTONS RENDERER =================
+    function renderQuickButtons() {
+      const container = document.getElementById('quickButtonsContainer');
+      container.innerHTML = '';
+      catalogItems.forEach(item => {
+        const localName = item[currentSecondaryLang] || item['ur'];
+        container.innerHTML += `
+          <button class="btn-pos-key" onclick="addCatalogItem('${item.en}', ${item.price})">
+            <div class="key-top-row">
+              <span class="key-icon">${item.icon}</span>
+              <span class="key-name-dual">${item.en} / ${localName}</span>
+            </div>
+            <div class="key-bottom-row">
+              <span class="key-unit">${item.unit}</span>
+              <span class="key-sep">/</span>
+              <span class="key-price-badge">${currentCurrency} ${item.price}</span>
+            </div>
+          </button>
+        `;
+      });
+    }
+
+    function addCatalogItem(itemName, price) {
+      const box = document.getElementById('bulkInput');
+      const targetLower = itemName.toLowerCase().trim();
+      const cat = catalogItems.find(it => it.en.toLowerCase() === targetLower || it.id === targetLower);
+
+      // Collect all names/aliases for this item
+      const aliases = [targetLower];
+      if (cat) {
+        if (cat.id) aliases.push(cat.id.toLowerCase());
+        if (cat.en) aliases.push(cat.en.toLowerCase());
+        if (cat.ur) aliases.push(cat.ur.toLowerCase());
+        if (cat.ar) aliases.push(cat.ar.toLowerCase());
+        if (cat.ro) aliases.push(cat.ro.toLowerCase());
+        if (cat.hi) aliases.push(cat.hi.toLowerCase());
+        if (cat.si) aliases.push(cat.si.toLowerCase());
+        if (cat.ta) aliases.push(cat.ta.toLowerCase());
+      }
+
+      const rawVal = box.value;
+      const lines = rawVal.split('\n');
+      let found = false;
+      const updatedLines = [];
+
+      for (let i = 0; i < lines.length; i++) {
+        const rawLine = lines[i];
+        const trimmed = rawLine.trim();
+        if (!trimmed) {
+          updatedLines.push(rawLine);
+          continue;
+        }
+
+        const m = trimmed.match(/^(?:(\d+(?:\.\d+)?)\s*(?:x|\*|pcs|pc|kg|l)?\s+)?(.*?)(?:\s+(\d+(?:\.\d+)?))?$/i);
+        let lineMatches = false;
+        let currentQty = 1;
+        let linePrice = price;
+
+        if (m) {
+          currentQty = m[1] ? parseFloat(m[1]) : 1;
+          const namePart = (m[2] || '').trim().toLowerCase();
+          linePrice = m[3] ? parseFloat(m[3]) : price;
+
+          lineMatches = aliases.some(alias => {
+            if (!alias) return false;
+            return namePart === alias ||
+                   namePart.startsWith(alias + ' ') ||
+                   namePart.endsWith(' ' + alias) ||
+                   namePart.includes(' ' + alias + ' ');
+          });
+
+          if (!lineMatches && namePart === targetLower) {
+            lineMatches = true;
+          }
+        }
+
+        if (!found && lineMatches) {
+          found = true;
+          const newQty = Math.round((currentQty + 1) * 100) / 100;
+          updatedLines.push(`${newQty} ${itemName} ${linePrice}`);
+        } else {
+          updatedLines.push(rawLine);
+        }
+      }
+
+      if (found) {
+        box.value = updatedLines.join('\n');
+      } else {
+        const newLine = `1 ${itemName} ${price}`;
+        box.value = box.value.trim() ? (box.value.trim() + '\n' + newLine) : newLine;
+      }
+      debounceParse();
+    }
+
+    function debounceParse() {
+      clearTimeout(parseTimeout);
+      parseTimeout = setTimeout(fetchSmartParsedReceipt, 180);
+    }
+
+    function fetchSmartParsedReceipt() {
+      const text = document.getElementById('bulkInput').value;
+      const fd = new FormData();
+      fd.append('raw_text', text);
+
+      fetch('/api/parse-preview/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(data => {
+        currentParsedData = data.items || [];
+        renderReceiptRows(currentParsedData);
+        recalcTotals();
+      });
+    }
+
+    function renderReceiptRows(items) {
+      const tbody = document.getElementById('previewRows');
+      tbody.innerHTML = '';
+      items.forEach((it, idx) => {
+        const dualName = formatDualLanguageName(it.name);
+        const unit = getItemUnit(it.name);
+        tbody.innerHTML += `
+          <tr>
+            <td style="text-align:center; color:#64748b;">${idx+1}</td>
+            <td><strong>${dualName}</strong></td>
+            <td style="text-align:center;">${it.qty}</td>
+            <td style="text-align:center; color:#64748b;">${unit}</td>
+            <td style="text-align:right;">${it.unit_price}</td>
+            <td style="text-align:right; font-weight:bold;">${it.line_total}</td>
+          </tr>
+        `;
+      });
+    }
+
+    function recalcTotals() {
+      const sub = currentParsedData.reduce((acc, it) => acc + parseFloat(it.line_total || 0), 0);
+      const disc = parseFloat(document.getElementById('discount').value) || 0;
+      const round = parseFloat(document.getElementById('roundOff').value) || 0;
+      const grand = Math.max(0, sub - disc - round);
+
+      document.getElementById('subtotalDisplay').innerText = `${currentCurrency} ${sub.toFixed(2)}`;
+      document.getElementById('grandTotalDisplay').innerText = `${currentCurrency} ${grand.toFixed(2)}`;
+    }
+
+    // ================= SUBMIT SALES BILL =================
+    function submitBill(paymentMode, splitCash=0, splitCard=0) {
+      const rawText = document.getElementById('bulkInput').value.trim();
+      if (!rawText) {
+        alert('⚠️ Please enter items to bill! / برائے مہربانی بل کے لیے اشیاء درج کریں');
+        return;
+      }
+
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const disc = document.getElementById('discount').value || '0';
+      const round = document.getElementById('roundOff').value || '0';
+
+      if (paymentMode === 'khata' && !name && !phone) {
+        alert('⚠️ Please enter Customer Name or Phone for Khata! / کھاتہ کے لیے گاہک کا نام یا فون درج کریں');
+        return;
+      }
+
+      const fd = new FormData();
+      fd.append('raw_text', rawText);
+      fd.append('customer_name', name);
+      fd.append('customer_phone', phone);
+      fd.append('payment_mode', paymentMode);
+      fd.append('discount', disc);
+      fd.append('round_off', round);
+      fd.append('cashier_name', currentUser.username);
+      fd.append('split_cash', splitCash);
+      fd.append('split_card', splitCard);
+
+      fetch('/api/create-invoice/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          openReceiptModalDirect(data.token);
+          document.getElementById('bulkInput').value = '';
+          document.getElementById('discount').value = '0';
+          document.getElementById('roundOff').value = '0';
+          document.getElementById('custName').value = '';
+          document.getElementById('custPhone').value = '';
+          fetchSmartParsedReceipt();
+          loadKhataDatalist();
+        } else {
+          alert('Error: ' + data.error);
+        }
+      });
+    }
+
+    // Split Modal
+    function openSplitModal() {
+      const grandStr = document.getElementById('grandTotalDisplay').innerText;
+      document.getElementById('splitTotalDue').innerText = grandStr;
+      const num = parseFloat(grandStr.replace(/[^0-9.]/g, '')) || 0;
+      document.getElementById('splitCashInput').value = (num / 2).toFixed(2);
+      document.getElementById('splitCardInput').value = (num / 2).toFixed(2);
+      document.getElementById('splitModal').style.display = 'flex';
+    }
+
+    function balanceSplit(changed) {
+      const grandStr = document.getElementById('splitTotalDue').innerText;
+      const total = parseFloat(grandStr.replace(/[^0-9.]/g, '')) || 0;
+      if (changed === 'cash') {
+        const cash = parseFloat(document.getElementById('splitCashInput').value) || 0;
+        document.getElementById('splitCardInput').value = Math.max(0, total - cash).toFixed(2);
+      } else {
+        const card = parseFloat(document.getElementById('splitCardInput').value) || 0;
+        document.getElementById('splitCashInput').value = Math.max(0, total - card).toFixed(2);
+      }
+    }
+
+    function confirmSplitPayment() {
+      const cash = parseFloat(document.getElementById('splitCashInput').value) || 0;
+      const card = parseFloat(document.getElementById('splitCardInput').value) || 0;
+      closeModal('splitModal');
+      submitBill('split', cash, card);
+    }
+
+    // ================= UNIFIED 7-MODULES HUB CONTROLS =================
+    function openModularHub(tab) {
+      document.getElementById('reportsModal').style.display = 'flex';
+      switchReportTab(tab);
+    }
+
+    function switchReportTab(tab) {
+      const tabs = ['sales', 'profit', 'inventory', 'suppliers', 'khata', 'accounts', 'users'];
+      tabs.forEach(t => {
+        const cap = t.charAt(0).toUpperCase() + t.slice(1);
+        const btn = document.getElementById(`tab${cap}Btn`) || (t === 'inventory' ? document.getElementById('tabInvBtn') : null);
+        const view = document.getElementById(`tab${cap}View`) || (t === 'inventory' ? document.getElementById('tabInvView') : null);
+        if (btn) btn.classList.toggle('active', t === tab);
+        if (view) view.style.display = (t === tab) ? 'block' : 'none';
+      });
+
+      if (tab === 'sales') renderSalesTab();
+      if (tab === 'profit') renderProfitTab();
+      if (tab === 'inventory') renderInventoryTab();
+      if (tab === 'suppliers') renderSuppliersTab();
+      if (tab === 'khata') renderKhataTab();
+      if (tab === 'accounts') renderAccountsTab();
+      if (tab === 'users') renderUsersTab();
+    }
+
+    // 1. Sales Tab (Invoices & Refunds)
+    function renderSalesTab() {
+      fetch('/api/reports-summary/')
+      .then(res => res.json())
+      .then(data => {
+        let html = `
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-bottom:14px;">
+            <div style="background:#0284c7; padding:12px; border-radius:10px;">آج کی کل سیلز: <strong style="font-size:20px; display:block;">${currentCurrency} ${data.total_sales}</strong></div>
+            <div style="background:#10b981; padding:12px; border-radius:10px;">کیش وصولی: <strong style="font-size:20px; display:block;">${currentCurrency} ${data.cash_sales}</strong></div>
+            <div style="background:#ef4444; padding:12px; border-radius:10px;">کھاتہ ادھار: <strong style="font-size:20px; display:block;">${currentCurrency} ${data.khata_sales}</strong></div>
+          </div>
+          <table class="inv-table">
+            <tr><th>انوائس</th><th>گاہک (Customer)</th><th>وقت</th><th>طریقہ</th><th>رقم</th><th>حیثیت</th><th>ایکشن</th></tr>`;
+        data.recent_bills.forEach(b => {
+          const isRefunded = b.status === 'refunded';
+          html += `<tr>
+            <td style="font-weight:800; color:#38bdf8;">#INV-${b.id}</td>
+            <td>${b.customer}</td>
+            <td style="color:#94a3b8;">${formatSystemDateTime(b.time)}</td>
+            <td>${b.mode}</td>
+            <td style="font-weight:800;">${currentCurrency} ${b.amount}</td>
+            <td><span class="badge-status ${isRefunded ? 'badge-danger' : 'badge-success'}">${b.status}</span></td>
+            <td>
+              <button onclick="openReceiptModalDirect('${b.token}')" style="background:#0284c7; border:none; color:white; padding:4px 8px; border-radius:5px; cursor:pointer; font-weight:bold;">👁️ رسید</button>
+              ${!isRefunded ? `<button onclick="refundBill(${b.id})" style="background:#ef4444; border:none; color:white; padding:4px 8px; border-radius:5px; cursor:pointer; font-weight:bold; margin-left:4px;">↩️ ریفنڈ</button>` : ''}
+            </td>
+          </tr>`;
+        });
+        html += '</table>';
+        document.getElementById('tabSalesView').innerHTML = html;
+      });
+    }
+
+    function refundBill(invId) {
+      if (!currentUser.permissions.can_refund) {
+        alert('⚠️ Cashier cannot refund! Please switch to Manager or Admin PIN.');
+        return;
+      }
+      const reason = prompt('ریفنڈ کی وجہ درج کریں (Reason for Refund):', 'Customer Return');
+      if (!reason) return;
+
+      const fd = new FormData();
+      fd.append('invoice_id', invId);
+      fd.append('reason', reason);
+      fd.append('refunded_by', currentUser.username);
+
+      fetch('/api/refund-invoice/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => {
+        if (d.success) {
+          alert(`✔ بل #${invId} ریفنڈ ہو گیا اور سامان واپس اسٹاک میں جمع کر دیا گیا!`);
+          renderSalesTab();
+        } else {
+          alert('خرابی: ' + d.error);
+        }
+      });
+    }
+
+    // 2. Profit & P&L Tab
+    function renderProfitTab(period='today') {
+      if (!currentUser.permissions.can_view_profits) {
+        document.getElementById('tabProfitView').innerHTML = '<div style="padding:30px; text-align:center; color:#f87171;">⚠️ خالص منافع صرف ایڈمن اور مینیجر کے لیے مجاز ہے!</div>';
+        return;
+      }
+      fetch(`/api/advanced-reports/?period=${period}`)
+      .then(res => res.json())
+      .then(d => {
+        let html = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+            <h3 style="margin:0; color:#38bdf8;">نفع و نقصان کی مکمل رپورٹ (Profit & Loss)</h3>
+            <div style="display:flex; gap:6px;">
+              <button class="tab-btn ${d.period==='today'?'active':''}" onclick="renderProfitTab('today')">آج (Today)</button>
+              <button class="tab-btn ${d.period==='yesterday'?'active':''}" onclick="renderProfitTab('yesterday')">کل (Yesterday)</button>
+              <button class="tab-btn ${d.period==='week'?'active':''}" onclick="renderProfitTab('week')">7 دن</button>
+              <button class="tab-btn ${d.period==='month'?'active':''}" onclick="renderProfitTab('month')">30 دن</button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px; margin-bottom:18px;">
+            <div style="background:#0f172a; border:1px solid #1e293b; padding:10px; border-radius:8px;">مجموعی سیلز: <strong style="display:block; font-size:18px; color:#38bdf8;">${currentCurrency} ${d.total_revenue}</strong></div>
+            <div style="background:#0f172a; border:1px solid #1e293b; padding:10px; border-radius:8px;">خریداری لاگت (COGS): <strong style="display:block; font-size:18px; color:#94a3b8;">${currentCurrency} ${d.total_cost}</strong></div>
+            <div style="background:#0f172a; border:1px solid #1e293b; padding:10px; border-radius:8px;">مجموعی مارجن (Gross): <strong style="display:block; font-size:18px; color:#10b981;">${currentCurrency} ${d.gross_profit}</strong></div>
+            <div style="background:#0f172a; border:1px solid #1e293b; padding:10px; border-radius:8px;">دکان کے اخراجات: <strong style="display:block; font-size:18px; color:#ef4444;">${currentCurrency} ${d.total_expenses}</strong></div>
+            <div style="background:linear-gradient(135deg, #059669, #047857); padding:10px; border-radius:8px;">خالص منافع (Net Profit): <strong style="display:block; font-size:20px; color:#fff;">${currentCurrency} ${d.net_profit}</strong></div>
+          </div>
+
+          <h4 style="color:#38bdf8; margin:16px 0 8px 0;">🔥 سب سے زیادہ بکنے والی اشیاء (Top 10 Best Sellers)</h4>
+          <table class="inv-table">
+            <tr><th>#</th><th>آئٹم کا نام (Dual Name)</th><th>فروخت شدہ تعداد</th><th>حاصل کردہ رقم</th></tr>`;
+        d.top_items.forEach((it, idx) => {
+          html += `<tr><td>${idx+1}</td><td style="font-weight:bold;">${formatDualLanguageName(it.name)}</td><td>${it.qty}</td><td style="font-weight:bold; color:#10b981;">${currentCurrency} ${it.total.toFixed(2)}</td></tr>`;
+        });
+        html += '</table>';
+        document.getElementById('tabProfitView').innerHTML = html;
+      });
+    }
+
+    // 3. Inventory & Expiry Tab
+    function renderInventoryTab() {
+      fetch('/api/inventory-list/')
+      .then(res => res.json())
+      .then(data => {
+        let html = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div style="display:flex; gap:10px;">
+              <button class="top-nav-btn" onclick="openStockAdjustModal()">📦 اسٹاک ایڈجسٹمنٹ (Audit / Damage)</button>
+              <button class="top-nav-btn" onclick="closeModal('reportsModal'); setAppMode('stock');">📥 بلک مال داخل کریں</button>
+            </div>
+            <span style="color:#94a3b8; font-size:13px;">کل پروڈکٹس: <strong>${data.total_count}</strong></span>
+          </div>
+
+          <table class="inv-table">
+            <tr>
+              <th>آئٹم کا نام (Dual Name)</th>
+              <th>کیٹیگری</th>
+              <th>بارکوڈ</th>
+              <th>خرید ریٹ (${currentCurrency})</th>
+              <th>سیل ریٹ (${currentCurrency})</th>
+              <th>مارجن</th>
+              <th>اسٹاک</th>
+              <th>ایکسپائری</th>
+              <th>ایکشن</th>
+            </tr>`;
+        data.products.forEach(p => {
+          const dualName = formatDualLanguageName(p.name);
+          html += `<tr>
+            <td><input type="text" id="nm_${p.id}" value="${dualName}" class="inv-field" style="width:160px;"></td>
+            <td style="color:#94a3b8; font-size:12px;">${p.category}</td>
+            <td><input type="text" id="bc_${p.id}" value="${p.barcode}" class="inv-field" style="width:110px;"></td>
+            <td><input type="number" id="cp_${p.id}" value="${p.cost_price}" step="0.5" class="inv-field" style="width:65px;"></td>
+            <td><input type="number" id="pr_${p.id}" value="${p.unit_price}" step="0.5" class="inv-field" style="width:65px;"></td>
+            <td style="color:#10b981; font-weight:bold;">${p.margin}</td>
+            <td><input type="number" id="st_${p.id}" value="${p.stock}" class="inv-field" style="width:55px;"></td>
+            <td>
+              <span class="badge-status badge-${p.status_class}">${p.status_text}</span>
+              <small style="display:block; color:#94a3b8; font-size:11px;">${p.expiry_date || 'N/A'}</small>
+            </td>
+            <td>
+              <button onclick="saveProductUpdate(${p.id})" style="background:#10b981; border:none; color:white; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">Save</button>
+              <button onclick="deleteProduct(${p.id})" style="background:#ef4444; border:none; color:white; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer; margin-left:3px;">Del</button>
+            </td>
+          </tr>`;
+        });
+        html += '</table>';
+        const invEl = document.getElementById('tabInventoryView') || document.getElementById('tabInvView');
+        if (invEl) invEl.innerHTML = html;
+      });
+    }
+
+    function saveProductUpdate(pId) {
+      const fd = new FormData();
+      fd.append('product_id', pId);
+      fd.append('name', document.getElementById(`nm_${pId}`).value);
+      fd.append('barcode', document.getElementById(`bc_${pId}`).value);
+      fd.append('cost_price', document.getElementById(`cp_${pId}`).value);
+      fd.append('unit_price', document.getElementById(`pr_${pId}`).value);
+      fd.append('stock', document.getElementById(`st_${pId}`).value);
+
+      fetch('/api/update-product/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => { if(d.success) alert('✔ پروڈکٹ کامیابی سے اپڈیٹ ہو گئی!'); });
+    }
+
+    function deleteProduct(pId) {
+      if (!currentUser.permissions.can_delete_products) {
+        alert('⚠️ صرف ایڈمن کو آئٹم ڈیلیٹ کرنے کی اجازت ہے!');
+        return;
+      }
+      if (!confirm('کیا آپ واقعی یہ پروڈکٹ ڈیلیٹ کرنا چاہتے ہیں؟')) return;
+      const fd = new FormData();
+      fd.append('product_id', pId);
+      fetch('/api/delete-product/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => { if(d.success) renderInventoryTab(); });
+    }
+
+    function openStockAdjustModal() {
+      fetch('/api/inventory-list/')
+      .then(res => res.json())
+      .then(d => {
+        const sel = document.getElementById('adjProdSelect');
+        sel.innerHTML = '';
+        d.products.forEach(p => { sel.innerHTML += `<option value="${p.id}">${p.name} (موجودہ: ${p.stock})</option>`; });
+        document.getElementById('stockAdjustModal').style.display = 'flex';
+      });
+    }
+
+    function submitStockAdjust() {
+      const fd = new FormData();
+      fd.append('product_id', document.getElementById('adjProdSelect').value);
+      fd.append('adjustment_type', document.getElementById('adjTypeSelect').value);
+      fd.append('quantity', document.getElementById('adjQtyInput').value);
+      fd.append('reason', document.getElementById('adjReasonInput').value);
+      fd.append('adjusted_by', currentUser.username);
+
+      fetch('/api/stock-adjust/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => {
+        if (d.success) {
+          alert('✔ اسٹاک ایڈجسٹمنٹ لاگ ہو گئی!');
+          closeModal('stockAdjustModal');
+          renderInventoryTab();
+        }
+      });
+    }
+
+    // 4. Purchases & Suppliers Tab
+    function renderSuppliersTab() {
+      fetch('/api/suppliers-list/')
+      .then(res => res.json())
+      .then(d => {
+        allSuppliers = d.suppliers;
+        let html = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <div style="display:flex; gap:10px;">
+              <button class="top-nav-btn" onclick="openAddSupplierModal()">➕ نیا سپلائر</button>
+              <button class="top-nav-btn" onclick="openPurchaseBillModal()">📥 خریداری بل درج کریں (Stock PO)</button>
+              <button class="top-nav-btn" onclick="openPaySupplierModal()">💳 سپلائر کو ادائیگی</button>
+            </div>
+          </div>
+
+          <table class="inv-table">
+            <tr><th>سپلائر کا نام</th><th>کمپنی</th><th>فون / واٹس ایپ</th><th>ایڈریس</th><th>واجب الادا بقایا</th><th>ایکشن</th></tr>`;
+        d.suppliers.forEach(s => {
+          html += `<tr>
+            <td style="font-weight:bold;">${s.name}</td>
+            <td style="color:#94a3b8;">${s.company_name || s.name}</td>
+            <td>${s.phone}</td>
+            <td style="color:#94a3b8; font-size:12px;">${s.address || 'N/A'}</td>
+            <td style="color:#ef4444; font-weight:900; font-size:15px;">${currentCurrency} ${s.outstanding_payable}</td>
+            <td>
+              <button onclick="quickPaySupplier(${s.id})" style="background:#0284c7; border:none; color:white; padding:4px 10px; border-radius:5px; cursor:pointer; font-weight:bold;">ادائیگی کریں</button>
+            </td>
+          </tr>`;
+        });
+        html += '</table>';
+        document.getElementById('tabSuppliersView').innerHTML = html;
+      });
+    }
+
+    function openAddSupplierModal() { document.getElementById('addSupplierModal').style.display = 'flex'; }
+    function submitAddSupplier() {
+      const fd = new FormData();
+      fd.append('name', document.getElementById('supName').value);
+      fd.append('company_name', document.getElementById('supCompany').value);
+      fd.append('phone', document.getElementById('supPhone').value);
+      fd.append('outstanding_payable', document.getElementById('supPayable').value);
+
+      fetch('/api/add-supplier/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => {
+        if (d.success) {
+          alert('✔ سپلائر محفوظ ہو گیا!');
+          closeModal('addSupplierModal');
+          renderSuppliersTab();
+        }
+      });
+    }
+
+    function openPurchaseBillModal() {
+      const sel = document.getElementById('poSupplierSelect');
+      sel.innerHTML = '';
+      allSuppliers.forEach(s => { sel.innerHTML += `<option value="${s.id}">${s.name}</option>`; });
+      document.getElementById('purchaseBillModal').style.display = 'flex';
+    }
+
+    function submitPurchaseBill() {
+      const fd = new FormData();
+      fd.append('supplier_id', document.getElementById('poSupplierSelect').value);
+      fd.append('bill_number', document.getElementById('poBillNo').value);
+      fd.append('total_amount', document.getElementById('poTotalAmount').value);
+      fd.append('paid_amount', document.getElementById('poPaidAmount').value);
+
+      const items = [{
+        name: document.getElementById('poItemName').value,
+        qty: document.getElementById('poQty').value,
+        cost_price: document.getElementById('poCost').value,
+        batch_number: document.getElementById('poBatch').value,
+        expiry_date: document.getElementById('poExpiry').value
+      }];
+      fd.append('items', JSON.stringify(items));
+
+      fetch('/api/create-purchase/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => {
+        if (d.success) {
+          alert('✔ خریداری انوائس درج ہو گئی اور اسٹاک بڑھا دیا گیا!');
+          closeModal('purchaseBillModal');
+          renderSuppliersTab();
+        }
+      });
+    }
+
+    function openPaySupplierModal() {
+      const sel = document.getElementById('paySupSelect');
+      sel.innerHTML = '';
+      allSuppliers.forEach(s => { sel.innerHTML += `<option value="${s.id}">${s.name} (بقایا: ${s.outstanding_payable})</option>`; });
+      document.getElementById('paySupplierModal').style.display = 'flex';
+    }
+
+    function quickPaySupplier(sId) {
+      openPaySupplierModal();
+      document.getElementById('paySupSelect').value = sId;
+    }
+
+    function submitPaySupplier() {
+      const fd = new FormData();
+      fd.append('supplier_id', document.getElementById('paySupSelect').value);
+      fd.append('amount', document.getElementById('paySupAmount').value);
+      fd.append('payment_mode', document.getElementById('paySupMode').value);
+
+      fetch('/api/pay-supplier/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => {
+        if (d.success) {
+          alert('✔ سپلائر کو ادائیگی درج ہو گئی!');
+          closeModal('paySupplierModal');
+          renderSuppliersTab();
+        }
+      });
+    }
+
+    // 5. Customer Khata Tab
+    function renderKhataTab() {
+      fetch('/api/khata-list/')
+      .then(res => res.json())
+      .then(data => {
+        khataData = data.customers;
+        let html = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <button class="top-nav-btn" onclick="document.getElementById('khataPayModal').style.display='flex'">💵 ادھار وصولی درج کریں (Settle)</button>
+            <span style="color:#94a3b8; font-size:13px;">کل کھاتہ کسٹمرز: <strong>${data.customers.length}</strong></span>
+          </div>
+
+          <table class="inv-table">
+            <tr><th>کسٹمر کا نام</th><th>فون / واٹس ایپ</th><th>کریڈٹ لمٹ</th><th>کل بقایا ادھار</th><th>لائلٹی پوائنٹس</th><th>ایکشن</th></tr>`;
+        data.customers.forEach(c => {
+          html += `<tr>
+            <td style="font-weight:bold;">${c.name}</td>
+            <td style="color:#94a3b8;">${c.phone}</td>
+            <td style="color:#94a3b8;">${currentCurrency} ${c.credit_limit}</td>
+            <td style="color:#ef4444; font-weight:900; font-size:16px;">${currentCurrency} ${c.balance}</td>
+            <td style="color:#10b981; font-weight:bold;">⭐ ${c.loyalty_points}</td>
+            <td>
+              <button onclick="viewCustomerStatement('${c.phone}')" style="background:#0284c7; border:none; color:white; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">ہسٹری</button>
+              <button onclick="sendKhataReminder('${c.name}', '${c.phone}', '${c.balance}')" style="background:#25D366; border:none; color:white; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer; margin-left:3px;">WhatsApp</button>
+            </td>
+          </tr>`;
+        });
+        html += '</table>';
+        document.getElementById('tabKhataView').innerHTML = html;
+      });
+    }
+
+    function submitKhataPayment() {
+      const fd = new FormData();
+      fd.append('phone', document.getElementById('kpCustPhone').value);
+      fd.append('amount', document.getElementById('kpAmount').value);
+
+      fetch('/api/khata-pay/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => {
+        if (d.success) {
+          alert(`✔ ادائیگی وصول ہو گئی! باقی بیلنس: ${currentCurrency} ${d.remaining_balance}`);
+          closeModal('khataPayModal');
+          renderKhataTab();
+        } else {
+          alert('خرابی: ' + d.error);
+        }
+      });
+    }
+
+    function viewCustomerStatement(ident) {
+      document.getElementById('statementModal').style.display = 'flex';
+      fetch(`/api/customer-statement/?phone=${encodeURIComponent(ident)}`)
+      .then(res => res.json())
+      .then(d => {
+        document.getElementById('stmtTitle').innerText = `${d.name} — Total Due: ${currentCurrency} ${d.total_outstanding} (Points: ${d.loyalty_points})`;
+        let html = '<table class="inv-table"><tr><th>تاریخ</th><th>رقم</th><th>خریداری آئٹمز</th><th>رسید</th></tr>';
+        d.invoices.forEach(inv => {
+          const itemsText = inv.items.map(i => `${i.qty} x ${formatDualLanguageName(i.name)} (${getItemUnit(i.name)})`).join(', ');
+          html += `<tr>
+            <td>${formatSystemDateTime(inv.date)}</td>
+            <td style="color:#ef4444; font-weight:800;">${currentCurrency} ${inv.total}</td>
+            <td style="color:#cbd5e1; font-size:12.5px;">${itemsText}</td>
+            <td><button onclick="openReceiptModalDirect('${inv.token}')" style="background:#0284c7; color:white; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">#INV-${inv.id}</button></td>
+          </tr>`;
+        });
+        html += '</table>';
+        document.getElementById('stmtBody').innerHTML = html;
+      });
+    }
+
+    function sendKhataReminder(name, phone, balance) {
+      const msg = `محترم ${name}!\nآپ کا بقایا گروسری ادھار کھاتہ برائے ${currentStoreName} مبلغ ${currentCurrency} ${balance} ہے۔\nبرائے مہربانی ادائیگی فرمائیں۔ شکریہ!`;
+      window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // 6. Accounts & Cash Drawer Tab
+    function renderAccountsTab() {
+      Promise.all([
+        fetch('/api/cash-drawer-status/').then(r => r.json()),
+        fetch('/api/expenses-list/').then(r => r.json())
+      ]).then(([drawer, expData]) => {
+        let html = `
+          <div style="background:#0f172a; border:1px solid #1e293b; border-radius:10px; padding:14px; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <h4 style="margin:0; color:#38bdf8;">💼 کیش دراز شفٹ اسٹیٹس (Cash Drawer Session)</h4>
+              <div>
+                <button class="top-nav-btn" onclick="openShiftDrawer()">اوپن شفٹ</button>
+                <button class="top-nav-btn" style="border-color:#ef4444; color:#ef4444;" onclick="closeShiftDrawer()">شفٹ کلوز کریں</button>
+              </div>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; font-size:13px;">
+              <div>صبح فلوٹ: <strong>${currentCurrency} ${drawer.opening_cash}</strong></div>
+              <div>آج نقد سیلز: <strong style="color:#10b981;">+ ${currentCurrency} ${drawer.cash_sales}</strong></div>
+              <div>آج نقد اخراجات: <strong style="color:#ef4444;">- ${currentCurrency} ${drawer.cash_expenses}</strong></div>
+              <div>دراز میں متوقع کیش: <strong style="color:#38bdf8; font-size:16px;">${currentCurrency} ${drawer.expected_cash}</strong></div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h4 style="margin:0; color:#fff;">دکان کے اخراجات (Operating Expenses)</h4>
+            <button class="top-nav-btn" onclick="openAddExpenseModal(expData.categories)">➕ نیا خرچہ واؤچر</button>
+          </div>
+
+          <table class="inv-table">
+            <tr><th>تاریخ</th><th>مد / تفصیل</th><th>کیٹیگری</th><th>طریقہ</th><th>رقم</th><th>اندراج کنندہ</th></tr>`;
+        expData.expenses.forEach(e => {
+          html += `<tr>
+            <td style="color:#94a3b8;">${e.date}</td>
+            <td style="font-weight:bold;">${e.title}</td>
+            <td style="color:#38bdf8;">${e.category}</td>
+            <td>${e.mode}</td>
+            <td style="color:#ef4444; font-weight:bold;">${currentCurrency} ${e.amount}</td>
+            <td style="color:#94a3b8;">${e.by}</td>
+          </tr>`;
+        });
+        html += '</table>';
+        document.getElementById('tabAccountsView').innerHTML = html;
+      });
+    }
+
+    function openShiftDrawer() {
+      const opening = prompt('صبح کا ابتدائی کیش فلوٹ درج کریں (Opening Float):', '200.00');
+      if (!opening) return;
+      const fd = new FormData();
+      fd.append('opening_cash', opening);
+      fd.append('cashier_name', currentUser.username);
+
+      fetch('/api/open-cash-drawer/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => { if(d.success) renderAccountsTab(); });
+    }
+
+    function closeShiftDrawer() {
+      const closing = prompt('دراز میں موجود گنتی کیا گیا نقد درج کریں (Counted Cash):', '0.00');
+      if (!closing) return;
+      const fd = new FormData();
+      fd.append('closing_cash', closing);
+
+      fetch('/api/close-cash-drawer/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => { if(d.success) { alert('✔ شفٹ کلوز ہو گئی!'); renderAccountsTab(); } });
+    }
+
+    function openAddExpenseModal(categories) {
+      fetch('/api/expenses-list/')
+      .then(r => r.json())
+      .then(d => {
+        const sel = document.getElementById('expCatSelect');
+        sel.innerHTML = '';
+        d.categories.forEach(c => { sel.innerHTML += `<option value="${c.id}">${c.name}</option>`; });
+        document.getElementById('addExpenseModal').style.display = 'flex';
+      });
+    }
+
+    function submitAddExpense() {
+      const fd = new FormData();
+      fd.append('category_id', document.getElementById('expCatSelect').value);
+      fd.append('title', document.getElementById('expTitle').value);
+      fd.append('amount', document.getElementById('expAmount').value);
+      fd.append('payment_mode', document.getElementById('expMode').value);
+      fd.append('created_by', currentUser.username);
+
+      fetch('/api/add-expense/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => {
+        if (d.success) {
+          alert('✔ خرچہ واؤچر محفوظ ہو گیا!');
+          closeModal('addExpenseModal');
+          renderAccountsTab();
+        }
+      });
+    }
+
+    // 7. Users & Permissions Tab
+    function renderUsersTab() {
+      fetch('/api/staff-list/')
+      .then(res => res.json())
+      .then(d => {
+        let html = `
+          <div style="background:#0f172a; border:1px solid #1e293b; border-radius:10px; padding:14px; margin-bottom:16px;">
+            <h4 style="margin:0 0 6px 0; color:#38bdf8;">موجودہ فعال لاگ ان: <strong>${currentUser.username}</strong> (${currentUser.role})</h4>
+            <p style="font-size:12.5px; color:#94a3b8; margin:0;">اختیارات: پرافٹ دیکھنا: ${currentUser.permissions.can_view_profits ? '✔' : '✕'} | ریفنڈ: ${currentUser.permissions.can_refund ? '✔' : '✕'} | آئٹم ڈیلیٹ: ${currentUser.permissions.can_delete_products ? '✔' : '✕'}</p>
+          </div>
+
+          <h4 style="color:#fff; margin-bottom:8px;">دکان کا اسٹاف اور کردار (Staff Accounts)</h4>
+          <table class="inv-table">
+            <tr><th>صارف (Username)</th><th>کردار (Role)</th><th>فون</th><th>ڈیفالٹ پن کوڈ</th></tr>`;
+        d.staff.forEach(s => {
+          html += `<tr>
+            <td style="font-weight:bold;">${s.username}</td>
+            <td style="color:#38bdf8;">${s.role}</td>
+            <td>${s.phone || 'N/A'}</td>
+            <td style="font-family:monospace; color:#10b981;">${s.role_code==='admin'?'1122':(s.role_code==='manager'?'2233':'1234')}</td>
+          </tr>`;
+        });
+        html += '</table>';
+        document.getElementById('tabUsersView').innerHTML = html;
+      });
+    }
+
+    function openPinModal() {
+      document.getElementById('userPinInput').value = '';
+      document.getElementById('pinModal').style.display = 'flex';
+      setTimeout(() => document.getElementById('userPinInput').focus(), 100);
+    }
+
+    function verifyPinCode() {
+      const pin = document.getElementById('userPinInput').value.trim();
+      const fd = new FormData();
+      fd.append('pin', pin);
+
+      fetch('/api/verify-pin/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(d => {
+        if (d.success) {
+          currentUser = { username: d.username, role: d.role, permissions: d.permissions };
+          document.getElementById('activeUserBadge').innerText = `${d.role==='admin'?'👑':(d.role==='manager'?'👔':'💳')} ${d.username} (${pin})`;
+          closeModal('pinModal');
+          alert(`✔ لاگ ان کامیاب: ${d.username} (${d.role})`);
+        } else {
+          alert('غلط پن کوڈ! برائے مہربانی درست کوڈ درج کریں۔');
+        }
+      });
+    }
+
+    // ================= MISC HELPERS & RECEIPT VIEWER =================
+    function openReceiptModalDirect(token) {
+      fetch(`/api/invoice-detail/${token}/`)
+      .then(res => res.json())
+      .then(inv => {
+        document.getElementById('rcptStore').innerText = currentStoreName;
+        document.getElementById('rcptDate').innerText = `Date: ${formatSystemDateTime(inv.created_at)} | Customer: ${inv.customer_name}`;
+        document.getElementById('rcptModeBadge').innerText = `طریقہ: ${inv.payment_mode}`;
+
+        const rows = document.getElementById('modalReceiptRows');
+        rows.innerHTML = '';
+        inv.items.forEach(it => {
+          const dual = formatDualLanguageName(it.name);
+          rows.innerHTML += `
+            <tr>
+              <td><strong>${dual}</strong></td>
+              <td style="text-align:center;">${it.qty}</td>
+              <td style="text-align:right;">${it.unit_price}</td>
+              <td style="text-align:right; font-weight:bold;">${it.line_total}</td>
+            </tr>
+          `;
+        });
+
+        document.getElementById('modalSubtotalVal').innerText = `${currentCurrency} ${inv.subtotal}`;
+        document.getElementById('modalDiscountVal').innerText = `- ${currentCurrency} ${inv.discount}`;
+        document.getElementById('modalRoundVal').innerText = `- ${currentCurrency} ${inv.round_off}`;
+        document.getElementById('modalNetVal').innerText = `${currentCurrency} ${inv.grand_total}`;
+
+        document.getElementById('receiptViewerModal').style.display = 'flex';
+      });
+    }
+
+    function submitQuickStockIn() {
+      const rawText = document.getElementById('bulkInput').value.trim();
+      if (!rawText) {
+        alert('⚠️ Please enter items to stock in! / برائے مہربانی نیا مال درج کریں');
+        return;
+      }
+      const fd = new FormData();
+      fd.append('raw_text', rawText);
+
+      fetch('/api/quick-stock-in/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          const list = document.getElementById('stockSuccessList');
+          list.innerHTML = '';
+          data.records.forEach(r => {
+            const dual = formatDualLanguageName(r.name);
+            list.innerHTML += `
+              <div class="stock-summary-row">
+                <span style="font-weight:800;">${dual}</span>
+                <div>
+                  <span class="stock-tag-add">+${r.added} New</span>
+                  <span class="stock-tag-total">Total: ${r.new_stock}</span>
+                </div>
+              </div>
+            `;
+          });
+          document.getElementById('customSuccessModal').style.display = 'flex';
+          document.getElementById('bulkInput').value = '';
+          fetchSmartParsedReceipt();
+        }
+      });
+    }
+
+    function loadKhataDatalist() {
+      fetch('/api/khata-list/')
+      .then(res => res.json())
+      .then(data => {
+        khataData = data.customers;
+        const dl = document.getElementById('custDatalist');
+        dl.innerHTML = '';
+        data.customers.forEach(c => {
+          dl.innerHTML += `<option value="${c.name}">${c.name} (${c.phone || 'No Phone'}) - ${currentCurrency} ${c.balance}</option>`;
+        });
+      });
+    }
+
+    function onCustomerInput(val) {
+      const match = khataData.find(c => c.name.toLowerCase() === val.trim().toLowerCase());
+      if (match) document.getElementById('custPhone').value = match.phone || '';
+    }
+
+    function handleBarcode(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const code = document.getElementById('barcodeScanner').value.trim();
+        fetch(`/api/barcode-lookup/?code=${encodeURIComponent(code)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.found) {
+            addCatalogItem(data.name, parseFloat(data.price));
+            document.getElementById('barcodeScanner').value = '';
+          } else {
+            alert('Barcode not registered! / بارکوڈ درج نہیں ہے');
+          }
+        });
+      }
+    }
+
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    // Init on load
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('storeNameInput').value = currentStoreName;
+      document.getElementById('headerStoreName').innerText = currentStoreName;
+      document.getElementById('currencySelect').value = currentCurrency;
+      document.getElementById('langSelect').value = currentSecondaryLang;
+      applyLanguageLabels();
+      applyCurrencyToUI();
+      loadKhataDatalist();
+      fetchSmartParsedReceipt();
+    });
+  </script>
+</body>
+</html>

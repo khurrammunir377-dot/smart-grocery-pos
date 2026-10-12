@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Grocery POS — Complete 7-in-1 Retail POS & WhatsApp Billing Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #070d18;
+      --surface: #0f172a;
+      --card-bg: rgba(17, 27, 46, 0.82);
+      --card-border: rgba(56, 189, 248, 0.2);
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.35);
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.6; }
+
+    /* Sticky Navbar */
+    header {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(7, 13, 24, 0.88); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 14px 32px;
+    }
+    .nav-container {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .brand-logo {
+      display: flex; align-items: center; gap: 10px; text-decoration: none;
+      font-size: 22px; font-weight: 900; color: #fff;
+    }
+    .brand-logo .badge-logo {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #040914; padding: 4px 10px; border-radius: 8px; font-size: 15px; font-weight: 900;
+    }
+    .nav-menu { display: flex; gap: 20px; align-items: center; list-style: none; }
+    .nav-link {
+      color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 700;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--primary); }
+    .nav-actions { display: flex; gap: 12px; align-items: center; }
+    .btn-pos-launch {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #fff; text-decoration: none; padding: 9px 20px; border-radius: 10px;
+      font-weight: 800; font-size: 13.5px; display: flex; align-items: center; gap: 6px;
+      box-shadow: 0 4px 18px rgba(2, 132, 199, 0.4); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-pos-launch:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(2, 132, 199, 0.6); }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1280px; margin: 40px auto 60px auto; padding: 0 24px;
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 6px 14px; border-radius: 30px; color: var(--primary); font-size: 13px; font-weight: 800;
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-size: 46px; line-height: 1.22; font-weight: 900; margin-bottom: 20px; letter-spacing: -0.5px;
+    }
+    .hero-title span.grad {
+      background: linear-gradient(90deg, #38bdf8, #10b981);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      color: var(--text-muted); font-size: 17px; line-height: 1.7; margin-bottom: 30px;
+    }
+
+    /* Fast Actions Matrix */
+    .hero-cta-group {
+      display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 35px;
+    }
+    .btn-main-cta {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white; padding: 13px 26px; border-radius: 12px; font-size: 15px; font-weight: 900;
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4); transition: all 0.2s;
+    }
+    .btn-main-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(16, 185, 129, 0.6); }
+    .btn-secondary-cta {
+      background: #1e293b; color: #38bdf8; border: 1.5px solid var(--primary);
+      padding: 13px 24px; border-radius: 12px; font-size: 15px; font-weight: 800;
+      text-decoration: none; display: flex; align-items: center; gap: 8px; transition: all 0.2s;
+    }
+    .btn-secondary-cta:hover { background: rgba(56, 189, 248, 0.15); color: #fff; }
+
+    /* Live Stat Bar */
+    .stat-ribbon {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 16px 20px;
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 24px; font-weight: 900; color: #fff; }
+    .stat-num span { color: var(--primary); font-size: 16px; }
+    .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
+
+    /* Live Interactive Sandbox Card */
+    .sandbox-card {
+      background: var(--card-bg); border: 1.5px solid var(--card-border);
+      border-radius: 20px; padding: 26px; box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+      backdrop-filter: blur(20px); position: relative;
+    }
+    .sandbox-badge {
+      position: absolute; top: -13px; left: 24px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff; font-size: 11.5px; font-weight: 900; padding: 4px 14px; border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+    .sandbox-header h3 { font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 4px; }
+    .sandbox-header p { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
+
+    .form-row { margin-bottom: 13px; }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { display: block; font-size: 12px; font-weight: 800; color: var(--text-muted); margin-bottom: 5px; }
+    input, select, textarea {
+      width: 100%; background: #080f1d; border: 1.5px solid #1e2c44;
+      border-radius: 8px; padding: 10px 14px; color: #fff; font-size: 13.5px; font-weight: 600;
+      transition: border 0.2s;
+    }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+    .btn-sandbox-submit {
+      width: 100%; background: linear-gradient(135deg, #38bdf8, #0284c7);
+      color: #040914; border: none; padding: 13px; border-radius: 10px;
+      font-size: 15px; font-weight: 900; cursor: pointer; margin-top: 10px;
+      box-shadow: 0 5px 20px rgba(56, 189, 248, 0.35); transition: all 0.2s;
+    }
+    .btn-sandbox-submit:hover { opacity: 0.95; transform: translateY(-1px); }
+
+    /* Sandbox result */
+    .sandbox-result {
+      display: none; margin-top: 16px; background: #061523; border: 1.5px solid #0284c7;
+      border-radius: 12px; padding: 16px; text-align: center;
+    }
+
+    /* ==========================================
+       THE 7 POS MODULES SECTION (CRITICAL)
+       ========================================== */
+    .modules-section {
+      max-width: 1280px; margin: 80px auto; padding: 0 24px;
+    }
+    .section-header { text-align: center; margin-bottom: 50px; }
+    .section-header .tag {
+      background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--accent); padding: 5px 14px; border-radius: 20px; font-size: 12.5px; font-weight: 800;
+      display: inline-block; margin-bottom: 12px;
+    }
+    .section-header h2 { font-size: 38px; font-weight: 900; color: #fff; margin-bottom: 10px; }
+    .section-header p { font-size: 16px; color: var(--text-muted); max-width: 700px; margin: 0 auto; }
+
+    .modules-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px;
+    }
+    .module-card {
+      background: var(--card-bg); border: 1.5px solid var(--card-border);
+      border-radius: 18px; padding: 26px; transition: all 0.25s ease;
+      display: flex; flex-direction: column; position: relative; overflow: hidden;
+    }
+    .module-card:hover {
+      transform: translateY(-5px); border-color: var(--primary);
+      box-shadow: 0 20px 45px rgba(2, 132, 199, 0.25);
+    }
+    .module-card::before {
+      content: ""; position: absolute; top: 0; right: 0; left: 0; height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      opacity: 0.8;
+    }
+    .module-icon-wrap {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 18px;
+    }
+    .icon-sales { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+    .icon-stock { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .icon-purchase { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .icon-customers { background: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+    .icon-accounts { background: rgba(236, 72, 153, 0.15); color: #ec4899; }
+    .icon-reports { background: rgba(14, 165, 233, 0.15); color: #0ea5e9; }
+    .icon-users { background: rgba(244, 63, 94, 0.15); color: #f43f5e; }
+
+    .module-number {
+      position: absolute; top: 22px; right: 24px;
+      font-size: 28px; font-weight: 900; color: rgba(255,255,255,0.08);
+    }
+    .module-card h3 { font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 8px; }
+    .module-card p.mod-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.6; }
+    
+    .feature-list { list-style: none; margin-bottom: 22px; flex: 1; }
+    .feature-list li {
+      font-size: 13.5px; color: #cbd5e1; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 8px; font-weight: 600;
+    }
+    .feature-list li::before {
+      content: "✔"; color: var(--accent); font-weight: 900; font-size: 13px;
+    }
+
+    .module-action-btn {
+      background: #132238; color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 9px 14px; border-radius: 8px; font-size: 13px; font-weight: 800;
+      text-decoration: none; text-align: center; transition: all 0.2s;
+    }
+    .module-action-btn:hover { background: var(--primary); color: #040914; }
+
+    /* Interactive Live Tab Preview */
+    .preview-section {
+      max-width: 1280px; margin: 90px auto; padding: 0 24px;
+    }
+    .preview-box {
+      background: linear-gradient(145deg, #0f192b, #090e18);
+      border: 1.5px solid var(--card-border); border-radius: 24px;
+      padding: 35px; box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+    }
+    .tab-bar {
+      display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px;
+      border-bottom: 1.5px solid rgba(255,255,255,0.08); margin-bottom: 30px;
+    }
+    .tab-btn {
+      background: #142033; color: var(--text-muted); border: 1px solid #1e2e47;
+      padding: 10px 18px; border-radius: 10px; font-size: 13.5px; font-weight: 800;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .tab-btn.active {
+      background: var(--primary); color: #050b14; border-color: var(--primary);
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; }
+    .tab-info h3 { font-size: 26px; font-weight: 900; color: #fff; margin-bottom: 12px; }
+    .tab-info p { color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 20px; }
+    .badge-pill-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .badge-pill {
+      background: rgba(56, 189, 248, 0.12); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.25);
+      font-size: 12px; font-weight: 800; padding: 4px 12px; border-radius: 20px;
+    }
+
+    .tab-mockup {
+      background: #080f1d; border: 1px solid #1e2c44; border-radius: 14px;
+      padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+    .mockup-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-bottom: 12px; border-bottom: 1px solid #1b263b; margin-bottom: 14px;
+    }
+    .mockup-dots { display: flex; gap: 6px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    /* Comparison Table */
+    .comparison-section {
+      max-width: 1100px; margin: 90px auto; padding: 0 24px;
+    }
+    .comp-table {
+      width: 100%; border-collapse: collapse; background: var(--card-bg);
+      border-radius: 16px; overflow: hidden; border: 1.5px solid var(--card-border);
+    }
+    .comp-table th {
+      background: #111e33; padding: 18px 20px; font-size: 15px; font-weight: 900; text-align: left;
+    }
+    .comp-table td {
+      padding: 14px 20px; font-size: 14px; border-bottom: 1px solid #1a273f; color: #cbd5e1; text-align: left;
+    }
+    .comp-table tr:last-child td { border-bottom: none; }
+    .badge-pos-good { color: #10b981; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+    .badge-pos-bad { color: #ef4444; font-weight: 600; }
+
+    /* SaaS Pricing */
+    .pricing-section {
+      max-width: 1280px; margin: 90px auto; padding: 0 24px; text-align: center;
+    }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: left; margin-top: 40px; }
+    .price-card {
+      background: var(--card-bg); border: 1.5px solid var(--card-border);
+      border-radius: 20px; padding: 32px 26px; display: flex; flex-direction: column;
+      position: relative; transition: all 0.25s ease;
+    }
+    .price-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+    .price-card.featured {
+      border: 2px solid var(--primary);
+      background: linear-gradient(145deg, rgba(17, 32, 57, 0.95), rgba(9, 17, 33, 0.95));
+      box-shadow: 0 25px 60px rgba(2, 132, 199, 0.35);
+    }
+    .popular-tag {
+      position: absolute; top: -14px; right: 26px; background: linear-gradient(90deg, #38bdf8, #0284c7);
+      color: #040914; font-size: 12px; font-weight: 900; padding: 4px 14px; border-radius: 20px;
+    }
+    .plan-title { font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 6px; }
+    .plan-price { font-size: 42px; font-weight: 900; color: #fff; margin: 15px 0 22px 0; }
+    .plan-price span { font-size: 15px; color: var(--text-muted); font-weight: 600; }
+    .plan-features { list-style: none; margin-bottom: 30px; flex: 1; }
+    .plan-features li { padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 13.5px; color: #cbd5e1; display: flex; align-items: center; gap: 8px; }
+    .plan-features li::before { content: "✔"; color: var(--accent); font-weight: 900; }
+    .btn-plan {
+      width: 100%; padding: 13px; border-radius: 10px; font-weight: 900; font-size: 15px;
+      cursor: pointer; text-align: center; text-decoration: none; border: none; transition: all 0.2s;
+    }
+    .btn-plan-starter { background: #1b2940; color: var(--primary); border: 1.5px solid var(--primary); }
+    .btn-plan-pro { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; box-shadow: 0 5px 20px rgba(2, 132, 199, 0.4); }
+    .btn-plan-ent { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4); }
+
+    /* Bottom Banner */
+    .bottom-cta {
+      max-width: 1280px; margin: 90px auto 40px auto; padding: 0 24px;
+    }
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.25), rgba(16, 185, 129, 0.25));
+      border: 1.5px solid var(--primary); border-radius: 24px; padding: 50px 30px;
+      text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+    }
+    .cta-banner h2 { font-size: 38px; font-weight: 900; color: #fff; margin-bottom: 12px; }
+    .cta-banner p { font-size: 16px; color: var(--text-muted); max-width: 650px; margin: 0 auto 28px auto; }
+
+    footer {
+      border-top: 1px solid var(--card-border); padding: 30px 24px;
+      text-align: center; color: var(--text-muted); font-size: 13px;
+    }
+
+    @media (max-width: 950px) {
+      .hero { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .tab-content.active { grid-template-columns: 1fr; }
+      .stat-ribbon { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header>
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <span class="badge-logo">SMART POS</span>
+        <span>Grocery & QuickBill</span>
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="#modules" class="nav-link">7 Core Modules</a></li>
+        <li><a href="#demo" class="nav-link">Live Demo</a></li>
+        <li><a href="#comparison" class="nav-link">Comparison</a></li>
+        <li><a href="#pricing" class="nav-link">Pricing Plans</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="/" class="btn-pos-launch">
+          <span>🛒</span> Open POS Counter
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span>⚡</span> Complete 7-in-1 Modular Retail POS & Silent WhatsApp Suite
+      </div>
+      <h1 class="hero-title">
+        Say Goodbye to Paper Registers!<br>
+        <span class="grad">Smart Grocery POS</span> Platform
+      </h1>
+      <p class="hero-desc">
+        A professional POS is far more than just a receipt printer. It unifies the 7 essential pillars of your retail business—Sales, Real-time Stock & Expiry, Supplier Purchases, Customer Digital Khata, Expense Management, Real-time Profit Reports, and Cashier Role Access.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="/" class="btn-main-cta">
+          <span>🚀</span> Launch Live POS Counter
+        </a>
+        <a href="#modules" class="btn-secondary-cta">
+          <span>📋</span> Explore 7 Core Modules
+        </a>
+      </div>
+
+      <!-- Live Statistics -->
+      <div class="stat-ribbon">
+        <div class="stat-item">
+          <div class="stat-num">100<span>%</span></div>
+          <div class="stat-label">Silent WhatsApp</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">7<span>-in-1</span></div>
+          <div class="stat-label">Complete Business Modules</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">&lt; 5<span>sec</span></div>
+          <div class="stat-label">Barcode & Fast Billing</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">AED<span>/USD</span></div>
+          <div class="stat-label">Multi-Currency Support</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Fast Invoice Sandbox -->
+    <div class="hero-right" id="demo">
+      <div class="sandbox-card">
+        <div class="sandbox-badge">Interactive Live Engine</div>
+        <div class="sandbox-header">
+          <h3>Create Instant WhatsApp Bill</h3>
+          <p>Instantly sends a branded digital receipt directly to customer's WhatsApp upon checkout.</p>
+        </div>
+
+        <div class="form-row">
+          <label>Store or Business Name:</label>
+          <input type="text" id="bName" value="Al Madina Smart Supermarket">
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-row">
+            <label>Currency:</label>
+            <select id="bCurr">
+              <option value="AED">AED (UAE Dirham)</option>
+              <option value="USD">USD ($)</option>
+              <option value="PKR">PKR (Pakistani Rupee)</option>
+              <option value="SAR">SAR (Saudi Riyal)</option>
+              <option value="OMR">OMR (Omani Rial)</option>
+              <option value="INR">INR (₹)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Customer WhatsApp Phone:</label>
+            <input type="tel" id="cPhone" placeholder="0501234567 or +971501234567">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-row">
+            <label>Customer Name:</label>
+            <input type="text" id="cName" value="Tariq Mahmood">
+          </div>
+          <div class="form-row">
+            <label>Total Amount:</label>
+            <input type="number" id="amt" value="95.50">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>Items Description (Fast Input):</label>
+          <input type="text" id="desc" value="1 Fresh Milk 6, 2 Bread 9, 1 Basmati Rice 7.5, 1 Cooking Oil 14">
+        </div>
+
+        <button id="submitBtn" class="btn-sandbox-submit" onclick="generateInstantBill()">
+          ⚡ Generate Bill & Send Silent WhatsApp
+        </button>
+
+        <div id="resultBox" class="sandbox-result">
+          <div style="font-size: 16px; font-weight: 900; color: #38bdf8;" id="resMsg">Bill Created Successfully!</div>
+          <div style="margin: 8px 0; font-size: 13.5px; font-weight: bold;" id="waStatus"></div>
+          <a id="previewAnchor" href="#" target="_blank" style="color:#38bdf8; font-size:13px; font-weight:bold; text-decoration:underline;">👁️ View Generated Bill Online</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       THE 7 POS MODULES SECTION (CRITICAL)
+       ========================================== -->
+  <section class="modules-section" id="modules">
+    <div class="section-header">
+      <span class="tag">Comprehensive Business Control</span>
+      <h2>7 Core Modules of a Professional POS</h2>
+      <p>Seamlessly integrates all departments of grocery stores, supermarkets, and retail counters into one unified system:</p>
+    </div>
+
+    <div class="modules-grid">
+      <!-- 1. Sales -->
+      <div class="module-card">
+        <span class="module-number">01</span>
+        <div class="module-icon-wrap icon-sales">🛒</div>
+        <h3>1. Sales & Checkout</h3>
+        <p class="mod-desc">Lightning-fast barcode scanning, natural language text bulk entry, thermal printing, and multi-payment processing.</p>
+        <ul class="feature-list">
+          <li>Hardware Barcode Scanner & 3D Touch Quick Keys</li>
+          <li>Free-text bulk natural item parsing with instant auto-calc</li>
+          <li>Discounts, round-off, and customer refund processing</li>
+          <li>Split payments (Cash, Card, Digital Khata Credit)</li>
+        </ul>
+        <a href="/" class="module-action-btn">Open POS Counter →</a>
+      </div>
+
+      <!-- 2. Inventory -->
+      <div class="module-card">
+        <span class="module-number">02</span>
+        <div class="module-icon-wrap icon-stock">📦</div>
+        <h3>2. Inventory & Stock</h3>
+        <p class="mod-desc">Real-time stock deduction, low stock alert notifications, batch numbers, and expiry date monitoring.</p>
+        <ul class="feature-list">
+          <li>Live stock quantity tracking with automated deduction</li>
+          <li>Automated low stock threshold warnings</li>
+          <li>Expiry dates tracking with 7-day alert badges</li>
+          <li>Damaged/spoilage stock write-offs and physical audit logs</li>
+        </ul>
+        <a href="/" class="module-action-btn">Manage Inventory →</a>
+      </div>
+
+      <!-- 3. Purchase & Suppliers -->
+      <div class="module-card">
+        <span class="module-number">03</span>
+        <div class="module-icon-wrap icon-purchase">🚚</div>
+        <h3>3. Purchases & Suppliers</h3>
+        <p class="mod-desc">Vendor purchasing, PO invoice recording, stock receiving, supplier payments, and accounts payable.</p>
+        <ul class="feature-list">
+          <li>Complete supplier contact directory & profile management</li>
+          <li>Direct PO bill entry with automatic stock updates</li>
+          <li>Cost price tracking and margin calculations</li>
+          <li>Supplier payments ledger & accounts payable balance</li>
+        </ul>
+        <a href="/" class="module-action-btn">Manage Suppliers →</a>
+      </div>
+
+      <!-- 4. Customers -->
+      <div class="module-card">
+        <span class="module-number">04</span>
+        <div class="module-icon-wrap icon-customers">👥</div>
+        <h3>4. Customers & Khata Ledger</h3>
+        <p class="mod-desc">Digital customer credit ledger, credit limits, automated debt recovery reminders, and loyalty rewards.</p>
+        <ul class="feature-list">
+          <li>Customer profiles with complete purchase history</li>
+          <li>Digital Khata credit ledger with WhatsApp balance alerts</li>
+          <li>Configurable credit limits to prevent unpaid risk</li>
+          <li>Customer loyalty points and rewards tracking</li>
+        </ul>
+        <a href="/" class="module-action-btn">Open Customer Khata →</a>
+      </div>
+
+      <!-- 5. Accounts -->
+      <div class="module-card">
+        <span class="module-number">05</span>
+        <div class="module-icon-wrap icon-accounts">💰</div>
+        <h3>5. Accounts & Expenses</h3>
+        <p class="mod-desc">Daily operational expenses, cash drawer shift sessions, cash float control, and net profit tracking.</p>
+        <ul class="feature-list">
+          <li>Expense vouchers (Rent, Utilities/DEWA, Salaries, Tea)</li>
+          <li>Shift opening cash float & end-of-shift closing drawer audits</li>
+          <li>Direct supplier cash payout logging</li>
+          <li>Net cash flow and profit & loss (P&L) statements</li>
+        </ul>
+        <a href="/" class="module-action-btn">View Drawer & Accounts →</a>
+      </div>
+
+      <!-- 6. Reports -->
+      <div class="module-card">
+        <span class="module-number">06</span>
+        <div class="module-icon-wrap icon-reports">📊</div>
+        <h3>6. Reports & Analytics</h3>
+        <p class="mod-desc">Daily, weekly, and monthly sales performance, top best-selling items, and cashier shift audits.</p>
+        <ul class="feature-list">
+          <li>Gross revenue, cash vs credit ratios, and net margins</li>
+          <li>Top 10 Best-Selling Grocery Items</li>
+          <li>Automated gross margin and net profit calculation</li>
+          <li>Staff & cashier sales performance metrics</li>
+        </ul>
+        <a href="/" class="module-action-btn">View Analytics Dashboard →</a>
+      </div>
+
+      <!-- 7. Users & Permissions -->
+      <div class="module-card" style="grid-column: 1 / -1; max-width: 800px; margin: 0 auto; width: 100%;">
+        <span class="module-number">07</span>
+        <div class="module-icon-wrap icon-users">🔐</div>
+        <h3>7. Users & Role Permissions</h3>
+        <p class="mod-desc">Role-based access control (Admin, Manager, Cashier) with fast 4-digit PIN authentication.</p>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 15px 0;">
+          <div style="background: #091222; padding: 14px; border-radius: 10px; border: 1px solid #1e2c44;">
+            <strong style="color: #38bdf8; display:block; font-size:14px;">👑 Owner / Admin</strong>
+            <small style="color: #94a3b8; font-size:12px;">Full access: profit reports, product deletion, supplier rates, and staff settings</small>
+          </div>
+          <div style="background: #091222; padding: 14px; border-radius: 10px; border: 1px solid #1e2c44;">
+            <strong style="color: #10b981; display:block; font-size:14px;">👔 Store Manager</strong>
+            <small style="color: #94a3b8; font-size:12px;">Stock In, purchase orders, supplier payments, customer khata, and refund approval</small>
+          </div>
+          <div style="background: #091222; padding: 14px; border-radius: 10px; border: 1px solid #1e2c44;">
+            <strong style="color: #f59e0b; display:block; font-size:14px;">💳 Cashier</strong>
+            <small style="color: #94a3b8; font-size:12px;">Fast checkout & cash/card collection only; restricted from profits and deletions</small>
+          </div>
+        </div>
+        <a href="/" class="module-action-btn">Test Staff Security →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       INTERACTIVE TAB PREVIEW SECTION
+       ========================================== -->
+  <section class="preview-section">
+    <div class="preview-box">
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab(0)">🛒 Sales & Checkout</button>
+        <button class="tab-btn" onclick="switchTab(1)">📦 Inventory & Expiry</button>
+        <button class="tab-btn" onclick="switchTab(2)">🚚 Suppliers & Purchases</button>
+        <button class="tab-btn" onclick="switchTab(3)">👥 Customer Khata</button>
+        <button class="tab-btn" onclick="switchTab(4)">💰 Cash Drawer & Expenses</button>
+      </div>
+
+      <!-- Tab 0: Sales Counter -->
+      <div class="tab-content active" id="tab0">
+        <div class="tab-info">
+          <h3>High-Speed POS Counter</h3>
+          <p>Scan with barcode scanners, touch quick product tiles, or type natural names. In under 5 seconds, receipt is printed and instantly sent to customer's WhatsApp.</p>
+          <div class="badge-pill-group">
+            <span class="badge-pill">Barcode Scanner Ready</span>
+            <span class="badge-pill">Silent WhatsApp Delivery</span>
+            <span class="badge-pill">Cash + Card Split Billing</span>
+            <span class="badge-pill">Offline-Resilient</span>
+          </div>
+          <a href="/" class="btn-main-cta" style="display:inline-flex;">Test Counter Live ⚡</a>
+        </div>
+        <div class="tab-mockup">
+          <div class="mockup-header">
+            <div class="mockup-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <small style="color:var(--primary); font-weight:bold;">POS COUNTER LIVE</small>
+          </div>
+          <div style="background:#040812; padding:16px; border-radius:8px; font-family:monospace; font-size:13px; color:#38bdf8;">
+            > 2 Fresh Milk 6.00 = AED 12.00<br>
+            > 1 White Sugar 4.00 = AED 4.00<br>
+            > 1 Cooking Oil 14.00 = AED 14.00<br>
+            ------------------------------------<br>
+            <span style="color:#10b981;">TOTAL PAYABLE: AED 30.00</span><br>
+            <span style="color:#cbd5e1;">Payment: PAID CASH [✔ WA Sent: +971501234567]</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 1: Inventory -->
+      <div class="tab-content" id="tab1">
+        <div class="tab-info">
+          <h3>Real-time Stock & Expiry Alerts</h3>
+          <p>Stay on top of expiry dates for dairy, bakery, and produce. Automated warnings prevent spoilage losses before items expire.</p>
+          <div class="badge-pill-group">
+            <span class="badge-pill">Expiry Date Warnings</span>
+            <span class="badge-pill">Batch Number Tracking</span>
+            <span class="badge-pill">Low Stock Alerts</span>
+            <span class="badge-pill">Bulk Quick Stock In</span>
+          </div>
+          <a href="/" class="btn-main-cta" style="display:inline-flex;">Check Stock Alerts 📦</a>
+        </div>
+        <div class="tab-mockup">
+          <div class="mockup-header">
+            <div class="mockup-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <small style="color:#f59e0b; font-weight:bold;">EXPIRY & STOCK MONITOR</small>
+          </div>
+          <div style="font-size:13px; line-height:1.8;">
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #1a273f; padding:4px 0;">
+              <span>Fresh Milk (D-MK-01)</span> <span style="color:#f59e0b; font-weight:bold;">⚠️ 5 Days Left (Stock: 50)</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid #1a273f; padding:4px 0;">
+              <span>Bread (D-BR-01)</span> <span style="color:#ef4444; font-weight:bold;">🚨 3 Days Left (Stock: 35)</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:4px 0;">
+              <span>Basmati Rice (G-RC-01)</span> <span style="color:#10b981; font-weight:bold;">✔ OK (Stock: 85)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Suppliers -->
+      <div class="tab-content" id="tab2">
+        <div class="tab-info">
+          <h3>Supplier & Purchase Order Management</h3>
+          <p>Record stock receiving bills from distributors in one click. Stock quantities automatically increase and profit margins are accurately calculated.</p>
+          <div class="badge-pill-group">
+            <span class="badge-pill">Accounts Payable</span>
+            <span class="badge-pill">Purchase Bills</span>
+            <span class="badge-pill">Cost Price Margin</span>
+          </div>
+          <a href="/" class="btn-main-cta" style="display:inline-flex;">Check Supplier Ledger 🚚</a>
+        </div>
+        <div class="tab-mockup">
+          <div class="mockup-header">
+            <div class="mockup-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <small style="color:#38bdf8; font-weight:bold;">SUPPLIER ACCOUNTS PAYABLE</small>
+          </div>
+          <div style="font-size:13px; line-height:1.8;">
+            <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #1a273f;">
+              <span>Al Rawabi Dairy Co.</span> <span style="color:#f87171; font-weight:bold;">Payable: AED 450.00</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #1a273f;">
+              <span>Fresh Harvest Farms</span> <span style="color:#f87171; font-weight:bold;">Payable: AED 620.00</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:6px 0;">
+              <span>National FMCG Dist.</span> <span style="color:#f87171; font-weight:bold;">Payable: AED 1,280.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Khata -->
+      <div class="tab-content" id="tab3">
+        <div class="tab-info">
+          <h3>Digital Customer Khata & Credit Limits</h3>
+          <p>Protect neighborhood credit lines. Every customer payment generates a digital receipt and updates the customer's balance via WhatsApp instantly.</p>
+          <div class="badge-pill-group">
+            <span class="badge-pill">WhatsApp Ledger Statement</span>
+            <span class="badge-pill">Credit Limits</span>
+            <span class="badge-pill">Loyalty Points</span>
+          </div>
+          <a href="/" class="btn-main-cta" style="display:inline-flex;">View Customer Khata 👥</a>
+        </div>
+        <div class="tab-mockup">
+          <div class="mockup-header">
+            <div class="mockup-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <small style="color:#8b5cf6; font-weight:bold;">CUSTOMER KHATA LEDGER</small>
+          </div>
+          <div style="font-size:13px; line-height:1.8;">
+            <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #1a273f;">
+              <span>Tariq Mahmood (+971501234567)</span> <span style="color:#ef4444; font-weight:bold;">Balance: AED 140.00</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #1a273f;">
+              <span>Muhammad Rafiq (+971559876543)</span> <span style="color:#ef4444; font-weight:bold;">Balance: AED 85.00</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; padding:6px 0;">
+              <span>Loyalty Points: 42 Points (Redeemable)</span> <span style="color:#10b981; font-weight:bold;">Active</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Cash Drawer -->
+      <div class="tab-content" id="tab4">
+        <div class="tab-info">
+          <h3>Cash Drawer & Expense Tracking</h3>
+          <p>Open drawer with morning float, record cash sales and tea/maintenance expenses throughout the day, and reconcile every single penny at shift close.</p>
+          <div class="badge-pill-group">
+            <span class="badge-pill">Shift Management</span>
+            <span class="badge-pill">Expense Vouchers</span>
+            <span class="badge-pill">Discrepancy Check</span>
+          </div>
+          <a href="/" class="btn-main-cta" style="display:inline-flex;">Check Cash Drawer 💰</a>
+        </div>
+        <div class="tab-mockup">
+          <div class="mockup-header">
+            <div class="mockup-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+            <small style="color:#ec4899; font-weight:bold;">DRAWER & EXPENSES</small>
+          </div>
+          <div style="font-size:13px; line-height:1.8;">
+            <div style="display:flex; justify-content:space-between;"><span>Opening Float:</span> <strong>AED 200.00</strong></div>
+            <div style="display:flex; justify-content:space-between;"><span>Today Cash Sales:</span> <strong style="color:#10b981;">+ AED 840.00</strong></div>
+            <div style="display:flex; justify-content:space-between;"><span>Today Expenses (Tea/DEWA):</span> <strong style="color:#ef4444;">- AED 80.00</strong></div>
+            <div style="border-top:1px dashed #38bdf8; margin-top:6px; padding-top:6px; display:flex; justify-content:space-between; font-weight:bold;">
+              <span>Expected In Drawer:</span> <span style="color:#38bdf8;">AED 960.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       COMPARISON TABLE
+       ========================================== -->
+  <section class="comparison-section" id="comparison">
+    <div class="section-header">
+      <span class="tag">Business Upgrade</span>
+      <h2>Traditional Paper Register vs Smart Grocery POS</h2>
+      <p>Discover how Smart POS eliminates human calculation errors, prevents inventory shrinkage, and delights customers:</p>
+    </div>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Traditional Paper Register</th>
+          <th>Smart Grocery POS Platform</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Billing Speed</strong></td>
+          <td class="badge-pos-bad">2 to 5 minutes manual handwriting</td>
+          <td class="badge-pos-good">✔ 5 seconds with barcode scanner & touch keys</td>
+        </tr>
+        <tr>
+          <td><strong>Receipt Delivery</strong></td>
+          <td class="badge-pos-bad">Easily lost paper slips</td>
+          <td class="badge-pos-good">✔ Permanent digital receipt sent directly to WhatsApp</td>
+        </tr>
+        <tr>
+          <td><strong>Customer Credit (Khata)</strong></td>
+          <td class="badge-pos-bad">Forgotten debts and handwritten dispute errors</td>
+          <td class="badge-pos-good">✔ Automatic digital ledger with WhatsApp balance reminders</td>
+        </tr>
+        <tr>
+          <td><strong>Inventory & Expiry</strong></td>
+          <td class="badge-pos-bad">Discovered only after goods spoil on shelves</td>
+          <td class="badge-pos-good">✔ 7-day early expiry alerts and live automated stock deduction</td>
+        </tr>
+        <tr>
+          <td><strong>Staff Management & Theft Prevention</strong></td>
+          <td class="badge-pos-bad">Cash discrepancies and no audit trace</td>
+          <td class="badge-pos-good">✔ Role permissions (Admin, Manager, Cashier) & shift drawer reconciliation</td>
+        </tr>
+        <tr>
+          <td><strong>Profit Tracking</strong></td>
+          <td class="badge-pos-bad">Guesswork with unknown margins</td>
+          <td class="badge-pos-good">✔ Accurate gross margin and net profit calculation on every sale</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==========================================
+       PRICING TIERS
+       ========================================== -->
+  <section class="pricing-section" id="pricing">
+    <div class="section-header">
+      <span class="tag">Transparent Plans</span>
+      <h2>SaaS Pricing Plans</h2>
+      <p>Choose the plan that fits your retail store or supermarket branch:</p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Starter Plan -->
+      <div class="price-card">
+        <div class="plan-title">Starter Plan</div>
+        <div class="plan-price">Free <span>/ Forever Free</span></div>
+        <ul class="plan-features">
+          <li>100 counter receipts per month</li>
+          <li>Barcode scanning and keyboard entry</li>
+          <li>Basic stock tracking</li>
+          <li>Online digital receipt web links</li>
+          <li>Single user login</li>
+        </ul>
+        <a href="/" class="btn-plan btn-plan-starter">Start Free →</a>
+      </div>
+
+      <!-- Pro Grocery Plan (Featured) -->
+      <div class="price-card featured">
+        <div class="popular-tag">Most Popular</div>
+        <div class="plan-title">Pro POS Suite</div>
+        <div class="plan-price">69 AED <span>/ month ($19)</span></div>
+        <ul class="plan-features">
+          <li><strong>Unlimited billing and counter sales</strong></li>
+          <li><strong>Silent background WhatsApp gateway</strong></li>
+          <li><strong>All 7 core modules included</strong></li>
+          <li><strong>Expiry date & batch number tracking</strong></li>
+          <li><strong>Supplier POs & Customer Khata ledger</strong></li>
+          <li><strong>Cash drawer shift audits & daily P&L reports</strong></li>
+        </ul>
+        <a href="/" class="btn-plan btn-plan-pro">Activate Pro Now ⚡</a>
+      </div>
+
+      <!-- Enterprise Suite -->
+      <div class="price-card">
+        <div class="plan-title">Enterprise Multi-Branch</div>
+        <div class="plan-price">179 AED <span>/ month ($49)</span></div>
+        <ul class="plan-features">
+          <li>All Pro Suite features included</li>
+          <li>Multi-counter and unlimited cashier logins</li>
+          <li>Custom store branding and white-label receipts</li>
+          <li>Bulk CSV product import & supplier export</li>
+          <li>24/7 dedicated priority WhatsApp support</li>
+        </ul>
+        <button class="btn-plan btn-plan-ent" onclick="alert('Enterprise inquiry submitted! Our team will contact you shortly.')">Get Enterprise 👑</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="bottom-cta">
+    <div class="cta-banner">
+      <h2>Transform Your Store into a 100% Digital POS Today</h2>
+      <p>No tedious installation. Run your checkout counter from any laptop, tablet, or PC and deliver professional digital WhatsApp receipts to your customers.</p>
+      <a href="/" class="btn-main-cta" style="display:inline-flex; font-size:17px; padding:15px 34px;">
+        🛒 Open POS Counter Now
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Smart Grocery POS & QuickBill Suite — All-in-One Professional Retail Solution. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function generateInstantBill() {
+      const btn = document.getElementById("submitBtn");
+      btn.disabled = true;
+      btn.innerText = "⏳ Generating Bill & Sending WhatsApp...";
+
+      const fd = new FormData();
+      fd.append("business_name", document.getElementById("bName").value);
+      fd.append("currency", document.getElementById("bCurr").value);
+      fd.append("customer_phone", document.getElementById("cPhone").value);
+      fd.append("customer_name", document.getElementById("cName").value);
+      fd.append("amount", document.getElementById("amt").value);
+      fd.append("paid_amount", document.getElementById("amt").value);
+      fd.append("item_description", document.getElementById("desc").value);
+
+      fetch("/quickbill/api/instant-create/", { method: "POST", body: fd })
+      .then(res => res.json())
+      .then(data => {
+        btn.disabled = false;
+        btn.innerText = "⚡ Generate Bill & Send Silent WhatsApp";
+
+        if(data.success) {
+          document.getElementById("resMsg").innerText = "✔ Receipt #" + data.invoice_number + " Generated Successfully!";
+          document.getElementById("previewAnchor").href = data.view_url;
+          
+          const statusDiv = document.getElementById("waStatus");
+          if(data.sent_silently) {
+            statusDiv.innerHTML = `<span style='color:#34d399;'>💬 WhatsApp message dispatched automatically to +${data.phone_used}!</span>`;
+          } else {
+            statusDiv.innerHTML = `<span style='color:#f87171;'>⚠️ WhatsApp gateway pending connection (Receipt link ready online)</span>`;
+          }
+          document.getElementById("resultBox").style.display = "block";
+        }
+      })
+      .catch(err => {
+        btn.disabled = false;
+        btn.innerText = "⚡ Generate Bill & Send Silent WhatsApp";
+        alert("Server communication error. Please try again.");
+      });
+    }
+
+    function switchTab(index) {
+      const buttons = document.querySelectorAll('.tab-btn');
+      const tabs = document.querySelectorAll('.tab-content');
+      buttons.forEach((b, i) => b.classList.toggle('active', i === index));
+      tabs.forEach((t, i) => t.classList.toggle('active', i === index));
+    }
+  </script>
+</body>
+</html>
