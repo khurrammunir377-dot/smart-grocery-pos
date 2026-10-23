@@ -45,3 +45,6 @@ Desktop.ini
 
 # Nested duplicate backup
 smart_grocery_pos/
+
+.vercel
+.env*
