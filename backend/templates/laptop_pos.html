@@ -28,14 +28,19 @@
     .top-bar {
       display: flex; justify-content: space-between; align-items: center;
       background: rgba(15, 23, 42, 0.96); backdrop-filter: blur(10px);
-      padding: 6px 16px; border-bottom: 2px solid #1e293b; height: 56px; gap: 8px;
+      padding: 6px 14px; border-bottom: 2px solid #1e293b; min-height: 54px; gap: 10px;
+      box-sizing: border-box; width: 100%;
     }
     .store-branding-box { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .store-cfg-group { display: flex; align-items: center; gap: 6px; }
     .store-input-edit {
       background: #080f1d; border: 1.5px solid #38bdf8; color: #38bdf8;
-      font-size: 16px; font-weight: 800; border-radius: 8px; padding: 4px 10px; width: 190px;
+      font-size: 15px; font-weight: 800; border-radius: 8px; padding: 4px 10px; width: 170px;
     }
-    .header-controls { display: flex; align-items: center; gap: 6px; overflow-x: auto; flex: 1; justify-content: flex-end; }
+    .header-controls { 
+      display: flex; align-items: center; gap: 6px; overflow-x: auto; overflow-y: hidden; 
+      flex: 1; justify-content: flex-start; scrollbar-width: thin;
+    }
     .control-select-box {
       background: #0f172a; border: 1.5px solid #0284c7; color: #38bdf8;
       padding: 5px 8px; border-radius: 8px; font-weight: 800; font-size: 12.5px; cursor: pointer;
@@ -137,40 +142,46 @@
       margin-bottom: 0; 
       padding-bottom: 8px;
       overflow-y: auto; 
+      overflow-x: hidden;
       flex: 1;
       min-height: 0;
+      width: 100%;
+      box-sizing: border-box;
     }
     .quick-grid::-webkit-scrollbar { width: 6px; }
     .quick-grid::-webkit-scrollbar-track { background: #080f1d; border-radius: 4px; }
     .quick-grid::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
     .quick-grid::-webkit-scrollbar-thumb:hover { background: #0284c7; }
 
-    /* AUTHENTIC 3D TACTILE POS KEY DESIGN */
+    /* AUTHENTIC 3D TACTILE POS KEY DESIGN WITH SHARP BORDERS */
     .btn-pos-key {
-      background: linear-gradient(180deg, #22334d 0%, #111c2d 100%);
-      border: 1.5px solid #334e73;
-      border-top: 2px solid rgba(255,255,255,0.22);
-      border-bottom: 4px solid #070d18;
-      border-radius: 11px;
+      background: linear-gradient(180deg, #1e2c42 0%, #0d1726 100%);
+      border: 2px solid #38bdf8;
+      border-top: 2.5px solid #7dd3fc;
+      border-bottom: 4.5px solid #0284c7;
+      border-radius: 10px;
       color: #fff;
-      padding: 6px 7px;
+      padding: 6px 8px;
       cursor: pointer;
       text-align: left;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       user-select: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
-      transition: transform 0.06s ease, box-shadow 0.06s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.2);
+      transition: transform 0.05s ease, box-shadow 0.05s ease, border-color 0.1s ease;
       height: 72px;
       width: 100%;
+      box-sizing: border-box;
       position: relative;
     }
     .btn-pos-key:hover {
-      background: linear-gradient(180deg, #2b4266 0%, #16243b 100%);
-      border-color: #38bdf8;
+      background: linear-gradient(180deg, #253956 0%, #132238 100%);
+      border-color: #60a5fa;
+      border-top-color: #93c5fd;
+      border-bottom-color: #2563eb;
       transform: translateY(-1px);
-      box-shadow: 0 6px 14px rgba(2, 132, 199, 0.3);
+      box-shadow: 0 6px 14px rgba(56, 189, 248, 0.4);
     }
     .btn-pos-key:active {
       transform: translateY(3px);
@@ -493,6 +504,79 @@
     }
     .stock-tag-add { background: rgba(16, 185, 129, 0.2); color: #34d399; padding: 2px 8px; border-radius: 6px; font-weight: 800; font-size: 12px; }
     .stock-tag-total { background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 8px; border-radius: 6px; font-weight: 800; font-size: 12px; }
+
+    /* Mobile & Tablet Responsive Enhancements */
+    @media (max-width: 900px) {
+      html, body {
+        height: auto !important;
+        min-height: 100vh;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+      }
+      .top-bar {
+        height: auto;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 8px 10px;
+        gap: 8px;
+      }
+      .store-branding-box {
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+      .store-input-edit {
+        width: 135px;
+        font-size: 14px;
+      }
+      .header-controls {
+        justify-content: flex-start;
+        width: 100%;
+        padding-bottom: 4px;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        padding: 8px;
+        gap: 12px;
+        overflow: visible;
+      }
+      .card-3d {
+        height: auto;
+        min-height: 360px;
+        overflow: visible;
+      }
+      .quick-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-height: 380px;
+        overflow-y: auto;
+      }
+      .billing-table-wrapper {
+        max-height: 250px;
+      }
+      .action-btns-fixed {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+      }
+      .cust-row-grid {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .module-fs-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .report-tabs-bar {
+        flex-wrap: wrap;
+      }
+    }
+    @media (min-width: 601px) and (max-width: 900px) {
+      .quick-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
   </style>
 </head>
 <body>
@@ -504,34 +588,35 @@
     <div class="store-branding-box">
       <span style="font-size: 18px;">🏪</span>
       <input type="text" id="storeNameInput" class="store-input-edit" value="Al Madina Grocery" oninput="updateStoreName(this.value)">
+
+      <div class="store-cfg-group">
+        <label style="font-size: 11px; color: #94a3b8; font-weight: bold;">💱</label>
+        <select id="currencySelect" class="control-select-box" onchange="changeCurrency(this.value)">
+          <option value="AED">AED (درهم)</option>
+          <option value="PKR">PKR (روپے)</option>
+          <option value="SAR">SAR (ريال)</option>
+          <option value="OMR">OMR (ر.ع)</option>
+          <option value="QAR">QAR (ر.ق)</option>
+          <option value="KWD">KWD (د.ك)</option>
+          <option value="USD">USD ($)</option>
+          <option value="INR">INR (₹)</option>
+          <option value="LKR">LKR (Rs)</option>
+        </select>
+
+        <label style="font-size: 11px; color: #94a3b8; font-weight: bold;">🌐</label>
+        <select id="langSelect" class="control-select-box" onchange="changeSecondaryLanguage(this.value)">
+          <option value="ur">Urdu (اردو)</option>
+          <option value="ar">Arabic (العربية)</option>
+          <option value="hi">Hindi (हिन्दी)</option>
+          <option value="ro">Roman Urdu</option>
+          <option value="si">Sinhala (සිංහල)</option>
+          <option value="ta">Tamil (தமிழ்)</option>
+          <option value="en">English</option>
+        </select>
+      </div>
     </div>
 
     <div class="header-controls">
-      <!-- ALL 9 ORIGINAL CURRENCIES RESTORED -->
-      <label style="font-size: 12.5px; color: #94a3b8; font-weight: bold;">Currency:</label>
-      <select id="currencySelect" class="control-select-box" onchange="changeCurrency(this.value)">
-        <option value="AED">AED (درهم)</option>
-        <option value="PKR">PKR (روپے)</option>
-        <option value="SAR">SAR (ريال)</option>
-        <option value="OMR">OMR (ر.ع)</option>
-        <option value="QAR">QAR (ر.ق)</option>
-        <option value="KWD">KWD (د.ك)</option>
-        <option value="USD">USD ($)</option>
-        <option value="INR">INR (₹)</option>
-        <option value="LKR">LKR (Rs)</option>
-      </select>
-
-      <!-- ALL 6 ORIGINAL SECONDARY LANGUAGES RESTORED -->
-      <label style="font-size: 12.5px; color: #94a3b8; font-weight: bold;">Language 2:</label>
-      <select id="langSelect" class="control-select-box" onchange="changeSecondaryLanguage(this.value)">
-        <option value="ur">Urdu (اردو)</option>
-        <option value="ar">Arabic (العربية)</option>
-        <option value="hi">Hindi (हिन्दी)</option>
-        <option value="ro">Roman Urdu</option>
-        <option value="si">Sinhala (සිංහල)</option>
-        <option value="ta">Tamil (தமிழ்)</option>
-        <option value="en">English</option>
-      </select>
 
       <button class="top-nav-btn" onclick="openModularHub('sales')">🛒 Sales / سیلز</button>
       <button class="top-nav-btn" onclick="openModularHub('profit')">📈 Profit / نفع</button>
@@ -661,14 +746,9 @@
 
       <!-- Quick Stock In Save Strip -->
       <div class="billing-bottom-fixed" id="stockFooterBox" style="display: none;">
-        <div style="background:#1e3a8a; padding:8px 12px; border-radius:8px; color:#93c5fd; font-size:12.5px; font-weight:bold;">
-          📦 Bulk Stock Replenish (سامان انوینٹری میں درج کریں)
-        </div>
-        <div style="margin-top: 4px;">
-          <button class="btn-action-3d btn-cash" style="width: 100%;" onclick="submitQuickStockIn()">
-            📥 Add to Inventory (نیا مال انوینٹری میں شامل کریں)
-          </button>
-        </div>
+        <button class="btn-action-3d btn-cash" style="width: 100%; font-size: 14px; padding: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="submitQuickStockIn()">
+          📥 <span>Save Stock to Inventory / نیا مال انوینٹری میں محفوظ کریں</span>
+        </button>
       </div>
     </div>
   </div>
@@ -746,6 +826,38 @@
   </div>
 
   <!-- ================= SUB-MODALS ================= -->
+
+  <!-- Centered Khata Customer Details Modal -->
+  <div id="khataPromptModal" class="modal">
+    <div class="dialog-box" style="width: 440px; max-width: 92vw; border: 2px solid #ef4444; box-shadow: 0 20px 40px rgba(0,0,0,0.8);">
+      <div class="dialog-header" style="border-bottom: 1.5px solid rgba(239, 68, 68, 0.3); padding-bottom: 10px;">
+        <h3 id="khataModalTitle" style="color: #f87171; display: flex; align-items: center; gap: 8px; margin: 0; font-size: 17px;">
+          📒 <span id="khataModalTitleText">Khata Customer Details</span>
+        </h3>
+        <button onclick="closeModal('khataPromptModal')" style="background:none; border:none; color:#ef4444; font-size:20px; cursor:pointer; font-weight:bold;">✕</button>
+      </div>
+      <p id="khataModalDesc" style="font-size:13px; color:#cbd5e1; margin: 12px 0 16px 0; line-height: 1.45;">
+        Customer name or phone number is required to record this bill to Khata (Credit).
+      </p>
+      <div class="form-ctrl" style="margin-bottom: 12px;">
+        <label id="khataNameLabel" style="font-weight: 700; color: #94a3b8; font-size: 12.5px;">Customer Name / گاہک کا نام:</label>
+        <input type="text" id="khataPromptName" list="custDatalist" placeholder="Enter customer name..." style="background: #0f172a; border: 1.5px solid #38bdf8; color: #fff; padding: 10px; border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 14px;" oninput="onKhataPromptNameInput(this.value)">
+      </div>
+      <div class="form-ctrl" style="margin-bottom: 16px;">
+        <label id="khataPhoneLabel" style="font-weight: 700; color: #94a3b8; font-size: 12.5px;">Mobile / WhatsApp / فون نمبر:</label>
+        <input type="tel" id="khataPromptPhone" placeholder="050... or 030..." style="background: #0f172a; border: 1.5px solid #38bdf8; color: #fff; padding: 10px; border-radius: 8px; width: 100%; box-sizing: border-box; font-size: 14px;">
+      </div>
+      <div id="khataModalErrorMsg" style="display: none; color: #f87171; font-size: 12.5px; font-weight: bold; margin-bottom: 12px;"></div>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-action-3d btn-khata" style="flex: 2; padding: 12px; font-size: 14px;" onclick="confirmKhataPrompt()" id="khataPromptSubmitBtn">
+          📒 Confirm Khata / کھاتہ محفوظ کریں
+        </button>
+        <button onclick="closeModal('khataPromptModal')" style="flex: 1; background: #334155; border: none; border-radius: 8px; color: #cbd5e1; font-weight: bold; cursor: pointer;">
+          Cancel / منسوخ
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Split Payment Modal -->
   <div id="splitModal" class="modal">
@@ -1040,12 +1152,12 @@
 
   <!-- ================= LOGIC & STATE SCRIPT ================= -->
   <script>
-    let serverStoreName = "{{ store_name|default:''|escapejs }}";
-    let serverCurrency = "{{ currency|default:''|escapejs }}";
-    let serverLanguage = "{{ language|default:''|escapejs }}";
-    let currentStoreName = serverStoreName || localStorage.getItem('pos_store_name') || 'Al Madina Grocery';
-    let currentCurrency = serverCurrency || localStorage.getItem('pos_currency') || 'AED';
-    let currentSecondaryLang = serverLanguage || localStorage.getItem('pos_sec_lang') || 'ur';
+    let serverStoreName = "{{ store_name|default:''|escapejs }}".trim();
+    let serverCurrency = "{{ currency|default:''|escapejs }}".trim();
+    let serverLanguage = "{{ language|default:''|escapejs }}".trim();
+    let currentStoreName = (serverStoreName && serverStoreName !== 'Al Madina Grocery') ? serverStoreName : (localStorage.getItem('pos_store_name') || 'Al Madina Grocery');
+    let currentCurrency = (serverCurrency && serverCurrency !== '') ? serverCurrency : (localStorage.getItem('pos_currency') || 'AED');
+    let currentSecondaryLang = (serverLanguage && serverLanguage !== '') ? serverLanguage : (localStorage.getItem('pos_sec_lang') || 'ur');
     let appMode = 'sales';
 
     let currentUser = {
@@ -1113,43 +1225,85 @@
         subtotal: "سب ٹوٹل:", discount: "ڈسکاؤنٹ:", round: "راؤنڈ آف:", net: "صافی رقم:",
         cashBtn: "Cash / کیش بل", khataBtn: "Khata / کھاتہ", cardBtn: "Card / کارڈ بل", splitBtn: "Split / اسپلٹ",
         thItem: "نام", thQty: "تعداد", thSize: "سائز", thRate: "ریٹ", thTotal: "ٹوٹل",
-        todaySales: "آج کی کل سیل", cashSales: "کیش وصولی", khataSales: "کھاتہ ادھار"
+        todaySales: "آج کی کل سیل", cashSales: "کیش وصولی", khataSales: "کھاتہ ادھار",
+        khataTitle: "کھاتہ کسٹمر معلومات",
+        khataDesc: "کھاتہ (ادھار) بل محفوظ کرنے کے لیے گاہک کا نام یا موبائل نمبر درج کرنا لازمی ہے۔",
+        khataNameLbl: "گاہک کا نام:",
+        khataPhoneLbl: "موبائل / واٹس ایپ نمبر:",
+        khataConfirm: "کھاتہ محفوظ کریں",
+        khataErr: "برائے مہربانی گاہک کا نام یا فون درج کریں!"
       },
       ar: {
         subtotal: "المجموع الفرعي:", discount: "الخصم:", round: "التقريب:", net: "المبلغ الصافي:",
         cashBtn: "Cash / نقداً", khataBtn: "Khata / آجل", cardBtn: "Card / بطاقة", splitBtn: "Split / مقسم",
         thItem: "الصنف", thQty: "الكمية", thSize: "الحجم", thRate: "السعر", thTotal: "الإجمالي",
-        todaySales: "مبيعات اليوم", cashSales: "المقبوض النقدي", khataSales: "مبيعات الآجل"
+        todaySales: "مبيعات اليوم", cashSales: "المقبوض النقدي", khataSales: "مبيعات الآجل",
+        khataTitle: "بيانات عميل الآجل",
+        khataDesc: "يرجى إدخال اسم العميل أو رقم الهاتف لتسجيل الفاتورة في حساب الآجل.",
+        khataNameLbl: "اسم العميل:",
+        khataPhoneLbl: "رقم الهاتف / واتساب:",
+        khataConfirm: "تأكيد تسجيل الآجل",
+        khataErr: "يرجى إدخال اسم العميل أو رقم الهاتف!"
       },
       hi: {
         subtotal: "उप-कुल:", discount: "छूट:", round: "राउंड ऑफ:", net: "कुल राशि:",
         cashBtn: "Cash / नकद बिल", khataBtn: "Khata / उधार खाता", cardBtn: "Card / कार्ड", splitBtn: "Split / मिश्रित",
         thItem: "सामग्री", thQty: "मात्रा", thSize: "साइज", thRate: "दर", thTotal: "कुल",
-        todaySales: "आज की कुल बिक्री", cashSales: "नकद प्राप्ति", khataSales: "उधार बिक्री"
+        todaySales: "आज की कुल बिक्री", cashSales: "नकद प्राप्ति", khataSales: "उधार बिक्री",
+        khataTitle: "उधार खाता ग्राहक विवरण",
+        khataDesc: "उधार खाता दर्ज करने کے لیے گاہک کا نام یا موبائل نمبر درج کرنا لازمی ہے۔",
+        khataNameLbl: "ग्राहक का नाम:",
+        khataPhoneLbl: "मोबाइल / व्हाट्सएप नंबर:",
+        khataConfirm: "उधार खाता दर्ज करें",
+        khataErr: "कृपया ग्राहक का नाम या फ़ोन नंबर दर्ज करें!"
       },
       ro: {
         subtotal: "Subtotal / Kul Bill:", discount: "Discount:", round: "Round Off:", net: "Net Total / Safi Raqam:",
         cashBtn: "Cash / Cash Bill", khataBtn: "Khata / Udhaar", cardBtn: "Card / Card Bill", splitBtn: "Split / Mix",
         thItem: "Item Name", thQty: "Qty", thSize: "Size", thRate: "Rate", thTotal: "Total",
-        todaySales: "Today Sales", cashSales: "Cash Collected", khataSales: "Khata Credit"
+        todaySales: "Today Sales", cashSales: "Cash Collected", khataSales: "Khata Credit",
+        khataTitle: "Khata Customer Details",
+        khataDesc: "Khata bill save karne ke liye customer ka naam ya mobile number zaroori hai.",
+        khataNameLbl: "Customer Ka Naam:",
+        khataPhoneLbl: "Mobile / WhatsApp Number:",
+        khataConfirm: "Confirm Khata",
+        khataErr: "Customer ka naam ya phone number darj karein!"
       },
       si: {
         subtotal: "උප එකතුව:", discount: "වට්ටම්:", round: "වටකුරු කිරීම:", net: "ශුද්ධ එකතුව:",
         cashBtn: "Cash / මුදල්", khataBtn: "Khata / ණය", cardBtn: "Card / කාඩ්පත", splitBtn: "Split / මිශ්‍ර",
         thItem: "භාණ්ඩය", thQty: "ප්‍රමාණය", thSize: "ඒකකය", thRate: "මිල", thTotal: "එකතුව",
-        todaySales: "අද විකුණුම්", cashSales: "මුදල් ලැබීම්", khataSales: "ණය විකුණුම්"
+        todaySales: "අද විකුණුම්", cashSales: "මුදල් ලැබීම්", khataSales: "ණය විකුණුම්",
+        khataTitle: "ණය පාරිභෝගික විස්තර",
+        khataDesc: "ණය බිල්පත සුරැකීමට පාරිභෝගිකයාගේ නම හෝ දුරකථන අංකය ඇතුළත් කිරීම අවශ්‍ය වේ.",
+        khataNameLbl: "පාරිභෝගික නම:",
+        khataPhoneLbl: "දුරකථන / WhatsApp අංකය:",
+        khataConfirm: "ණය තහවුරු කරන්න",
+        khataErr: "කරුණාකර පාරිභෝගික නම හෝ දුරකථන අංකය ඇතුළත් කරන්න!"
       },
       ta: {
         subtotal: "கூட்டுத்தொகை:", discount: "தள்ளுபடி:", round: "ரவுண்ட் ஆஃப்:", net: "நிகரத் தொகை:",
         cashBtn: "Cash / ரொக்கம்", khataBtn: "Khata / கடன்", cardBtn: "Card / அட்டை", splitBtn: "Split / பகிர்வு",
         thItem: "பொருள்", thQty: "எண்ணிக்கை", thSize: "அளவு", thRate: "விலை", thTotal: "மொத்தம்",
-        todaySales: "இன்றைய விற்பனை", cashSales: "ரொக்க வசூல்", khataSales: "கடன் விற்பனை"
+        todaySales: "இன்றைய விற்பனை", cashSales: "ரொக்க வசூல்", khataSales: "கடன் விற்பனை",
+        khataTitle: "கடன் வாடிக்கையாளர் விவரங்கள்",
+        khataDesc: "கடன் பில் பதிவு செய்ய வாடிக்கையாளர் பெயர் அல்லது தொலைபேசி எண் தேவை.",
+        khataNameLbl: "வாடிக்கையாளர் பெயர்:",
+        khataPhoneLbl: "தொலைபேசி / WhatsApp எண்:",
+        khataConfirm: "கடனை உறுதிசெய்",
+        khataErr: "தயவுசெய்து வாடிக்கையாளர் பெயர் அல்லது தொலைபேசி எண்ணை உள்ளிடவும்!"
       },
       en: {
         subtotal: "Subtotal:", discount: "Discount:", round: "Round Off:", net: "Net Total:",
         cashBtn: "Cash / Cash Bill", khataBtn: "Khata / Ledger", cardBtn: "Card / Card Bill", splitBtn: "Split / Multi",
         thItem: "Item Name", thQty: "Qty", thSize: "Unit", thRate: "Rate", thTotal: "Total",
-        todaySales: "Today Sales", cashSales: "Cash Collected", khataSales: "Khata Credit"
+        todaySales: "Today Sales", cashSales: "Cash Collected", khataSales: "Khata Credit",
+        khataTitle: "Customer Details for Khata",
+        khataDesc: "Customer name or mobile number is required to record this bill to Khata (Credit).",
+        khataNameLbl: "Customer Name:",
+        khataPhoneLbl: "WhatsApp Mobile Number:",
+        khataConfirm: "Confirm Khata",
+        khataErr: "Please enter customer name or mobile number!"
       }
     };
 
@@ -1222,8 +1376,10 @@
       else if (type === 'error') icon = '❌';
       else if (type === 'warning') icon = '⚠️';
 
-      if (!titleSec && toastSecDict[currentSecondaryLang]) {
-        titleSec = toastSecDict[currentSecondaryLang][titleEn] || '';
+      if (toastSecDict[currentSecondaryLang] && toastSecDict[currentSecondaryLang][titleEn]) {
+        titleSec = toastSecDict[currentSecondaryLang][titleEn];
+      } else if (!titleSec && toastSecDict['ur'] && toastSecDict['ur'][titleEn]) {
+        titleSec = toastSecDict['ur'][titleEn];
       }
 
       pill.innerHTML = `
@@ -1544,9 +1700,13 @@
               <div>${dualName}</div>
             </td>
             <td style="text-align:center; white-space:nowrap;">
-              <button onclick="adjustItemQty(${idx}, -1)" style="border:none; background:#e2e8f0; color:#0f172a; width:18px; height:18px; border-radius:3px; cursor:pointer; font-weight:bold; font-size:11px; margin-right:2px;">-</button>
-              <span style="font-weight:800; min-width:16px; display:inline-block;">${it.qty}</span>
-              <button onclick="adjustItemQty(${idx}, 1)" style="border:none; background:#e2e8f0; color:#0f172a; width:18px; height:18px; border-radius:3px; cursor:pointer; font-weight:bold; font-size:11px; margin-left:2px;">+</button>
+              <button onclick="adjustItemQty(${idx}, -1)" style="border:none; background:#e2e8f0; color:#0f172a; width:20px; height:20px; border-radius:3px; cursor:pointer; font-weight:bold; font-size:12px; margin-right:2px;">-</button>
+              <input type="number" step="any" min="0.01" value="${it.qty}" 
+                     class="qty-edit-input"
+                     onchange="updateItemQtyDirect(${idx}, this.value)"
+                     onfocus="this.select()"
+                     style="width: 44px; text-align: center; font-weight: 800; font-size: 13px; color: #0f172a; background: #ffffff; border: 1.5px solid #94a3b8; border-radius: 4px; padding: 2px 0;">
+              <button onclick="adjustItemQty(${idx}, 1)" style="border:none; background:#e2e8f0; color:#0f172a; width:20px; height:20px; border-radius:3px; cursor:pointer; font-weight:bold; font-size:12px; margin-left:2px;">+</button>
             </td>
             <td style="text-align:center; color:#64748b; font-size:11px;">${unit}</td>
             <td style="text-align:right;">${parseFloat(it.unit_price).toFixed(2)}</td>
@@ -1557,6 +1717,21 @@
           </tr>
         `;
       });
+    }
+
+    function updateItemQtyDirect(idx, val) {
+      if (!currentParsedData[idx]) return;
+      const q = parseFloat(val);
+      if (isNaN(q) || q <= 0) {
+        removeItemRow(idx);
+        return;
+      }
+      currentParsedData[idx].qty = q;
+      const unitPrice = parseFloat(currentParsedData[idx].unit_price) || 0;
+      currentParsedData[idx].line_total = (q * unitPrice).toFixed(2);
+      renderReceiptRows(currentParsedData);
+      recalcTotals();
+      syncBulkInputFromParsedData();
     }
 
     function recalcTotals() {
@@ -1584,7 +1759,7 @@
       const round = document.getElementById('roundOff').value || '0';
 
       if (paymentMode === 'khata' && !name && !phone) {
-        showToast('Customer Name or Phone required for Khata!', 'کھاتہ کے لیے گاہک کا نام یا فون درج کریں', 'error');
+        openKhataPromptModal();
         return;
       }
 
@@ -1621,6 +1796,46 @@
       .catch(err => {
         showToast('Server connection error', 'سرور سے رابطہ نہ ہو سکا', 'error');
       });
+    }
+
+    // Centered Khata Modal Handlers
+    function openKhataPromptModal() {
+      const L = i18n[currentSecondaryLang] || i18n['ur'];
+      document.getElementById('khataModalTitleText').innerText = `Khata / ${L.khataTitle || 'Customer Details'}`;
+      document.getElementById('khataModalDesc').innerText = L.khataDesc || 'Customer name or phone number is required to record this bill to Khata.';
+      document.getElementById('khataNameLabel').innerText = `Customer Name / ${L.khataNameLbl || 'Name'}`;
+      document.getElementById('khataPhoneLabel').innerText = `WhatsApp / ${L.khataPhoneLbl || 'Mobile'}`;
+      document.getElementById('khataPromptSubmitBtn').innerText = `📒 ${L.khataConfirm || 'Confirm Khata'}`;
+      document.getElementById('khataModalErrorMsg').style.display = 'none';
+
+      document.getElementById('khataPromptName').value = document.getElementById('custName').value.trim();
+      document.getElementById('khataPromptPhone').value = document.getElementById('custPhone').value.trim();
+      document.getElementById('khataPromptModal').style.display = 'flex';
+      setTimeout(() => document.getElementById('khataPromptName').focus(), 100);
+    }
+
+    function onKhataPromptNameInput(val) {
+      if (!khataData) return;
+      const match = khataData.find(c => c.name.toLowerCase() === val.trim().toLowerCase());
+      if (match) document.getElementById('khataPromptPhone').value = match.phone || '';
+    }
+
+    function confirmKhataPrompt() {
+      const name = document.getElementById('khataPromptName').value.trim();
+      const phone = document.getElementById('khataPromptPhone').value.trim();
+      const L = i18n[currentSecondaryLang] || i18n['ur'];
+
+      if (!name && !phone) {
+        const errDiv = document.getElementById('khataModalErrorMsg');
+        errDiv.innerText = L.khataErr || 'Customer name or phone is required!';
+        errDiv.style.display = 'block';
+        return;
+      }
+
+      document.getElementById('custName').value = name;
+      document.getElementById('custPhone').value = phone;
+      closeModal('khataPromptModal');
+      submitBill('khata');
     }
 
     // Split Modal
@@ -2276,12 +2491,12 @@
       const store = currentStoreName || 'Al Madina Grocery';
       const msg = `محترم ${inv.customer_name || 'گاہک'}!\nآپ کا گروسری بل تیار ہے (#${inv.id}) برائے ${store}\nصافی رقم: ${currentCurrency} ${inv.grand_total}\nآن لائن رسید دیکھیں:\n${window.location.origin}/bill/view/${inv.token}/\nخریداری کا شکریہ!`;
       if (phone) {
-        window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
+        window.location.href = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`;
       } else {
         const askPhone = prompt("گاہک کا فون نمبر درج کریں (Enter Phone / WhatsApp):");
         if (askPhone) {
           const clean = askPhone.replace(/[^0-9]/g, '');
-          window.open(`https://api.whatsapp.com/send?phone=${clean}&text=${encodeURIComponent(msg)}`, '_blank');
+          window.location.href = `https://api.whatsapp.com/send?phone=${clean}&text=${encodeURIComponent(msg)}`;
         }
       }
     }
@@ -2366,10 +2581,16 @@
 
     // Init on load
     window.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('storeNameInput').value = currentStoreName;
-      document.getElementById('headerStoreName').innerText = currentStoreName;
-      document.getElementById('currencySelect').value = currentCurrency;
-      document.getElementById('langSelect').value = currentSecondaryLang;
+      const sInput = document.getElementById('storeNameInput');
+      if (sInput) sInput.value = currentStoreName;
+      const hTitle = document.getElementById('headerStoreName');
+      if (hTitle) hTitle.innerText = currentStoreName;
+      const fsTitle = document.getElementById('fsStoreTitle');
+      if (fsTitle) fsTitle.innerText = currentStoreName;
+      const cSel = document.getElementById('currencySelect');
+      if (cSel) cSel.value = currentCurrency;
+      const lSel = document.getElementById('langSelect');
+      if (lSel) lSel.value = currentSecondaryLang;
       applyLanguageLabels();
       applyCurrencyToUI();
       loadKhataDatalist();

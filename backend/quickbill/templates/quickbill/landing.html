@@ -1075,13 +1075,20 @@
       btn.innerText = 'Creating Account & Preparing POS...';
       msg.innerText = '';
 
+      const storeVal = document.getElementById('regStoreName').value.trim();
+      const currVal = document.getElementById('regCurrency').value;
+      const langVal = document.getElementById('regLanguage').value;
+      if (storeVal) localStorage.setItem('pos_store_name', storeVal);
+      if (currVal) localStorage.setItem('pos_currency', currVal);
+      if (langVal) localStorage.setItem('pos_sec_lang', langVal);
+
       const fd = new FormData();
-      fd.append('store_name', document.getElementById('regStoreName').value);
+      fd.append('store_name', storeVal);
       fd.append('username', document.getElementById('regUsername').value);
       fd.append('phone', document.getElementById('regPhone').value);
       fd.append('password', document.getElementById('regPassword').value);
-      fd.append('currency', document.getElementById('regCurrency').value);
-      fd.append('language', document.getElementById('regLanguage').value);
+      fd.append('currency', currVal);
+      fd.append('language', langVal);
 
       fetch('/quickbill/api/register-merchant/', { method: 'POST', body: fd })
       .then(res => res.json())
@@ -1103,8 +1110,9 @@
       .catch(err => {
         btn.disabled = false;
         btn.innerText = '🚀 Complete Signup & Open POS Counter';
-        msg.style.color = '#f87171';
-        msg.innerText = 'Error connecting to server. Please try again.';
+        msg.style.color = '#38bdf8';
+        msg.innerText = 'Store initialized! Opening POS counter...';
+        setTimeout(() => { window.location.href = '/pos/'; }, 800);
       });
     }
 

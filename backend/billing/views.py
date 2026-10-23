@@ -89,20 +89,22 @@ def parse_grocery_text_advanced(raw_text):
     return items
 
 def laptop_pos_view(request):
-    store_name = 'Al Madina Grocery'
-    currency = 'AED'
-    language = 'ur'
+    store_name = ''
+    currency = ''
+    language = ''
     user_name = 'admin'
     is_authenticated = request.user.is_authenticated
 
     if is_authenticated:
         user_name = request.user.username
-        # Check RegisteredMerchant profile
-        merchant = getattr(request.user, 'merchant_profile', None)
-        if merchant:
-            store_name = merchant.store_name or store_name
-            currency = merchant.currency or currency
-            language = getattr(merchant, 'language', 'ur') or 'ur'
+        try:
+            merchant = getattr(request.user, 'merchant_profile', None)
+            if merchant:
+                store_name = merchant.store_name or ''
+                currency = merchant.currency or ''
+                language = getattr(merchant, 'language', '') or ''
+        except Exception:
+            pass
 
     context = {
         'store_name': store_name,
