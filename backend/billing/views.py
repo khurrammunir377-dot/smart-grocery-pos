@@ -89,7 +89,29 @@ def parse_grocery_text_advanced(raw_text):
     return items
 
 def laptop_pos_view(request):
-    return render(request, 'laptop_pos.html')
+    store_name = 'Al Madina Grocery'
+    currency = 'AED'
+    language = 'ur'
+    user_name = 'admin'
+    is_authenticated = request.user.is_authenticated
+
+    if is_authenticated:
+        user_name = request.user.username
+        # Check RegisteredMerchant profile
+        merchant = getattr(request.user, 'merchant_profile', None)
+        if merchant:
+            store_name = merchant.store_name or store_name
+            currency = merchant.currency or currency
+            language = getattr(merchant, 'language', 'ur') or 'ur'
+
+    context = {
+        'store_name': store_name,
+        'currency': currency,
+        'language': language,
+        'user_name': user_name,
+        'is_logged_in': is_authenticated,
+    }
+    return render(request, 'laptop_pos.html', context)
 
 # ==========================================
 # 1. SALES & BILLING APIs

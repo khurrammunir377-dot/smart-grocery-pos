@@ -77,12 +77,21 @@ else:
         if not TMP_DB.exists():
             if SEED_DB.exists():
                 try:
-                    shutil.copy2(SEED_DB, TMP_DB)
+                    shutil.copyfile(str(SEED_DB), str(TMP_DB))
+                    try:
+                        os.chmod(str(TMP_DB), 0o666)
+                    except Exception:
+                        pass
                 except Exception as e:
-                    print("Failed to copy SEED_DB:", e)
-        DB_PATH = TMP_DB
+                    print("Failed to copyfile SEED_DB:", e)
+        else:
+            try:
+                os.chmod(str(TMP_DB), 0o666)
+            except Exception:
+                pass
+        DB_PATH = str(TMP_DB)
     else:
-        DB_PATH = BASE_DIR / 'db.sqlite3'
+        DB_PATH = str(BASE_DIR / 'db.sqlite3')
 
     DATABASES = {
         'default': {

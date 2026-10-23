@@ -991,11 +991,26 @@
           <label>Primary Currency:</label>
           <select id="regCurrency">
             <option value="AED">AED (UAE Dirham)</option>
-            <option value="USD">USD ($)</option>
-            <option value="PKR">PKR (Pakistani Rupee)</option>
+            <option value="LKR">LKR (Rs - Sri Lanka)</option>
             <option value="SAR">SAR (Saudi Riyal)</option>
             <option value="OMR">OMR (Omani Rial)</option>
-            <option value="INR">INR (₹)</option>
+            <option value="QAR">QAR (Qatari Riyal)</option>
+            <option value="KWD">KWD (Kuwaiti Dinar)</option>
+            <option value="PKR">PKR (Pakistani Rupee)</option>
+            <option value="INR">INR (₹ - Indian Rupee)</option>
+            <option value="USD">USD ($)</option>
+          </select>
+        </div>
+        <div class="auth-form-row">
+          <label>Secondary Language / ترجیحی زبان:</label>
+          <select id="regLanguage">
+            <option value="ur">Urdu (اردو)</option>
+            <option value="ar">Arabic (العربية)</option>
+            <option value="hi">Hindi (हिन्दी)</option>
+            <option value="ro">Roman Urdu</option>
+            <option value="si">Sinhala (සිංහල)</option>
+            <option value="ta">Tamil (தமிழ்)</option>
+            <option value="en">English</option>
           </select>
         </div>
         <button type="submit" id="btnSubmitSignup" class="btn-auth-submit">
@@ -1066,6 +1081,7 @@
       fd.append('phone', document.getElementById('regPhone').value);
       fd.append('password', document.getElementById('regPassword').value);
       fd.append('currency', document.getElementById('regCurrency').value);
+      fd.append('language', document.getElementById('regLanguage').value);
 
       fetch('/quickbill/api/register-merchant/', { method: 'POST', body: fd })
       .then(res => res.json())
@@ -1075,7 +1091,10 @@
         if (d.success) {
           msg.style.color = '#34d399';
           msg.innerText = d.message;
-          setTimeout(() => { window.location.href = d.redirect_url; }, 900);
+          if (d.store_name) localStorage.setItem('pos_store_name', d.store_name);
+          if (d.currency) localStorage.setItem('pos_currency', d.currency);
+          if (d.language) localStorage.setItem('pos_sec_lang', d.language);
+          setTimeout(() => { window.location.href = d.redirect_url; }, 800);
         } else {
           msg.style.color = '#f87171';
           msg.innerText = d.error || 'Registration failed.';
@@ -1109,7 +1128,10 @@
         if (d.success) {
           msg.style.color = '#34d399';
           msg.innerText = d.message;
-          setTimeout(() => { window.location.href = d.redirect_url; }, 800);
+          if (d.store_name) localStorage.setItem('pos_store_name', d.store_name);
+          if (d.currency) localStorage.setItem('pos_currency', d.currency);
+          if (d.language) localStorage.setItem('pos_sec_lang', d.language);
+          setTimeout(() => { window.location.href = d.redirect_url; }, 700);
         } else {
           msg.style.color = '#f87171';
           msg.innerText = d.error || 'Login failed.';

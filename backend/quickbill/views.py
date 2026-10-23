@@ -69,6 +69,7 @@ def register_merchant_api(request):
     business_type = request.POST.get("business_type", "Grocery Store").strip()
     city = request.POST.get("city", "Dubai").strip()
     currency = request.POST.get("currency", "AED").strip()
+    language = request.POST.get("language", "ur").strip()
 
     if not store_name or not username or not password:
         return JsonResponse({"success": False, "error": "Store name, username, and password are required."})
@@ -84,7 +85,8 @@ def register_merchant_api(request):
             phone=phone,
             business_type=business_type,
             city=city,
-            currency=currency
+            currency=currency,
+            language=language
         )
         login(request, user)
 
@@ -101,7 +103,10 @@ def register_merchant_api(request):
         return JsonResponse({
             "success": True,
             "message": "Account created successfully! Redirecting to POS Counter...",
-            "redirect_url": "/pos/"
+            "redirect_url": "/pos/",
+            "store_name": store_name,
+            "currency": currency,
+            "language": language
         })
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)})
@@ -126,10 +131,14 @@ def login_merchant_api(request):
             device_type=detect_device(request.META.get('HTTP_USER_AGENT', '')),
             user=user
         )
+        merchant = getattr(user, 'merchant_profile', None)
         return JsonResponse({
             "success": True,
             "message": "Logged in successfully!",
-            "redirect_url": "/pos/"
+            "redirect_url": "/pos/",
+            "store_name": merchant.store_name if merchant else "Al Madina Grocery",
+            "currency": merchant.currency if merchant else "AED",
+            "language": getattr(merchant, 'language', 'ur') if merchant else "ur"
         })
     else:
         return JsonResponse({"success": False, "error": "Invalid username or password. Please try again."})

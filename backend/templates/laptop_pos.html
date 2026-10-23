@@ -82,48 +82,304 @@
       box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
     }
 
+    .quick-toolbar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
     .barcode-input {
-      width: 100%; background: #080f1d; border: 2px solid #0284c7; color: #38bdf8;
-      border-radius: 10px; padding: 7px 12px; font-size: 14px; font-weight: bold; margin-bottom: 8px;
+      flex: 1; background: #080f1d; border: 2px solid #0284c7; color: #38bdf8;
+      border-radius: 10px; padding: 7px 12px; font-size: 13.5px; font-weight: bold; margin-bottom: 0;
+    }
+    .btn-paste-toggle {
+      background: linear-gradient(180deg, #1e293b, #0f172a);
+      border: 1.5px solid #38bdf8;
+      color: #38bdf8;
+      border-radius: 9px;
+      padding: 7px 12px;
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-paste-toggle:hover {
+      background: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    }
+    .btn-clear-pos {
+      background: #1e293b;
+      border: 1px solid #475569;
+      color: #cbd5e1;
+      border-radius: 9px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .btn-clear-pos:hover {
+      background: #ef4444;
+      border-color: #ef4444;
+      color: white;
     }
 
     .quick-grid { 
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 8px; padding-bottom: 4px;
-      overflow-y: auto; max-height: 290px;
+      display: grid; 
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 8px; 
+      margin-bottom: 0; 
+      padding-bottom: 8px;
+      overflow-y: auto; 
+      flex: 1;
+      min-height: 0;
     }
+    .quick-grid::-webkit-scrollbar { width: 6px; }
+    .quick-grid::-webkit-scrollbar-track { background: #080f1d; border-radius: 4px; }
+    .quick-grid::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    .quick-grid::-webkit-scrollbar-thumb:hover { background: #0284c7; }
+
+    /* AUTHENTIC 3D TACTILE POS KEY DESIGN */
     .btn-pos-key {
-      background: linear-gradient(180deg, #2b4266 0%, #16243b 100%);
-      border: 1.5px solid #486694; border-top: 2px solid rgba(255,255,255,0.3);
-      border-bottom: 5px solid #070d18; border-radius: 12px;
-      color: #fff; padding: 6px 5px; cursor: pointer; text-align: center;
-      display: flex; flex-direction: column; justify-content: space-between; align-items: center; 
-      user-select: none; box-shadow: 0 6px 14px rgba(0,0,0,0.6); 
-      transition: all 0.08s cubic-bezier(0.4, 0, 0.2, 1); height: 70px; width: 100%; position: relative;
+      background: linear-gradient(180deg, #22334d 0%, #111c2d 100%);
+      border: 1.5px solid #334e73;
+      border-top: 2px solid rgba(255,255,255,0.22);
+      border-bottom: 4px solid #070d18;
+      border-radius: 11px;
+      color: #fff;
+      padding: 6px 7px;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+      transition: transform 0.06s ease, box-shadow 0.06s ease;
+      height: 72px;
+      width: 100%;
+      position: relative;
     }
     .btn-pos-key:hover {
-      background: linear-gradient(180deg, #35517d 0%, #1b2d4a 100%);
-      border-color: #38bdf8; transform: translateY(-1px);
+      background: linear-gradient(180deg, #2b4266 0%, #16243b 100%);
+      border-color: #38bdf8;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(2, 132, 199, 0.3);
     }
-    .btn-pos-key:active { transform: translateY(4px); border-bottom: 1px solid #070d18; }
-    .key-top-row { display: flex; align-items: center; justify-content: center; width: 100%; overflow: hidden; padding: 0 2px; gap: 4px; }
-    .key-icon { font-size: 13px; flex-shrink: 0; line-height: 1; }
-    .key-name-dual { font-size: 11.5px; font-weight: 800; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; direction: ltr; }
-    .key-bottom-row { display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; padding: 0 2px; }
-    .key-unit { font-size: 11px; font-weight: 700; color: #94a3b8; }
-    .key-sep { color: #475569; font-size: 11px; font-weight: bold; }
-    .key-price-badge { background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8; border-radius: 5px; padding: 1px 5px; font-size: 11px; font-weight: 900; color: #38bdf8; }
+    .btn-pos-key:active {
+      transform: translateY(3px);
+      border-bottom-width: 1px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
+    .key-top-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .key-icon {
+      font-size: 15px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .key-name-dual {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #f8fafc;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      direction: ltr;
+    }
+    .key-bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: auto;
+    }
+    .key-unit {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #94a3b8;
+      background: rgba(15, 23, 42, 0.6);
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+    .key-price-badge {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-size: 11px;
+      font-weight: 900;
+      color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
 
-    .cust-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 8px; margin-bottom: 8px; }
-    .cust-row input {
-      background: #080f1d; border: 1px solid #1e293b; color: white;
-      border-radius: 8px; padding: 7px 10px; font-size: 13px; font-weight: 600; width: 100%;
+    .cust-row-right {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 6px;
+      margin-top: 8px;
+      background: #080f1d;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 6px 8px;
     }
+    .cust-row-right input {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: white;
+      border-radius: 6px;
+      padding: 6px 9px;
+      font-size: 12.5px;
+      font-weight: 600;
+      width: 100%;
+    }
+    .cust-row-right input:focus {
+      outline: none;
+      border-color: #38bdf8;
+    }
+
     .extended-textarea {
       flex: 1; width: 100%; background: #080f1d; border: 1px solid #1e293b;
       border-radius: 10px; color: #f8fafc; font-family: monospace; font-size: 13px;
       padding: 9px; resize: none; min-height: 95px;
     }
     .extended-textarea:focus { outline: none; border-color: #38bdf8; }
+
+    /* Modern Glassmorphic Toast Notifications */
+    .toast-container {
+      position: fixed;
+      top: 18px;
+      right: 20px;
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .toast-pill {
+      background: rgba(11, 20, 36, 0.95);
+      border: 1.5px solid #0284c7;
+      border-radius: 12px;
+      padding: 10px 16px;
+      min-width: 260px;
+      max-width: 380px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(2, 132, 199, 0.3);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: toastSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      pointer-events: auto;
+    }
+    .toast-pill.toast-success {
+      border-color: #10b981;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(16, 185, 129, 0.35);
+    }
+    .toast-pill.toast-error {
+      border-color: #ef4444;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(239, 68, 68, 0.35);
+    }
+    .toast-pill.toast-warning {
+      border-color: #f59e0b;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(245, 158, 11, 0.35);
+    }
+    .toast-icon { font-size: 20px; flex-shrink: 0; }
+    .toast-content { display: flex; flex-direction: column; flex: 1; }
+    .toast-title-en { font-size: 13px; font-weight: 800; color: #f8fafc; }
+    .toast-title-sec { font-size: 12px; font-weight: 600; color: #94a3b8; margin-top: 2px; }
+    @keyframes toastSlideIn {
+      from { opacity: 0; transform: translateX(35px) scale(0.96); }
+      to { opacity: 1; transform: translateX(0) scale(1); }
+    }
+    @keyframes toastFadeOut {
+      from { opacity: 1; transform: translateX(0) scale(1); }
+      to { opacity: 0; transform: translateX(35px) scale(0.96); }
+    }
+
+    /* Full-screen Workspace for Top 7 Modules */
+    .module-fullscreen-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      min-height: calc(100vh - 58px);
+      background: #080f1d;
+      color: #f8fafc;
+      padding: 10px 16px 24px 16px;
+    }
+    .module-fs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: #0b1424;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 10px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+    }
+    .btn-fs-back {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.1s ease;
+      box-shadow: 0 3px 8px rgba(2, 132, 199, 0.4);
+    }
+    .btn-fs-back:hover {
+      background: linear-gradient(135deg, #0369a1, #075985);
+      transform: translateX(-2px);
+    }
+    .btn-fs-close {
+      background: #1e293b;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-fs-close:hover {
+      background: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+    .module-fs-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 2px;
+    }
+    .module-fs-body {
+      flex: 1;
+      background: #0b1424;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      overflow-y: auto;
+    }
 
     /* Billing receipt panel */
     .billing-panel { display: flex; flex-direction: column; height: 100%; }
@@ -274,6 +530,7 @@
         <option value="ro">Roman Urdu</option>
         <option value="si">Sinhala (සිංහල)</option>
         <option value="ta">Tamil (தமிழ்)</option>
+        <option value="en">English</option>
       </select>
 
       <button class="top-nav-btn" onclick="openModularHub('sales')">🛒 Sales / سیلز</button>
@@ -282,14 +539,19 @@
       <button class="top-nav-btn" onclick="openModularHub('suppliers')">🚚 Suppliers / سپلائر</button>
       <button class="top-nav-btn" onclick="openModularHub('khata')">📒 Khata / کھاتہ</button>
       <button class="top-nav-btn" onclick="openModularHub('accounts')">💰 Drawer / دراز</button>
+      <button class="top-nav-btn" onclick="openModularHub('users')">👥 Staff / عملہ</button>
       <a href="/" target="_blank" class="top-nav-btn" style="text-decoration:none; display:inline-flex; align-items:center;">🌐 Landing Page</a>
       <a href="/admin-panel/" target="_blank" class="top-nav-btn" style="text-decoration:none; display:inline-flex; align-items:center;">📊 Admin Panel</a>
       <button class="top-nav-btn btn-user-badge" id="activeUserBadge" onclick="openPinModal()">👑 admin (PIN)</button>
     </div>
   </div>
 
+  <!-- Toast Notification System -->
+  <div id="toastContainer" class="toast-container"></div>
+
   <!-- ================= MAIN POS COUNTER WORKSPACE ================= -->
-  <div class="container">
+  <div class="container" id="posMainContainer">
+    <!-- Left Column: 100% Quick Touch POS Buttons -->
     <div class="card-3d">
       <div class="mode-bar">
         <button id="modeSalesBtn" class="mode-btn active-sales" onclick="setAppMode('sales')">
@@ -300,23 +562,25 @@
         </button>
       </div>
 
-      <input type="text" id="barcodeScanner" class="barcode-input" placeholder="🔍 Scan Barcode & Press Enter... / بارکوڈ اسکین کریں" onkeypress="handleBarcode(event)">
-
-      <!-- ALL 28 QUICK 3D BUTTONS WITH ENGLISH + SECONDARY LANGUAGE -->
-      <div class="quick-grid" id="quickButtonsContainer"></div>
-
-      <div class="cust-row" id="custRowBox">
-        <div>
-          <input list="custDatalist" id="custName" placeholder="Customer Name (Select or Type)... / گاہک کا نام" oninput="onCustomerInput(this.value)">
-          <datalist id="custDatalist"></datalist>
-        </div>
-        <input type="tel" id="custPhone" placeholder="Phone / WhatsApp / فون نمبر">
+      <!-- Quick Action Toolbar -->
+      <div class="quick-toolbar">
+        <input type="text" id="barcodeScanner" class="barcode-input" placeholder="🔍 Scan Barcode & Press Enter... / بارکوڈ اسکین کریں" onkeypress="handleBarcode(event)">
+        <button class="btn-paste-toggle" onclick="openPasteModal()" title="Paste bulk list from WhatsApp or notes">
+          📋 Paste List / فہرست
+        </button>
+        <button class="btn-clear-pos" onclick="clearCurrentBill()" title="Clear bill table">
+          🗑️ Clear
+        </button>
       </div>
 
-      <textarea id="bulkInput" class="extended-textarea" placeholder="Paste or type items list freely, e.g.:&#10;1 Garlic, 2 Drink, 1 Eggs, Sugar 4.0&#10;یا اردو میں: 2 دودھ 6، 1 چینی 4" oninput="debounceParse()"></textarea>
+      <!-- 100% RESERVED FULL HEIGHT 3D QUICK BUTTONS GRID -->
+      <div class="quick-grid" id="quickButtonsContainer"></div>
+
+      <!-- Hidden textarea kept for backward-compatible form syncing -->
+      <textarea id="bulkInput" style="display:none;"></textarea>
     </div>
 
-    <!-- Live Bilingual Receipt Preview -->
+    <!-- Right Column: Live Bilingual Receipt Preview & Customer Data -->
     <div class="card-3d billing-panel">
       <div class="receipt-paper">
         <div style="text-align: center; border-bottom: 2px dashed #94a3b8; padding-bottom: 6px;">
@@ -327,16 +591,27 @@
         <table>
           <thead>
             <tr>
-              <th style="width: 26px; text-align: center;">#</th>
+              <th style="width: 24px; text-align: center;">#</th>
               <th id="thItem">Item / نام (Dual Name)</th>
-              <th style="width: 40px; text-align: center;" id="thQty">Qty</th>
-              <th style="width: 58px; text-align: center;" id="thSize">Size/Unit</th>
-              <th style="width: 50px; text-align: right;" id="thRate">Rate</th>
-              <th style="width: 60px; text-align: right;" id="thTotal">Total</th>
+              <th style="width: 52px; text-align: center;" id="thQty">Qty</th>
+              <th style="width: 52px; text-align: center;" id="thSize">Unit</th>
+              <th style="width: 48px; text-align: right;" id="thRate">Rate</th>
+              <th style="width: 58px; text-align: right;" id="thTotal">Total</th>
             </tr>
           </thead>
           <tbody id="previewRows"></tbody>
         </table>
+      </div>
+
+      <!-- Customer Details Row: Shifted to Right Side Directly Below Bill -->
+      <div class="cust-row-right" id="custRowBox">
+        <div>
+          <input list="custDatalist" id="custName" placeholder="👤 Customer Name / گاہک کا نام" oninput="onCustomerInput(this.value)">
+          <datalist id="custDatalist"></datalist>
+        </div>
+        <div>
+          <input type="tel" id="custPhone" placeholder="📱 WhatsApp / فون نمبر">
+        </div>
       </div>
 
       <!-- Financial Calculation & Payment Action Strip -->
@@ -398,30 +673,74 @@
     </div>
   </div>
 
-  <!-- ================= UNIFIED 7-MODULES MODAL HUB ================= -->
-  <div id="reportsModal" class="modal">
-    <div class="modal-content-fixed">
-      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding:12px 16px; background:#080f1d;">
-        <div style="display:flex; gap:8px; align-items:center; overflow-x:auto;">
-          <button class="tab-btn active" id="tabSalesBtn" onclick="switchReportTab('sales')">🛒 1. Sales & Bills</button>
-          <button class="tab-btn" id="tabProfitBtn" onclick="switchReportTab('profit')">📈 2. Profit & P&L</button>
-          <button class="tab-btn" id="tabInventoryBtn" onclick="switchReportTab('inventory')">📦 3. Stock & Expiry</button>
-          <button class="tab-btn" id="tabSuppliersBtn" onclick="switchReportTab('suppliers')">🚚 4. Purchases & Suppliers</button>
-          <button class="tab-btn" id="tabKhataBtn" onclick="switchReportTab('khata')">📒 5. Customers & Khata</button>
-          <button class="tab-btn" id="tabAccountsBtn" onclick="switchReportTab('accounts')">💰 6. Accounts & Drawer</button>
-          <button class="tab-btn" id="tabUsersBtn" onclick="switchReportTab('users')">🔐 7. Staff & Roles</button>
-        </div>
-        <button onclick="closeModal('reportsModal')" style="background:#ef4444; border:none; color:white; padding:6px 14px; border-radius:6px; font-weight:bold; cursor:pointer;">✕</button>
+  <!-- ================= UNIFIED 7-MODULES FULL SCREEN WORKSPACE ================= -->
+  <div id="moduleFullScreenView" class="module-fullscreen-container" style="display: none;">
+    <div class="module-fs-header">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button class="btn-fs-back" onclick="closeModularHub()">
+          ← Back to POS Counter (بلنگ کاؤنٹر واپس)
+        </button>
+        <span style="font-size: 13.5px; color: #38bdf8; font-weight: 800;">
+          🏪 <span id="fsStoreTitle">Al Madina Grocery</span> • Hub
+        </span>
       </div>
 
-      <div class="modal-fixed-body">
-        <div id="tabSalesView"></div>
-        <div id="tabProfitView" style="display:none;"></div>
-        <div id="tabInventoryView" style="display:none;"></div>
-        <div id="tabSuppliersView" style="display:none;"></div>
-        <div id="tabKhataView" style="display:none;"></div>
-        <div id="tabAccountsView" style="display:none;"></div>
-        <div id="tabUsersView" style="display:none;"></div>
+      <div class="module-fs-tabs">
+        <button class="tab-btn active" id="tabSalesBtn" onclick="switchReportTab('sales')">🛒 1. Sales & Bills</button>
+        <button class="tab-btn" id="tabProfitBtn" onclick="switchReportTab('profit')">📈 2. Profit & P&L</button>
+        <button class="tab-btn" id="tabInventoryBtn" onclick="switchReportTab('inventory')">📦 3. Stock & Expiry</button>
+        <button class="tab-btn" id="tabSuppliersBtn" onclick="switchReportTab('suppliers')">🚚 4. Purchases & Suppliers</button>
+        <button class="tab-btn" id="tabKhataBtn" onclick="switchReportTab('khata')">📒 5. Customers & Khata</button>
+        <button class="tab-btn" id="tabAccountsBtn" onclick="switchReportTab('accounts')">💰 6. Accounts & Drawer</button>
+        <button class="tab-btn" id="tabUsersBtn" onclick="switchReportTab('users')">🔐 7. Staff & Roles</button>
+      </div>
+
+      <div>
+        <button class="btn-fs-close" onclick="closeModularHub()" title="Return to POS Counter">✕ Exit (بند کریں)</button>
+      </div>
+    </div>
+
+    <div class="module-fs-body">
+      <div id="tabSalesView"></div>
+      <div id="tabProfitView" style="display:none;"></div>
+      <div id="tabInventoryView" style="display:none;"></div>
+      <div id="tabSuppliersView" style="display:none;"></div>
+      <div id="tabKhataView" style="display:none;"></div>
+      <div id="tabAccountsView" style="display:none;"></div>
+      <div id="tabUsersView" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- Paste Text List Modal -->
+  <div id="pasteModal" class="modal">
+    <div class="dialog-box" style="max-width: 580px; width: 92%;">
+      <div class="dialog-header">
+        <h3 style="margin: 0; color: #38bdf8; font-size: 16px;">
+          📋 Paste Grocery Text List / اشیاء کی فہرست پیسٹ کریں
+        </h3>
+        <button onclick="closeModal('pasteModal')" style="background:none; border:none; color:#ef4444; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+      <div style="padding-top: 6px;">
+        <p style="margin: 0 0 10px 0; font-size: 12.5px; color: #94a3b8; line-height: 1.5;">
+          Paste free text from WhatsApp, messages, or notes. Example:
+          <br><code style="color: #38bdf8; font-weight: bold;">2 Milk 6, 1 Bread 4.5, 3 Eggs, 1 Sugar 4.0</code>
+          <br><span style="direction: rtl; color: #93c5fd;">یا اردو میں: 2 دودھ 6، 1 چینی 4، 1 بریڈ</span>
+        </p>
+        <textarea id="pasteModalTextarea" class="extended-textarea" style="width: 100%; height: 160px; font-size: 13.5px;" placeholder="Paste or type items list freely..."></textarea>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px;">
+          <button class="top-nav-btn" style="background: #334155;" onclick="document.getElementById('pasteModalTextarea').value=''">
+            🗑️ Clear Text
+          </button>
+          <div style="display: flex; gap: 8px;">
+            <button class="top-nav-btn" style="background: #475569;" onclick="closeModal('pasteModal')">
+              Cancel / منسوخ
+            </button>
+            <button class="top-nav-btn" style="background: linear-gradient(135deg, #10b981, #059669); color: white; font-weight: bold; padding: 8px 18px;" onclick="applyPasteModalToBill()">
+              ✅ Apply to Bill / بل میں شامل کریں
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -721,13 +1040,16 @@
 
   <!-- ================= LOGIC & STATE SCRIPT ================= -->
   <script>
-    let currentStoreName = localStorage.getItem('pos_store_name') || 'Al Madina Grocery';
-    let currentCurrency = localStorage.getItem('pos_currency') || 'AED';
-    let currentSecondaryLang = localStorage.getItem('pos_sec_lang') || 'ur';
+    let serverStoreName = "{{ store_name|default:''|escapejs }}";
+    let serverCurrency = "{{ currency|default:''|escapejs }}";
+    let serverLanguage = "{{ language|default:''|escapejs }}";
+    let currentStoreName = serverStoreName || localStorage.getItem('pos_store_name') || 'Al Madina Grocery';
+    let currentCurrency = serverCurrency || localStorage.getItem('pos_currency') || 'AED';
+    let currentSecondaryLang = serverLanguage || localStorage.getItem('pos_sec_lang') || 'ur';
     let appMode = 'sales';
 
     let currentUser = {
-      username: 'admin',
+      username: '{{ user_name|default:"admin"|escapejs }}',
       role: 'admin',
       permissions: { can_manage_products: true, can_delete_products: true, can_view_profits: true, can_refund: true }
     };
@@ -739,35 +1061,51 @@
 
     // ================= ALL 28 CATALOG ITEMS WITH 6 LANGUAGES RESTORED =================
     const catalogItems = [
-      { id: 'onion', icon: '&#129477;', en: 'Onion', unit: '1 Kg', price: 3.5, ur: 'پیاز', ar: 'بصل', hi: 'प्याज', ro: 'Pyaz', si: 'ලූනු', ta: 'வெங்காயம்' },
-      { id: 'tomato', icon: '&#127813;', en: 'Tomato', unit: '1 Kg', price: 4.0, ur: 'ٹماٹر', ar: 'طماطم', hi: 'टमाटर', ro: 'Tamatar', si: 'තක්කාලි', ta: 'தக்காளி' },
-      { id: 'potato', icon: '&#129364;', en: 'Potato', unit: '1 Kg', price: 2.5, ur: 'آلو', ar: 'بطاطس', hi: 'आलू', ro: 'Aloo', si: 'අර්තාපල්', ta: 'உருளை' },
-      { id: 'garlic', icon: '&#129476;', en: 'Garlic', unit: '500g', price: 6.0, ur: 'لہسن', ar: 'ثوم', hi: 'लहसुन', ro: 'Lehsan', si: 'සුදු ළූණු', ta: 'பூண்டு' },
-      { id: 'milk', icon: '&#129371;', en: 'Fresh Milk', unit: '1 L', price: 6.0, ur: 'دودھ', ar: 'حليب', hi: 'दूध', ro: 'Doodh', si: 'කිරි', ta: 'பால்' },
-      { id: 'bread', icon: '&#127838;', en: 'Bread', unit: '1 Pc', price: 4.5, ur: 'بریڈ', ar: 'خبز', hi: 'ब्रेड', ro: 'Bread', si: 'පාන්', ta: 'ரொட்டி' },
-      { id: 'eggs', icon: '&#129370;', en: 'Eggs', unit: '6 Pcs', price: 5.0, ur: 'انڈے', ar: 'بيض', hi: 'अंडे', ro: 'Anday', si: 'බිත්තර', ta: 'முட்டை' },
-      { id: 'yogurt', icon: '&#129379;', en: 'Yogurt', unit: '500g', price: 3.0, ur: 'دہی', ar: 'زبادي', hi: 'दही', ro: 'Dahi', si: 'යෝගට්', ta: 'தயிர்' },
-      { id: 'sugar', icon: '&#129474;', en: 'White Sugar', unit: '1 Kg', price: 4.0, ur: 'چینی', ar: 'سكر', hi: 'चीनी', ro: 'Cheeni', si: 'සීනි', ta: 'சர்க்கரை' },
-      { id: 'rice', icon: '&#127834;', en: 'Basmati Rice', unit: '1 Kg', price: 7.5, ur: 'چاول', ar: 'أرز', hi: 'चावल', ro: 'Chawal', si: 'සහල්', ta: 'அரிசி' },
-      { id: 'oil', icon: '&#129703;', en: 'Cooking Oil', unit: '1 L', price: 14.0, ur: 'تیل', ar: 'زيت', hi: 'तेल', ro: 'Oil', si: 'තෙල්', ta: 'எண்ணெய்' },
-      { id: 'ghee', icon: '&#129479;', en: 'Pure Ghee', unit: '1 Kg', price: 15.0, ur: 'گھی', ar: 'سمن', hi: 'घी', ro: 'Ghee', si: 'එළඟිතෙල්', ta: 'நெய்' },
-      { id: 'water', icon: '&#128167;', en: 'Water Bottle', unit: '1.5 L', price: 1.5, ur: 'پانی', ar: 'ماء', hi: 'पानी', ro: 'Pani', si: 'වතුර', ta: 'தண்ணீர்' },
-      { id: 'drink', icon: '&#129380;', en: 'Soft Drink', unit: '1.5 L', price: 2.5, ur: 'کولڈ ڈرنک', ar: 'مشروب', hi: 'कोल्ड ड्रिंक', ro: 'Cold Drink', si: 'බීම', ta: 'குளிர்பானம்' },
-      { id: 'tea', icon: '&#9749;', en: 'Tea Dust', unit: '400g', price: 12.0, ur: 'چائے', ar: 'شاي', hi: 'चाय', ro: 'Chai', si: 'තේ කොළ', ta: 'தேநீர்' },
-      { id: 'biscuits', icon: '&#127850;', en: 'Biscuits', unit: '1 Pack', price: 2.0, ur: 'بسکٹ', ar: 'بسكويت', hi: 'बिस्कुट', ro: 'Biscuit', si: 'බිස්කට්', ta: 'பிஸ்கட்' },
-      { id: 'chicken', icon: '&#127831;', en: 'Fresh Chicken', unit: '1 Kg', price: 15.0, ur: 'مرغی', ar: 'دجاج', hi: 'चिकन', ro: 'Murghi', si: 'කුකුල් මස්', ta: 'கோழி' },
-      { id: 'fish', icon: '&#128031;', en: 'Fresh Fish', unit: '1 Kg', price: 22.0, ur: 'مچھلی', ar: 'سمك', hi: 'माछली', ro: 'Machli', si: 'මාළු', ta: 'மீன்' },
-      { id: 'apple', icon: '&#127822;', en: 'Red Apples', unit: '1 Kg', price: 6.5, ur: 'سیب', ar: 'تفاح', hi: 'себ', ro: 'Seb', si: 'ඇපල්', ta: 'ஆப்பிள்' },
-      { id: 'banana', icon: '&#127820;', en: 'Bananas', unit: '1 Kg', price: 4.5, ur: 'کیلا', ar: 'موز', hi: 'केला', ro: 'Kela', si: 'කෙසෙල්', ta: 'வாழைப்பழம்' },
-      { id: 'soap', icon: '&#129524;', en: 'Bath Soap', unit: '1 Pc', price: 3.5, ur: 'صابن', ar: 'صابون', hi: 'साबुन', ro: 'Sabun', si: 'සබන්', ta: 'சோப்பு' },
-      { id: 'surf', icon: '&#129530;', en: 'Detergent', unit: '1 Pack', price: 8.5, ur: 'سرف', ar: 'مسحوق', hi: 'डिटर्जेंट', ro: 'Surf', si: 'රෙදි සෝදන කුඩු', ta: 'சலவை தூள்' },
-      { id: 'shampoo', icon: '&#129524;', en: 'Shampoo', unit: '200ml', price: 16.0, ur: 'شیمپو', ar: 'شامبو', hi: 'शैम्पू', ro: 'Shampoo', si: 'ෂැම්පු', ta: 'ஷாம்பு' },
-      { id: 'diaper', icon: '&#128118;', en: 'Baby Diapers', unit: '1 Pack', price: 35.0, ur: 'پیمپرز', ar: 'حفاضات', hi: 'डायपर', ro: 'Pampers', si: 'ඩයපර්', ta: 'டயப்பர்கள்' },
-      { id: 'daalmash', icon: '&#129379;', en: 'Daal Mash', unit: '1 Kg', price: 11.0, ur: 'دال ماش', ar: 'عدس ماش', hi: 'दाल उड़द', ro: 'Daal Mash', si: 'උඳු ධාන්‍ය', ta: 'உளுந்து' },
-      { id: 'daalchana', icon: '&#127858;', en: 'Daal Chana', unit: '1 Kg', price: 9.5, ur: 'دال چنا', ar: 'حمص مجروش', hi: 'दाल चना', ro: 'Daal Chana', si: 'කඩල පරිප්පු', ta: 'கடலை பருப்பு' },
-      { id: 'herbs', icon: '&#127807;', en: 'Coriander/Mint', unit: '1 Bunch', price: 1.5, ur: 'دھنیا پودینہ', ar: 'كزبرة ونعناع', hi: 'धनिया पुदीना', ro: 'Dhaniya Pudina', si: 'කොත්තමල්ලි', ta: 'கொத்தமல்லி' },
-      { id: 'eggtray', icon: '&#128230;', en: 'Egg Tray', unit: '30 Pcs', price: 22.0, ur: 'انڈے کریٹ', ar: 'طبق بيض', hi: 'अंडे की ट्रे', ro: 'Anday Tray', si: 'බිත්තර තට්ටුව', ta: 'முட்டை தட்டு' }
-    ];
+      { id: 'onion', icon: '🧅', en: 'Onion', unit: '1 Kg', price: 3.5, ur: 'پیاز', ar: 'بصل', hi: 'प्याज', ro: 'Pyaz', si: 'ලූනු', ta: 'வெங்காயம்' },
+      { id: 'tomato', icon: '🍅', en: 'Tomato', unit: '1 Kg', price: 4.0, ur: 'ٹماٹر', ar: 'طماطم', hi: 'टमाटर', ro: 'Tamatar', si: 'තක්කාලි', ta: 'தக்காளி' },
+      { id: 'potato', icon: '🥔', en: 'Potato', unit: '1 Kg', price: 2.5, ur: 'آلو', ar: 'بطاطس', hi: 'आलू', ro: 'Aloo', si: 'අර්තාපල්', ta: 'உருளை' },
+      { id: 'garlic', icon: '🧄', en: 'Garlic', unit: '500g', price: 6.0, ur: 'لہسن', ar: 'ثوم', hi: 'लहसुन', ro: 'Lehsan', si: 'සුදු ළූණු', ta: 'பூண்டு' },
+      { id: 'ginger', icon: '🫚', en: 'Ginger', unit: '500g', price: 5.5, ur: 'ادرک', ar: 'زنجبيل', hi: 'अदरक', ro: 'Adrak', si: 'ඉඟුරු', ta: 'இஞ்சி' },
+      { id: 'lemon', icon: '🍋', en: 'Lemon', unit: '500g', price: 3.0, ur: 'لیمو', ar: 'ليمون', hi: 'नींबू', ro: 'Leemo', si: 'දෙහි', ta: 'எலுமிச்சை' },
+      { id: 'greenchili', icon: '🌶️', en: 'Green Chili', unit: '250g', price: 2.5, ur: 'ہری مرچ', ar: 'فلفل أخضر', hi: 'हरी मिर्च', ro: 'Hari Mirch', si: 'අමු මිරිස්', ta: 'பச்சை மிளகாய்' },
+      { id: 'cucumber', icon: '🥒', en: 'Cucumber', unit: '1 Kg', price: 3.5, ur: 'کھیرا', ar: 'خيار', hi: 'खीरा', ro: 'Kheera', si: 'පිපිඤ්ඤා', ta: 'வெள்ளரிக்காய்' },
+      { id: 'apple', icon: '🍎', en: 'Red Apples', unit: '1 Kg', price: 6.5, ur: 'سیب', ar: 'تفاح', hi: 'सेब', ro: 'Seb', si: 'ඇපල්', ta: 'ஆப்பிள்' },
+      { id: 'banana', icon: '🍌', en: 'Bananas', unit: '1 Kg', price: 4.5, ur: 'کیلا', ar: 'موز', hi: 'केला', ro: 'Kela', si: 'කෙසෙල්', ta: 'வாழைப்பழம்' },
+      { id: 'orange', icon: '🍊', en: 'Oranges', unit: '1 Kg', price: 5.5, ur: 'مالٹا', ar: 'برتقال', hi: 'संतरा', ro: 'Malta', si: 'දොඩම්', ta: 'ஆரஞ்சு' },
+      { id: 'coriander', icon: '🌿', en: 'Coriander/Mint', unit: '1 Bunch', price: 1.5, ur: 'دھنیا پودینہ', ar: 'كزبرة ونعناع', hi: 'धनिया पुदीना', ro: 'Dhaniya Pudina', si: 'කොත්තමල්ලි', ta: 'கொத்தமல்லி' },
+      { id: 'milk', icon: '🥛', en: 'Fresh Milk', unit: '1 L', price: 6.0, ur: 'دودھ', ar: 'حليب', hi: 'दूध', ro: 'Doodh', si: 'කිරි', ta: 'பால்' },
+      { id: 'yogurt', icon: '🥣', en: 'Yogurt / Curd', unit: '500g', price: 3.0, ur: 'دہی', ar: 'زبادي', hi: 'दही', ro: 'Dahi', si: 'යෝගට්', ta: 'தயிர்' },
+      { id: 'bread', icon: '🍞', en: 'Bread', unit: '1 Pc', price: 4.5, ur: 'بریڈ', ar: 'خبز', hi: 'ब्रेड', ro: 'Bread', si: 'පාන්', ta: 'ரொட்டி' },
+      { id: 'butter', icon: '🧈', en: 'Butter', unit: '200g', price: 7.0, ur: 'مکھن', ar: 'زبدة', hi: 'मक्खन', ro: 'Makhan', si: 'බටර්', ta: 'வெண்ணெய்' },
+      { id: 'eggs', icon: '🥚', en: 'Eggs', unit: '6 Pcs', price: 5.0, ur: 'انڈے', ar: 'بيض', hi: 'अंडे', ro: 'Anday', si: 'බිත්තර', ta: 'முட்டை' },
+      { id: 'eggtray', icon: '📦', en: 'Egg Tray', unit: '30 Pcs', price: 22.0, ur: 'انڈے کریٹ', ar: 'طبق بيض', hi: 'अंडे کی ट्रे', ro: 'Anday Tray', si: 'බිත්තර තට්ටුව', ta: 'முட்டை தட்டு' },
+      { id: 'sugar', icon: '🧂', en: 'White Sugar', unit: '1 Kg', price: 4.0, ur: 'چینی', ar: 'سكر', hi: 'चीनी', ro: 'Cheeni', si: 'සීනි', ta: 'சர்க்கரை' },
+      { id: 'rice', icon: '🍚', en: 'Basmati Rice', unit: '1 Kg', price: 7.5, ur: 'چاول', ar: 'أرز', hi: 'चावल', ro: 'Chawal', si: 'සහල්', ta: 'அரிசி' },
+      { id: 'flour', icon: '🌾', en: 'Wheat Flour / Atta', unit: '2 Kg', price: 8.0, ur: 'آٹا', ar: 'دقيق', hi: 'आटा', ro: 'Atta', si: 'තිරිඟු පිටි', ta: 'கோதுமை மாவு' },
+      { id: 'oil', icon: '🫗', en: 'Cooking Oil', unit: '1 L', price: 14.0, ur: 'تیل', ar: 'زيت', hi: 'तेल', ro: 'Oil', si: 'තෙල්', ta: 'எண்ணெய்' },
+      { id: 'ghee', icon: '🧈', en: 'Pure Ghee', unit: '1 Kg', price: 15.0, ur: 'گھی', ar: 'سمن', hi: 'घी', ro: 'Ghee', si: 'එළඟිතෙල්', ta: 'நெய்' },
+      { id: 'daalchana', icon: '🍲', en: 'Daal Chana', unit: '1 Kg', price: 9.5, ur: 'دال چنا', ar: 'حمص مجروش', hi: 'दाल चना', ro: 'Daal Chana', si: 'කඩල පරිප්පු', ta: 'கடலை பருப்பு' },
+      { id: 'daalmash', icon: '🥣', en: 'Daal Mash', unit: '1 Kg', price: 11.0, ur: 'دال ماش', ar: 'عدس ماش', hi: 'दाल उड़द', ro: 'Daal Mash', si: 'උඳු ධාන්‍ය', ta: 'உளுந்து' },
+      { id: 'daalmoong', icon: '🥣', en: 'Daal Moong', unit: '1 Kg', price: 10.0, ur: 'دال مونگ', ar: 'عدس أصفر', hi: 'दाल मूंग', ro: 'Daal Moong', si: 'මුං පරිප්පු', ta: 'பாசிப்பருப்பு' },
+      { id: 'daalmasoor', icon: '🥣', en: 'Red Lentils / Masoor', unit: '1 Kg', price: 8.5, ur: 'مسور دال', ar: 'عدس أحمر', hi: 'मसूर दाल', ro: 'Daal Masoor', si: 'මසූර් පරිප්පු', ta: 'மைசூர் பருப்பு' },
+      { id: 'salt', icon: '🧂', en: 'Table Salt', unit: '800g', price: 2.0, ur: 'نمک', ar: 'ملح طعام', hi: 'नमक', ro: 'Namak', si: 'ලුණු', ta: 'உப்பு' },
+      { id: 'pepper', icon: '🧂', en: 'Black Pepper', unit: '100g', price: 6.0, ur: 'کالی مرچ', ar: 'فلفل أسود', hi: 'काली मिर्च', ro: 'Kali Mirch', si: 'ගම්මිරිස්', ta: 'கருப்பு மிளகு' },
+      { id: 'water', icon: '💧', en: 'Water Bottle', unit: '1.5 L', price: 1.5, ur: 'پانی', ar: 'ماء', hi: 'पानी', ro: 'Pani', si: 'වතුර', ta: 'தண்ணீர்' },
+      { id: 'drink', icon: '🥤', en: 'Soft Drink', unit: '1.5 L', price: 2.5, ur: 'کولڈ ڈرنک', ar: 'مشروب غازي', hi: 'कोल्ड ड्रिंक', ro: 'Drink', si: 'බීම', ta: 'குளிர்பானம்' },
+      { id: 'tea', icon: '☕', en: 'Tea Dust', unit: '400g', price: 12.0, ur: 'چائے', ar: 'شاي', hi: 'चाय', ro: 'Chai', si: 'තේ කොළ', ta: 'தேநீர்' },
+      { id: 'coffee', icon: '☕', en: 'Instant Coffee', unit: '100g', price: 16.5, ur: 'کافی', ar: 'قهوة', hi: 'कॉफ़ी', ro: 'Coffee', si: 'කෝපි', ta: 'காபி' },
+      { id: 'biscuits', icon: '🍪', en: 'Biscuits / Cookies', unit: '1 Pack', price: 2.0, ur: 'بسکٹ', ar: 'بسكويت', hi: 'बिस्कुट', ro: 'Biscuit', si: 'බිස්කට්', ta: 'பிஸ்கட்' },
+      { id: 'chips', icon: '🍟', en: 'Potato Chips', unit: '1 Pack', price: 3.0, ur: 'چپس', ar: 'رقائق بطاطس', hi: 'चिप्स', ro: 'Chips', si: 'චිප්ස්', ta: 'சிப்ஸ்' },
+      { id: 'chicken', icon: '🍗', en: 'Fresh Chicken', unit: '1 Kg', price: 15.0, ur: 'مرغی', ar: 'دجاج', hi: 'चिकन', ro: 'Chicken', si: 'කුකුල් මස්', ta: 'கோழி' },
+      { id: 'meat', icon: '🥩', en: 'Fresh Meat / Mutton', unit: '1 Kg', price: 38.0, ur: 'گوشت', ar: 'لحم', hi: 'मटन', ro: 'Gosht', si: 'මස්', ta: 'இறைச்சி' },
+      { id: 'fish', icon: '🐟', en: 'Fresh Fish', unit: '1 Kg', price: 22.0, ur: 'مچھلی', ar: 'سمك', hi: 'मछली', ro: 'Fish', si: 'මාළු', ta: 'மீன்' },
+      { id: 'soap', icon: '🧼', en: 'Bath Soap', unit: '1 Pc', price: 3.5, ur: 'صابن', ar: 'صابون', hi: 'साबुन', ro: 'Sabun', si: 'සබන්', ta: 'சோப்பு' },
+      { id: 'surf', icon: '🧺', en: 'Detergent / Surf', unit: '1 Pack', price: 8.5, ur: 'سرف', ar: 'مسحوق غسيل', hi: 'डिटर्जेंट', ro: 'Surf', si: 'රෙදි සෝදන කුඩු', ta: 'சலவை தூள்' },
+      { id: 'shampoo', icon: '🧴', en: 'Shampoo', unit: '200ml', price: 16.0, ur: 'شیمپو', ar: 'شامبو', hi: 'शैम्पू', ro: 'Shampoo', si: 'ෂැම්පු', ta: 'ஷாம்பு' },
+      { id: 'dishwash', icon: '🧴', en: 'Dishwash Liquid', unit: '500ml', price: 7.5, ur: 'برتن دھونے کا مائع', ar: 'سائل غسيل الصحون', hi: 'बर्तन धोने का तरल', ro: 'Dishwash', si: 'පිඟන් සෝදන දියර', ta: 'பாத்திரம் கழுவும் திரவம்' },
+      { id: 'tissue', icon: '🧻', en: 'Tissue Box', unit: '1 Box', price: 4.5, ur: 'ٹشو باکس', ar: 'علبة مناديل', hi: 'टिशू बॉक्स', ro: 'Tissue', si: 'ටිෂූ පෙට්ටිය', ta: 'திசு பெட்டி' },
+      { id: 'diaper', icon: '👶', en: 'Baby Diapers', unit: '1 Pack', price: 35.0, ur: 'پیمپرز', ar: 'حفاضات', hi: 'डायपर', ro: 'Pampers', si: 'ඩයපර්', ta: 'டயப்பர்கள்' }
+    ]];
 
     // ================= FULL BILINGUAL UI STRINGS DICTIONARY =================
     const i18n = {
@@ -806,8 +1144,102 @@
         cashBtn: "Cash / ரொக்கம்", khataBtn: "Khata / கடன்", cardBtn: "Card / அட்டை", splitBtn: "Split / பகிர்வு",
         thItem: "பொருள்", thQty: "எண்ணிக்கை", thSize: "அளவு", thRate: "விலை", thTotal: "மொத்தம்",
         todaySales: "இன்றைய விற்பனை", cashSales: "ரொக்க வசூல்", khataSales: "கடன் விற்பனை"
+      },
+      en: {
+        subtotal: "Subtotal:", discount: "Discount:", round: "Round Off:", net: "Net Total:",
+        cashBtn: "Cash / Cash Bill", khataBtn: "Khata / Ledger", cardBtn: "Card / Card Bill", splitBtn: "Split / Multi",
+        thItem: "Item Name", thQty: "Qty", thSize: "Unit", thRate: "Rate", thTotal: "Total",
+        todaySales: "Today Sales", cashSales: "Cash Collected", khataSales: "Khata Credit"
       }
     };
+
+    // ================= TOAST NOTIFICATION SYSTEM =================
+    const toastSecDict = {
+      ur: {
+        'Invoice Saved Successfully!': 'بل کامیابی سے محفوظ ہو گیا!',
+        'Customer Name or Phone required for Khata!': 'کھاتہ کے لیے گاہک کا نام یا فون درج کریں!',
+        'Please enter items to bill!': 'برائے مہربانی بل کے لیے اشیاء درج کریں!',
+        'Barcode not registered!': 'یہ بارکوڈ سسٹم میں درج نہیں ہے!',
+        'Bill Cleared': 'بل صاف کر دیا گیا!',
+        'Items Added to Bill!': 'اشیاء بل میں شامل کر دی گئیں!',
+        'Stock Adjusted Successfully!': 'اسٹاک کامیابی سے ایڈجسٹ ہو گیا!'
+      },
+      ar: {
+        'Invoice Saved Successfully!': 'تم حفظ الفاتورة بنجاح!',
+        'Customer Name or Phone required for Khata!': 'اسم العميل أو الهاتف مطلوب للآجل!',
+        'Please enter items to bill!': 'يرجى إضافة أصناف إلى الفاتورة!',
+        'Barcode not registered!': 'الباركود غير مسجل في النظام!',
+        'Bill Cleared': 'تم مسح الفاتورة!',
+        'Items Added to Bill!': 'تمت إضافة الأصناف إلى الفاتورة!',
+        'Stock Adjusted Successfully!': 'تم تعديل المخزون بنجاح!'
+      },
+      hi: {
+        'Invoice Saved Successfully!': 'बिल सफलतापूर्वक सहेजा गया!',
+        'Customer Name or Phone required for Khata!': 'खाते के लिए ग्राहक का नाम या फ़ोन आवश्यक है!',
+        'Please enter items to bill!': 'कृपया बिल में आइटम जोड़ें!',
+        'Barcode not registered!': 'यह बारकोड पंजीकृत नहीं है!',
+        'Bill Cleared': 'बिल साफ कर दिया गया!',
+        'Items Added to Bill!': 'आइटम बिल में जोड़े गए!',
+        'Stock Adjusted Successfully!': 'स्टॉक सफलतापूर्वक अपडेट हो गया!'
+      },
+      ro: {
+        'Invoice Saved Successfully!': 'Bill kamyabi se save ho gaya!',
+        'Customer Name or Phone required for Khata!': 'Khata ke liye customer ka naam ya phone lazmi hai!',
+        'Please enter items to bill!': 'Baraye mehrbani items add karein!',
+        'Barcode not registered!': 'Barcode register nahi hai!',
+        'Bill Cleared': 'Bill saaf kar diya gaya!',
+        'Items Added to Bill!': 'Items bill mein shamil kar di gayin!',
+        'Stock Adjusted Successfully!': 'Stock update ho gaya!'
+      },
+      si: {
+        'Invoice Saved Successfully!': 'බිල්පත සාර්ථකව සුරකින ලදී!',
+        'Customer Name or Phone required for Khata!': 'ණය සඳහා පාරිභෝගික නම හෝ දුරකථනය අවශ්‍යයි!',
+        'Please enter items to bill!': 'කරුණාකර අයිතම ඇතුළත් කරන්න!',
+        'Barcode not registered!': 'බාර්කෝඩ් ලියාපදිංචි කර නැත!',
+        'Bill Cleared': 'බිල්පත හිස් කරන ලදී!',
+        'Items Added to Bill!': 'අයිතම බිල්පතට එක් කරන ලදී!',
+        'Stock Adjusted Successfully!': 'තොගය සාර්ථකව යාවත්කාලීන කරන ලදී!'
+      },
+      ta: {
+        'Invoice Saved Successfully!': 'விலைப்பட்டியல் வெற்றிகரமாக சேமிக்கப்பட்டது!',
+        'Customer Name or Phone required for Khata!': 'கடனுக்கு வாடிக்கையாளர் பெயர் அல்லது தொலைபேசி தேவை!',
+        'Please enter items to bill!': 'தயவுசெய்து பொருட்களை உள்ளிடவும்!',
+        'Barcode not registered!': 'பார்கோடு பதிவு செய்யப்படவில்லை!',
+        'Bill Cleared': 'பில் அழிக்கப்பட்டது!',
+        'Items Added to Bill!': 'பொருட்கள் சேர்க்கப்பட்டன!',
+        'Stock Adjusted Successfully!': 'பங்கு வெற்றிகரமாக புதுப்பிக்கப்பட்டது!'
+      }
+    };
+
+    function showToast(titleEn, titleSec = '', type = 'info', duration = 2400) {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+      const pill = document.createElement('div');
+      pill.className = `toast-pill toast-${type}`;
+      
+      let icon = 'ℹ️';
+      if (type === 'success') icon = '✅';
+      else if (type === 'error') icon = '❌';
+      else if (type === 'warning') icon = '⚠️';
+
+      if (!titleSec && toastSecDict[currentSecondaryLang]) {
+        titleSec = toastSecDict[currentSecondaryLang][titleEn] || '';
+      }
+
+      pill.innerHTML = `
+        <div class="toast-icon">${icon}</div>
+        <div class="toast-content">
+          <div class="toast-title-en">${titleEn}</div>
+          ${titleSec ? `<div class="toast-title-sec">${titleSec}</div>` : ''}
+        </div>
+      `;
+      container.appendChild(pill);
+
+      setTimeout(() => {
+        pill.style.animation = 'toastFadeOut 0.22s forwards';
+        setTimeout(() => pill.remove(), 220);
+      }, duration);
+    }
 
     function formatSystemDateTime(isoStr) {
       if (!isoStr) return '';
@@ -923,9 +1355,10 @@
       renderReceiptRows(currentParsedData);
     }
 
-    // ================= 3D BUTTONS RENDERER =================
+    // ================= 3D TACTILE BUTTONS RENDERER =================
     function renderQuickButtons() {
       const container = document.getElementById('quickButtonsContainer');
+      if (!container) return;
       container.innerHTML = '';
       catalogItems.forEach(item => {
         const localName = item[currentSecondaryLang] || item['ur'];
@@ -937,84 +1370,128 @@
             </div>
             <div class="key-bottom-row">
               <span class="key-unit">${item.unit}</span>
-              <span class="key-sep">/</span>
-              <span class="key-price-badge">${currentCurrency} ${item.price}</span>
+              <span class="key-price-badge">${currentCurrency} ${parseFloat(item.price).toFixed(2)}</span>
             </div>
           </button>
         `;
       });
     }
 
-    function addCatalogItem(itemName, price) {
+    // ================= INSTANT 0-MS CLIENT-SIDE BILLING =================
+    function syncBulkInputFromParsedData() {
       const box = document.getElementById('bulkInput');
+      if (!box) return;
+      box.value = currentParsedData.map(it => `${it.qty} ${it.name} ${it.unit_price}`).join('\n');
+    }
+
+    function addCatalogItem(itemName, price) {
       const targetLower = itemName.toLowerCase().trim();
       const cat = catalogItems.find(it => it.en.toLowerCase() === targetLower || it.id === targetLower);
-
-      // Collect all names/aliases for this item
-      const aliases = [targetLower];
-      if (cat) {
-        if (cat.id) aliases.push(cat.id.toLowerCase());
-        if (cat.en) aliases.push(cat.en.toLowerCase());
-        if (cat.ur) aliases.push(cat.ur.toLowerCase());
-        if (cat.ar) aliases.push(cat.ar.toLowerCase());
-        if (cat.ro) aliases.push(cat.ro.toLowerCase());
-        if (cat.hi) aliases.push(cat.hi.toLowerCase());
-        if (cat.si) aliases.push(cat.si.toLowerCase());
-        if (cat.ta) aliases.push(cat.ta.toLowerCase());
+      
+      let existing = currentParsedData.find(it => it.name.toLowerCase().trim() === targetLower);
+      if (!existing && cat) {
+        existing = currentParsedData.find(it => {
+          const itName = it.name.toLowerCase().trim();
+          return itName === cat.en.toLowerCase() ||
+                 (cat.ur && itName === cat.ur.toLowerCase()) ||
+                 (cat.ro && itName === cat.ro.toLowerCase());
+        });
       }
 
-      const rawVal = box.value;
-      const lines = rawVal.split('\n');
-      let found = false;
-      const updatedLines = [];
-
-      for (let i = 0; i < lines.length; i++) {
-        const rawLine = lines[i];
-        const trimmed = rawLine.trim();
-        if (!trimmed) {
-          updatedLines.push(rawLine);
-          continue;
-        }
-
-        const m = trimmed.match(/^(?:(\d+(?:\.\d+)?)\s*(?:x|\*|pcs|pc|kg|l)?\s+)?(.*?)(?:\s+(\d+(?:\.\d+)?))?$/i);
-        let lineMatches = false;
-        let currentQty = 1;
-        let linePrice = price;
-
-        if (m) {
-          currentQty = m[1] ? parseFloat(m[1]) : 1;
-          const namePart = (m[2] || '').trim().toLowerCase();
-          linePrice = m[3] ? parseFloat(m[3]) : price;
-
-          lineMatches = aliases.some(alias => {
-            if (!alias) return false;
-            return namePart === alias ||
-                   namePart.startsWith(alias + ' ') ||
-                   namePart.endsWith(' ' + alias) ||
-                   namePart.includes(' ' + alias + ' ');
-          });
-
-          if (!lineMatches && namePart === targetLower) {
-            lineMatches = true;
-          }
-        }
-
-        if (!found && lineMatches) {
-          found = true;
-          const newQty = Math.round((currentQty + 1) * 100) / 100;
-          updatedLines.push(`${newQty} ${itemName} ${linePrice}`);
-        } else {
-          updatedLines.push(rawLine);
-        }
-      }
-
-      if (found) {
-        box.value = updatedLines.join('\n');
+      if (existing) {
+        existing.qty = Math.round((parseFloat(existing.qty || 1) + 1) * 100) / 100;
+        existing.line_total = (Math.round(existing.qty * parseFloat(existing.unit_price) * 100) / 100).toFixed(2);
       } else {
-        const newLine = `1 ${itemName} ${price}`;
-        box.value = box.value.trim() ? (box.value.trim() + '\n' + newLine) : newLine;
+        currentParsedData.push({
+          name: itemName,
+          qty: 1,
+          unit_price: parseFloat(price).toFixed(2),
+          line_total: parseFloat(price).toFixed(2)
+        });
       }
-      debounceParse();
+
+      // Sync and render instantly with 0ms network latency!
+      syncBulkInputFromParsedData();
+      renderReceiptRows(currentParsedData);
+      recalcTotals();
+
+      const secName = cat ? (cat[currentSecondaryLang] || cat.ur || '') : '';
+      showToast(`Added: ${itemName}`, secName ? `شامل ہو گیا: ${secName}` : '', 'info', 1000);
+    }
+
+    function adjustItemQty(idx, delta) {
+      if (!currentParsedData[idx]) return;
+      const current = parseFloat(currentParsedData[idx].qty) || 1;
+      const newQty = Math.round((current + delta) * 100) / 100;
+      if (newQty <= 0) {
+        currentParsedData.splice(idx, 1);
+      } else {
+        currentParsedData[idx].qty = newQty;
+        currentParsedData[idx].line_total = (Math.round(newQty * parseFloat(currentParsedData[idx].unit_price) * 100) / 100).toFixed(2);
+      }
+      syncBulkInputFromParsedData();
+      renderReceiptRows(currentParsedData);
+      recalcTotals();
+    }
+
+    function removeItemRow(idx) {
+      if (!currentParsedData[idx]) return;
+      const removed = currentParsedData[idx].name;
+      currentParsedData.splice(idx, 1);
+      syncBulkInputFromParsedData();
+      renderReceiptRows(currentParsedData);
+      recalcTotals();
+      showToast(`Removed: ${removed}`, 'آئٹم بل سے ہٹا دی گئی', 'info', 1200);
+    }
+
+    function clearCurrentBill() {
+      if (!currentParsedData.length && !document.getElementById('custName').value && !document.getElementById('custPhone').value) return;
+      currentParsedData = [];
+      document.getElementById('bulkInput').value = '';
+      document.getElementById('custName').value = '';
+      document.getElementById('custPhone').value = '';
+      document.getElementById('discount').value = '0';
+      document.getElementById('roundOff').value = '0';
+      renderReceiptRows([]);
+      recalcTotals();
+      showToast('Bill Cleared', 'بل صاف کر دیا گیا', 'info', 1200);
+    }
+
+    // ================= PASTE TEXT LIST MODAL CONTROLS =================
+    function openPasteModal() {
+      const modal = document.getElementById('pasteModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        const ta = document.getElementById('pasteModalTextarea');
+        if (ta) {
+          ta.value = document.getElementById('bulkInput').value || '';
+          setTimeout(() => ta.focus(), 80);
+        }
+      }
+    }
+
+    function applyPasteModalToBill() {
+      const text = document.getElementById('pasteModalTextarea').value;
+      if (!text.trim()) {
+        closeModal('pasteModal');
+        return;
+      }
+      document.getElementById('bulkInput').value = text;
+      closeModal('pasteModal');
+      
+      const fd = new FormData();
+      fd.append('raw_text', text);
+      fetch('/api/parse-preview/', { method: 'POST', body: fd })
+      .then(res => res.json())
+      .then(data => {
+        currentParsedData = data.items || [];
+        renderReceiptRows(currentParsedData);
+        recalcTotals();
+        showToast('Items Added to Bill!', 'فہرست بل میں شامل کر دی گئی', 'success');
+      })
+      .catch(() => {
+        showToast('Error parsing text list', 'فہرست پارس کرنے میں خرابی', 'error');
+      });
     }
 
     function debounceParse() {
@@ -1024,6 +1501,12 @@
 
     function fetchSmartParsedReceipt() {
       const text = document.getElementById('bulkInput').value;
+      if (!text.trim()) {
+        currentParsedData = [];
+        renderReceiptRows([]);
+        recalcTotals();
+        return;
+      }
       const fd = new FormData();
       fd.append('raw_text', text);
 
@@ -1038,18 +1521,39 @@
 
     function renderReceiptRows(items) {
       const tbody = document.getElementById('previewRows');
+      if (!tbody) return;
       tbody.innerHTML = '';
+      if (!items || items.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align:center; padding: 28px 10px; color:#94a3b8; font-style:italic;">
+              🛒 Cart is empty.
+              <br><small style="color:#64748b;">Click buttons on left or scan barcode to add items.</small>
+            </td>
+          </tr>
+        `;
+        return;
+      }
       items.forEach((it, idx) => {
         const dualName = formatDualLanguageName(it.name);
         const unit = getItemUnit(it.name);
         tbody.innerHTML += `
           <tr>
-            <td style="text-align:center; color:#64748b;">${idx+1}</td>
-            <td><strong>${dualName}</strong></td>
-            <td style="text-align:center;">${it.qty}</td>
-            <td style="text-align:center; color:#64748b;">${unit}</td>
-            <td style="text-align:right;">${it.unit_price}</td>
-            <td style="text-align:right; font-weight:bold;">${it.line_total}</td>
+            <td style="text-align:center; color:#64748b; font-size:11px;">${idx+1}</td>
+            <td style="font-weight:700;">
+              <div>${dualName}</div>
+            </td>
+            <td style="text-align:center; white-space:nowrap;">
+              <button onclick="adjustItemQty(${idx}, -1)" style="border:none; background:#e2e8f0; color:#0f172a; width:18px; height:18px; border-radius:3px; cursor:pointer; font-weight:bold; font-size:11px; margin-right:2px;">-</button>
+              <span style="font-weight:800; min-width:16px; display:inline-block;">${it.qty}</span>
+              <button onclick="adjustItemQty(${idx}, 1)" style="border:none; background:#e2e8f0; color:#0f172a; width:18px; height:18px; border-radius:3px; cursor:pointer; font-weight:bold; font-size:11px; margin-left:2px;">+</button>
+            </td>
+            <td style="text-align:center; color:#64748b; font-size:11px;">${unit}</td>
+            <td style="text-align:right;">${parseFloat(it.unit_price).toFixed(2)}</td>
+            <td style="text-align:right; font-weight:bold; color:#0f172a; white-space:nowrap;">
+              ${parseFloat(it.line_total).toFixed(2)}
+              <span onclick="removeItemRow(${idx})" title="Remove item" style="color:#ef4444; cursor:pointer; margin-left:4px; font-weight:bold; font-size:13px;">×</span>
+            </td>
           </tr>
         `;
       });
@@ -1067,11 +1571,12 @@
 
     // ================= SUBMIT SALES BILL =================
     function submitBill(paymentMode, splitCash=0, splitCard=0) {
-      const rawText = document.getElementById('bulkInput').value.trim();
-      if (!rawText) {
-        alert('⚠️ Please enter items to bill! / برائے مہربانی بل کے لیے اشیاء درج کریں');
+      if (!currentParsedData.length) {
+        showToast('Please enter items to bill!', 'برائے مہربانی بل کے لیے اشیاء درج کریں', 'warning');
         return;
       }
+      syncBulkInputFromParsedData();
+      const rawText = document.getElementById('bulkInput').value.trim();
 
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
@@ -1079,7 +1584,7 @@
       const round = document.getElementById('roundOff').value || '0';
 
       if (paymentMode === 'khata' && !name && !phone) {
-        alert('⚠️ Please enter Customer Name or Phone for Khata! / کھاتہ کے لیے گاہک کا نام یا فون درج کریں');
+        showToast('Customer Name or Phone required for Khata!', 'کھاتہ کے لیے گاہک کا نام یا فون درج کریں', 'error');
         return;
       }
 
@@ -1098,17 +1603,23 @@
       .then(res => res.json())
       .then(data => {
         if (data.success) {
+          showToast('Invoice Saved Successfully!', 'بل کامیابی سے محفوظ ہو گیا!', 'success');
           openReceiptModalDirect(data.token);
+          currentParsedData = [];
           document.getElementById('bulkInput').value = '';
           document.getElementById('discount').value = '0';
           document.getElementById('roundOff').value = '0';
           document.getElementById('custName').value = '';
           document.getElementById('custPhone').value = '';
-          fetchSmartParsedReceipt();
+          renderReceiptRows([]);
+          recalcTotals();
           loadKhataDatalist();
         } else {
-          alert('Error: ' + data.error);
+          showToast('Error creating invoice', data.error || '', 'error');
         }
+      })
+      .catch(err => {
+        showToast('Server connection error', 'سرور سے رابطہ نہ ہو سکا', 'error');
       });
     }
 
@@ -1141,10 +1652,21 @@
       submitBill('split', cash, card);
     }
 
-    // ================= UNIFIED 7-MODULES HUB CONTROLS =================
+    // ================= UNIFIED 7-MODULES FULL SCREEN CONTROLS =================
     function openModularHub(tab) {
-      document.getElementById('reportsModal').style.display = 'flex';
+      document.getElementById('posMainContainer').style.display = 'none';
+      const fsView = document.getElementById('moduleFullScreenView');
+      fsView.style.display = 'flex';
+      const fsTitle = document.getElementById('fsStoreTitle');
+      if (fsTitle) fsTitle.innerText = currentStoreName;
       switchReportTab(tab);
+      window.scrollTo(0, 0);
+    }
+
+    function closeModularHub() {
+      document.getElementById('moduleFullScreenView').style.display = 'none';
+      document.getElementById('posMainContainer').style.display = 'grid';
+      window.scrollTo(0, 0);
     }
 
     function switchReportTab(tab) {
@@ -1827,13 +2349,20 @@
             addCatalogItem(data.name, parseFloat(data.price));
             document.getElementById('barcodeScanner').value = '';
           } else {
-            alert('Barcode not registered! / بارکوڈ درج نہیں ہے');
+            showToast('Barcode not registered!', 'یہ بارکوڈ سسٹم میں درج نہیں ہے', 'error');
           }
         });
       }
     }
 
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function closeModal(id) { 
+      if (id === 'reportsModal' || id === 'moduleFullScreenView') {
+        closeModularHub();
+        return;
+      }
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    }
 
     // Init on load
     window.addEventListener('DOMContentLoaded', () => {

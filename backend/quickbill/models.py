@@ -78,6 +78,7 @@ class RegisteredMerchant(models.Model):
     country = models.CharField(max_length=50, default="United Arab Emirates")
     city = models.CharField(max_length=50, default="Dubai")
     currency = models.CharField(max_length=10, default="AED")
+    language = models.CharField(max_length=20, default="ur")
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
