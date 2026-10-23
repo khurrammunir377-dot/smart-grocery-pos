@@ -247,122 +247,497 @@
     }
     .held-bill-card:hover { border-color: #38bdf8; }
 
-    /* ================= MODERN CENTRAL LAUNCHER HOME SCREEN (ERP & POS HUB) ================= */
+    /* ================= EXACT "INTEGRATED BUSINESS SOLUTION" ENTERPRISE LAUNCHER ================= */
     .launcher-hub-container {
-      display: none; flex-direction: column; flex: 1; overflow-y: auto;
-      background: radial-gradient(circle at 50% 15%, #0f2342 0%, #060b14 70%);
-      padding: 14px 20px; box-sizing: border-box; align-items: center;
-    }
-    .launcher-hub-content {
-      width: 100%; max-width: 1240px; display: flex; flex-direction: column; gap: 16px;
-    }
-
-    /* Hero Strip */
-    .launcher-hero-strip {
-      background: linear-gradient(135deg, rgba(15,23,42,0.9) 0%, rgba(8,15,29,0.95) 100%);
-      border: 1.5px solid #1e3a8a; border-radius: 16px; padding: 14px 20px;
-      display: flex; justify-content: space-between; align-items: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6); flex-wrap: wrap; gap: 12px;
-    }
-    .launcher-title-area { display: flex; align-items: center; gap: 14px; }
-    .launcher-emblem {
-      font-size: 32px; background: #080f1d; border: 2px solid #38bdf8;
-      border-radius: 12px; padding: 6px 12px; box-shadow: 0 0 20px rgba(56,189,248,0.3);
-    }
-    .launcher-store-heading {
-      margin: 0; font-size: 24px; font-weight: 900; color: #f8fafc; letter-spacing: -0.5px;
-    }
-    .launcher-sub-badge {
-      display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700;
-      color: #94a3b8; margin-top: 3px;
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      min-height: calc(100vh - 55px);
+      background: #dce5ee;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      position: relative;
+      overflow-x: hidden;
+      box-sizing: border-box;
+      user-select: none;
     }
 
-    .btn-hero-launch-pos {
-      background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #0284c7 100%);
-      background-size: 200% auto;
-      color: #ffffff; border: 2px solid #38bdf8; border-radius: 12px;
-      padding: 12px 26px; font-size: 15px; font-weight: 900; cursor: pointer;
-      box-shadow: 0 8px 25px rgba(2, 132, 199, 0.5), inset 0 1px 0 rgba(255,255,255,0.3);
-      display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s ease;
+    /* Top Lime Strip & Enterprise Navy Header Banner */
+    .ibs-top-lime-bar {
+      height: 5px;
+      background: #84cc16;
+      width: 100%;
+    }
+    .ibs-header-banner {
+      background: linear-gradient(90deg, #0c2b4e 0%, #10345d 60%, #153e6d 100%);
+      color: #ffffff;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(12, 43, 78, 0.35);
+    }
+    /* Skyscraper / architectural pattern texture on right */
+    .ibs-header-banner::before {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 36%;
+      background: 
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 0, transparent 14px),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 0, transparent 14px),
+        linear-gradient(135deg, rgba(22, 62, 109, 0.4) 0%, rgba(12, 43, 78, 0.8) 100%);
+      clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+      border-left: 3px solid #84cc16;
+      pointer-events: none;
+    }
+    .ibs-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+    .ibs-header-logo {
+      width: 36px;
+      height: 36px;
+      background: #84cc16;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #0c2b4e;
+      font-size: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .ibs-header-title {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #ffffff;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+    .ibs-header-subtitle {
+      font-size: 11px;
+      font-weight: 700;
+      color: #84cc16;
+      letter-spacing: 0.6px;
+    }
+
+    .ibs-header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+    .btn-launch-pos-hero {
+      background: linear-gradient(180deg, #16a34a 0%, #15803d 100%);
+      color: #ffffff;
+      border: 1.5px solid #84cc16;
+      border-radius: 6px;
+      padding: 8px 18px;
+      font-weight: 800;
+      font-size: 13.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+      transition: all 0.18s ease;
+    }
+    .btn-launch-pos-hero:hover {
+      background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+      transform: scale(1.03);
+      box-shadow: 0 6px 18px rgba(132, 204, 22, 0.6);
+    }
+
+    /* Main Hub Stage */
+    .ibs-stage-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      position: relative;
+      min-height: 520px;
+    }
+    .ibs-radial-canvas {
+      width: 100%;
+      max-width: 1100px;
+      height: 510px;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    /* Central Radiant Starburst & Hub */
+    .ibs-center-hub {
+      position: absolute;
+      top: 49%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 360px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+    .ibs-starburst-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 460px;
+      height: 460px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.9;
+    }
+
+    /* Date Filter Row in Center */
+    .ibs-date-picker-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 3px 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      position: relative;
+      z-index: 6;
+    }
+    .ibs-date-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #334155;
+      white-space: nowrap;
+    }
+    .ibs-date-box {
+      display: inline-flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #94a3b8;
+      border-radius: 3px;
+      padding: 2px 5px;
+      gap: 3px;
+    }
+    .ibs-date-strip {
+      width: 16px;
+      height: 11px;
+      background: linear-gradient(90deg, #2563eb 0%, #ef4444 100%);
+      border-radius: 2px;
+      display: inline-block;
+    }
+    .ibs-date-input {
+      border: none;
+      background: transparent;
+      font-size: 11px;
+      font-family: monospace;
+      color: #1e293b;
+      font-weight: 700;
+      width: 80px;
+      padding: 0;
+      outline: none;
+    }
+    .ibs-date-icon {
+      font-size: 11px;
+      color: #64748b;
+      cursor: pointer;
+    }
+
+    /* Center Brand Logo & Typography */
+    .ibs-brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      z-index: 6;
+    }
+    .ibs-brand-logo-glyph {
+      width: 44px;
+      height: 44px;
+      filter: drop-shadow(0 2px 6px rgba(132, 204, 22, 0.45));
+    }
+    .ibs-brand-text-col {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .ibs-brand-main-title {
+      font-size: 21px;
+      font-weight: 900;
+      color: #0c2b4e;
+      letter-spacing: 1.5px;
+      line-height: 1.1;
+      font-family: "Arial Black", -apple-system, sans-serif;
+    }
+    .ibs-brand-sub-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #254972;
+      letter-spacing: 1.2px;
+      line-height: 1.1;
+    }
+    .ibs-brand-store-name {
+      margin-top: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #0284c7;
+      background: rgba(2, 132, 199, 0.08);
+      border: 1px solid rgba(2, 132, 199, 0.25);
+      border-radius: 12px;
+      padding: 2px 9px;
+      display: inline-block;
+      align-self: flex-start;
+    }
+
+    /* Radial Spoke Buttons */
+    .ibs-spoke-node {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      z-index: 10;
+    }
+    .ibs-btn {
+      background: linear-gradient(180deg, #1b4575 0%, #0d284a 100%);
+      color: #ffffff;
+      border: 1.5px solid #2b5f9e;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(13, 40, 74, 0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+      padding: 9px 18px;
+      min-width: 126px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
+      white-space: nowrap;
+    }
+    .ibs-btn:hover {
+      transform: scale(1.06);
+      border-color: #84cc16;
+      box-shadow: 0 8px 22px rgba(132, 204, 22, 0.55), inset 0 1px 0 rgba(255,255,255,0.4);
+      background: linear-gradient(180deg, #225692 0%, #123764 100%);
+    }
+    .ibs-btn:active {
+      transform: scale(0.98);
+    }
+    .ibs-btn-pos {
+      background: linear-gradient(180deg, #1d4ed8 0%, #0c2b5c 100%);
+      border: 2px solid #38bdf8;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.45), 0 4px 12px rgba(13, 40, 74, 0.4);
+      position: relative;
+    }
+    .ibs-btn-pos:hover {
+      border-color: #84cc16;
+      box-shadow: 0 0 24px rgba(132, 204, 22, 0.7);
+    }
+    .ibs-pos-cursor {
+      position: absolute;
+      bottom: -6px;
+      right: -6px;
+      font-size: 18px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+      pointer-events: none;
+    }
+    .ibs-btn-sub {
+      font-size: 10px;
+      font-weight: 700;
+      opacity: 0.8;
+      color: #93c5fd;
+    }
+
+    /* Node Positioning (Symmetric Starburst Coordinates) */
+    .node-coa {
+      top: 1%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .node-invoices {
+      top: 12%;
+      left: 58%;
+    }
+    .node-ledger {
+      top: 49%;
+      left: 71%;
+      transform: translateY(-50%);
+    }
+    .node-inventory {
+      top: 73%;
+      left: 58%;
+    }
+    .node-petty {
+      top: 86%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .node-payroll {
+      top: 73%;
+      right: 58%;
+      flex-direction: row-reverse;
+    }
+    .node-pos {
+      top: 49%;
+      right: 71%;
+      transform: translateY(-50%);
+    }
+    .node-vouchers {
+      top: 12%;
+      right: 58%;
+      flex-direction: row-reverse;
+    }
+
+    /* Curved Callout Bracket SVGs & Text */
+    .ibs-callout-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .ibs-curve-svg {
+      width: 48px;
+      height: 38px;
+      flex-shrink: 0;
+    }
+    .ibs-callout-text {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #1e3a5f;
+      line-height: 1.35;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .ibs-callout-text-left {
+      text-align: right;
+    }
+
+    /* Status Bar Pill Just Above Footer */
+    .ibs-status-pill-row {
+      margin-top: 8px;
+      margin-bottom: 6px;
+      text-align: center;
+      z-index: 5;
+    }
+    .ibs-status-pill {
+      display: inline-block;
+      background: #c8d3df;
+      border: 1px solid #94a3b8;
+      border-radius: 3px;
+      padding: 3px 18px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: Consolas, monospace;
+      color: #1e293b;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+      letter-spacing: 0.5px;
+    }
+
+    /* Corporate Navy Footer Banner with Lime Accents */
+    .ibs-footer-banner {
+      background: #0c2647;
+      color: #94a3b8;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      border-top: 3px solid #84cc16;
+      box-shadow: 0 -4px 15px rgba(12, 38, 71, 0.25);
+    }
+    .ibs-footer-banner::before {
+      content: "";
+      position: absolute;
+      left: 110px;
+      top: 0;
+      bottom: 0;
+      width: 35px;
+      background: #84cc16;
+      transform: skewX(-25deg);
+      opacity: 0.9;
+    }
+    .ibs-footer-banner::after {
+      content: "";
+      position: absolute;
+      right: 260px;
+      top: 0;
+      bottom: 0;
+      width: 24px;
+      background: #84cc16;
+      transform: skewX(25deg);
+      opacity: 0.9;
+    }
+    .ibs-footer-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #f8fafc;
+      position: relative;
+      z-index: 2;
+    }
+    .ibs-footer-right {
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+      position: relative;
+      z-index: 2;
       letter-spacing: 0.3px;
     }
-    .btn-hero-launch-pos:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 12px 30px rgba(56, 189, 248, 0.7);
-    }
 
-    /* Central Core Date & KPI Bar */
-    .launcher-center-core {
-      background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px);
-      border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 14px;
-      padding: 12px 18px; display: flex; flex-direction: column; gap: 10px;
-    }
-    .core-date-filter-bar {
-      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-    }
-    .core-date-pill {
-      background: #0f172a; border: 1px solid #334155; color: #94a3b8;
-      border-radius: 14px; padding: 4px 10px; font-size: 11.5px; font-weight: 800;
-      cursor: pointer; transition: all 0.12s ease;
-    }
-    .core-date-pill.active {
-      background: #0284c7; border-color: #38bdf8; color: #fff;
-    }
-    .core-kpi-row {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-    }
-    .core-kpi-card {
-      background: #080f1d; border: 1px solid #1e293b; border-radius: 10px;
-      padding: 10px 14px; display: flex; flex-direction: column; gap: 4px;
-    }
-    .core-kpi-lbl { font-size: 11.5px; color: #94a3b8; font-weight: 700; }
-    .core-kpi-val { font-size: 18px; font-weight: 900; color: #38bdf8; }
-
-    /* Orbital / Radial 8-Modules Grid (Matching Screenshot 3 Integrated Business Solution) */
-    .launcher-radial-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
-    }
-    .launcher-card {
-      background: linear-gradient(145deg, #132238 0%, #0d1726 100%);
-      border: 1.5px solid #233a59; border-radius: 14px; padding: 14px;
-      display: flex; flex-direction: column; gap: 10px; cursor: pointer;
-      position: relative; overflow: hidden; transition: all 0.18s ease;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.5); user-select: none;
-    }
-    .launcher-card:hover {
-      transform: translateY(-4px);
-      border-color: #38bdf8;
-      box-shadow: 0 12px 28px rgba(2, 132, 199, 0.35);
-      background: linear-gradient(145deg, #182e4e 0%, #101e33 100%);
-    }
-    .hub-card-pos {
-      border: 2px solid #38bdf8 !important;
-      background: linear-gradient(145deg, #14355a 0%, #0c213a 100%) !important;
-      box-shadow: 0 8px 22px rgba(56, 189, 248, 0.3) !important;
-    }
-    .hub-icon-wrap { font-size: 28px; line-height: 1; }
-    .hub-card-title {
-      margin: 0; font-size: 15px; font-weight: 900; color: #f8fafc;
-    }
-    .hub-card-sec { font-size: 12.5px; font-weight: 800; color: #38bdf8; margin-top: 1px; }
-    .hub-card-desc {
-      margin: 4px 0 0 0; font-size: 11px; color: #94a3b8; line-height: 1.35;
-    }
-    .hub-arrow-cue {
-      position: absolute; bottom: 10px; right: 12px; font-size: 14px; color: #38bdf8;
-      opacity: 0.6; transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-    .launcher-card:hover .hub-arrow-cue {
-      transform: translateX(3px); opacity: 1;
-    }
-
-    @media (max-width: 900px) {
-      .core-kpi-row { grid-template-columns: repeat(2, 1fr); }
-      .launcher-radial-grid { grid-template-columns: repeat(2, 1fr); }
-      .btn-hero-launch-pos { width: 100%; justify-content: center; }
-    }
-    @media (max-width: 550px) {
-      .launcher-radial-grid { grid-template-columns: 1fr; }
+    /* Responsive Grid for Tablets & Phones (< 920px) */
+    @media (max-width: 920px) {
+      .ibs-radial-canvas {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        padding: 10px 0;
+      }
+      .ibs-center-hub {
+        position: static;
+        transform: none;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .ibs-starburst-bg {
+        display: none;
+      }
+      .ibs-spoke-node {
+        position: static;
+        transform: none;
+        width: 100%;
+        max-width: 380px;
+        flex-direction: row !important;
+        justify-content: space-between;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 8px 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      }
+      .ibs-curve-svg { display: none; }
+      .ibs-callout-text, .ibs-callout-text-left { text-align: right; }
+      .ibs-header-banner::before { display: none; }
+      .ibs-footer-banner::before, .ibs-footer-banner::after { display: none; }
     }
 
     .card-3d { 
@@ -950,149 +1325,223 @@
   <!-- Toast Notification System -->
   <div id="toastContainer" class="toast-container"></div>
 
-    <!-- ================= MODERN CENTRAL LAUNCHER HOME SCREEN (ERP & POS HUB) ================= -->
+    <!-- SVG Markers Definition for Curved Callout Lines -->
+  <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+    <defs>
+      <marker id="ibs-arrow-left" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 8 1 L 2 5 L 8 9" fill="none" stroke="#2563eb" stroke-width="2"/>
+      </marker>
+      <marker id="ibs-arrow-right" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 2 1 L 8 5 L 2 9" fill="none" stroke="#2563eb" stroke-width="2"/>
+      </marker>
+    </defs>
+  </svg>
+
+  <!-- ================= EXACT "INTEGRATED BUSINESS SOLUTION" ENTERPRISE LAUNCHER ================= -->
   <div id="appHomeLauncher" class="launcher-hub-container">
-    <div class="launcher-hub-content">
-      
-      <!-- Top Sub-Bar with Store Quick Status & Direct POS Launch -->
-      <div class="launcher-hero-strip">
-        <div class="launcher-title-area">
-          <div class="launcher-emblem">🏪</div>
-          <div>
-            <h1 class="launcher-store-heading" id="launcherStoreName">Al Madina Grocery</h1>
-            <div class="launcher-sub-badge">
-              <span class="live-dot-pulse">●</span>
-              <span>INTEGRATED BUSINESS SOLUTION & POS HUB</span>
-              <span class="meta-sep">•</span>
-              <span id="launcherClock">--:--</span>
+    <!-- Top Lime Accent Line -->
+    <div class="ibs-top-lime-bar"></div>
+
+    <!-- Corporate Navy Header Banner with Skyscraper Angled Facade -->
+    <div class="ibs-header-banner">
+      <div class="ibs-header-left">
+        <div class="ibs-header-logo">
+          <!-- Stylized Enterprise Emblem -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0c2b4e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </div>
+        <div>
+          <div class="ibs-header-title">INTEGRATED BUSINESS SOLUTION</div>
+          <div class="ibs-header-subtitle">SMART GROCERY & SUPERMARKET MANAGEMENT SYSTEM</div>
+        </div>
+      </div>
+
+      <div class="ibs-header-right">
+        <!-- Direct POS Billing Counter Launch Button -->
+        <button class="btn-launch-pos-hero" onclick="switchToPosView()" title="Launch POS Billing Counter">
+          🛒 <span>POINT OF SALES (بلنگ کاؤنٹر)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Radial Hub Stage (Matches Screenshot Exactly) -->
+    <div class="ibs-stage-wrap">
+      <div class="ibs-radial-canvas">
+
+        <!-- Center Radiant Sunburst Background -->
+        <svg class="ibs-starburst-bg" viewBox="-150 -150 300 300" aria-hidden="true">
+          <defs>
+            <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+              <stop offset="35%" stop-color="#fef08a" stop-opacity="0.4" />
+              <stop offset="75%" stop-color="#dce5ee" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <polygon points="0,0 -18,-140 18,-140" fill="url(#sunGlow)" transform="rotate(0)" />
+          <polygon points="0,0 -18,-140 18,-140" fill="url(#sunGlow)" transform="rotate(45)" />
+          <polygon points="0,0 -18,-140 18,-140" fill="url(#sunGlow)" transform="rotate(90)" />
+          <polygon points="0,0 -18,-140 18,-140" fill="url(#sunGlow)" transform="rotate(135)" />
+          <polygon points="0,0 -18,-140 18,-140" fill="url(#sunGlow)" transform="rotate(180)" />
+          <polygon points="0,0 -18,-140 18,-140" fill="url(#sunGlow)" transform="rotate(225)" />
+          <polygon points="0,0 -18,-140 18,-140" fill="url(#sunGlow)" transform="rotate(270)" />
+          <polygon points="0,0 -18,-140 18,-140" fill="url(#sunGlow)" transform="rotate(315)" />
+          <circle cx="0" cy="0" r="105" fill="url(#sunGlow)" />
+        </svg>
+
+        <!-- Center Hub Core: Date Inputs & Logo & Titles -->
+        <div class="ibs-center-hub">
+          <!-- Date Filter Row (Above Logo) -->
+          <div class="ibs-date-picker-bar">
+            <span class="ibs-date-label">Date From</span>
+            <div class="ibs-date-box">
+              <span class="ibs-date-strip"></span>
+              <input type="text" id="launcherDateFrom" class="ibs-date-input" value="01/10/2026" placeholder="DD/MM/YYYY" />
+              <span class="ibs-date-icon" onclick="pickLauncherDate('from')">📅</span>
+            </div>
+            <span class="ibs-date-label">Date To</span>
+            <div class="ibs-date-box">
+              <input type="text" id="launcherDateTo" class="ibs-date-input" value="31/10/2026" placeholder="DD/MM/YYYY" />
+              <span class="ibs-date-icon" onclick="pickLauncherDate('to')">📅</span>
+            </div>
+          </div>
+
+          <!-- Central Brand Logo & Typography -->
+          <div class="ibs-brand-row">
+            <svg class="ibs-brand-logo-glyph" viewBox="0 0 100 100">
+              <path d="M 38 15 C 38 15 38 75 38 75 C 38 85 48 90 60 85 C 72 80 78 68 78 55 C 78 40 68 32 54 32 C 45 32 38 38 38 38" fill="none" stroke="#84cc16" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="56" cy="58" r="10" fill="#a3e635"/>
+            </svg>
+            <div class="ibs-brand-text-col">
+              <div class="ibs-brand-main-title">INTEGRATED</div>
+              <div class="ibs-brand-sub-title">BUSINESS SOLUTION</div>
+              <span class="ibs-brand-store-name" id="launcherStoreName">Al Madina Grocery</span>
             </div>
           </div>
         </div>
 
-        <!-- Big Radiant POS Billing Button -->
-        <button class="btn-hero-launch-pos" onclick="switchToPosView()">
-          🛒 POINT OF SALES (بلنگ کاؤنٹر شروع کریں)
-        </button>
+        <!-- 1. TOP: Chart Of Accounts (Reports & Margin) -->
+        <div class="ibs-spoke-node node-coa">
+          <button class="ibs-btn" onclick="openModularHub('profit')">
+            <span>Chart Of Accounts</span>
+            <span class="ibs-btn-sub">نفع و نقصان اور چارٹ آف اکاؤنٹس</span>
+          </button>
+        </div>
+
+        <!-- 2. TOP-RIGHT: Invoices -> Callout Text -->
+        <div class="ibs-spoke-node node-invoices">
+          <button class="ibs-btn" onclick="openModularHub('sales')">
+            <span>Invoices</span>
+            <span class="ibs-btn-sub">سیلز انوائسز</span>
+          </button>
+          <div class="ibs-callout-wrap">
+            <svg class="ibs-curve-svg" viewBox="0 0 60 40">
+              <path d="M 2,10 C 26,10 40,20 54,30" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#ibs-arrow-right)"/>
+            </svg>
+            <div class="ibs-callout-text">
+              Sales Invoice<br>
+              Sales Return Invoice<br>
+              Performa Invoice
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. RIGHT: Ledger (Customer Khata Ledger) -->
+        <div class="ibs-spoke-node node-ledger">
+          <button class="ibs-btn" onclick="openModularHub('khata')">
+            <span>Ledger</span>
+            <span class="ibs-btn-sub">ادھار کھاتہ لیجر</span>
+          </button>
+        </div>
+
+        <!-- 4. BOTTOM-RIGHT: Inventory -> Callout Text -->
+        <div class="ibs-spoke-node node-inventory">
+          <button class="ibs-btn" onclick="openModularHub('inventory')">
+            <span>Inventory</span>
+            <span class="ibs-btn-sub">اسٹاک و انوینٹری</span>
+          </button>
+          <div class="ibs-callout-wrap">
+            <svg class="ibs-curve-svg" viewBox="0 0 60 40">
+              <path d="M 2,10 C 26,10 40,20 54,30" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#ibs-arrow-right)"/>
+            </svg>
+            <div class="ibs-callout-text">
+              Store Items<br>
+              Items Transfer Note<br>
+              Ware House<br>
+              Inventory Ledger
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. BOTTOM: Petty Cash (Cash Drawer & Expenses) -->
+        <div class="ibs-spoke-node node-petty">
+          <button class="ibs-btn" onclick="openModularHub('accounts')">
+            <span>Petty Cash</span>
+            <span class="ibs-btn-sub">کیش دراز و اخراجات</span>
+          </button>
+        </div>
+
+        <!-- 6. BOTTOM-LEFT: Payroll <- Callout Text -->
+        <div class="ibs-spoke-node node-payroll">
+          <button class="ibs-btn" onclick="openModularHub('users')">
+            <span>Payroll</span>
+            <span class="ibs-btn-sub">عملہ و ملازمین</span>
+          </button>
+          <div class="ibs-callout-wrap">
+            <div class="ibs-callout-text ibs-callout-text-left">
+              Daily Wages<br>
+              Salary
+            </div>
+            <svg class="ibs-curve-svg" viewBox="0 0 60 40">
+              <path d="M 58,10 C 34,10 20,20 6,30" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#ibs-arrow-left)"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 7. LEFT: Point Of Sales (Highlighted With Cursor) -->
+        <div class="ibs-spoke-node node-pos">
+          <button class="ibs-btn ibs-btn-pos" onclick="switchToPosView()" title="Launch Point of Sales">
+            <span>Point Of Sales</span>
+            <span class="ibs-btn-sub">کاؤنٹر بلنگ شروع کریں</span>
+            <span class="ibs-pos-cursor">👆</span>
+          </button>
+        </div>
+
+        <!-- 8. TOP-LEFT: Vouchers <- Callout Text -->
+        <div class="ibs-spoke-node node-vouchers">
+          <button class="ibs-btn" onclick="openModularHub('suppliers')">
+            <span>Vouchers</span>
+            <span class="ibs-btn-sub">سپلائر واؤچرز</span>
+          </button>
+          <div class="ibs-callout-wrap">
+            <div class="ibs-callout-text ibs-callout-text-left">
+              Journal Voucher<br>
+              Payment Voucher<br>
+              Stock Receipt Voucher
+            </div>
+            <svg class="ibs-curve-svg" viewBox="0 0 60 40">
+              <path d="M 58,10 C 34,10 20,20 6,30" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#ibs-arrow-left)"/>
+            </svg>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Central Metrics & Date Range Bar (Matching Screenshot 3) -->
-      <div class="launcher-center-core">
-        <div class="core-date-filter-bar">
-          <span style="font-size:12px; font-weight:bold; color:#94a3b8;">📅 Filter:</span>
-          <button class="core-date-pill active" onclick="setLauncherDateFilter('today')">Today (آج)</button>
-          <button class="core-date-pill" onclick="setLauncherDateFilter('week')">This Week (اس ہفتے)</button>
-          <button class="core-date-pill" onclick="setLauncherDateFilter('month')">This Month (اس ماہ)</button>
-        </div>
-
-        <div class="core-kpi-row">
-          <div class="core-kpi-card">
-            <span class="core-kpi-lbl">Today's Sales (سیلز)</span>
-            <strong class="core-kpi-val" id="coreSalesVal">AED 0.00</strong>
-          </div>
-          <div class="core-kpi-card">
-            <span class="core-kpi-lbl">Orders / Clients (بل)</span>
-            <strong class="core-kpi-val" id="coreBillsVal">0 Bills</strong>
-          </div>
-          <div class="core-kpi-card">
-            <span class="core-kpi-lbl">Cash in Drawer (دراز)</span>
-            <strong class="core-kpi-val" id="coreDrawerVal">AED 0.00</strong>
-          </div>
-          <div class="core-kpi-card">
-            <span class="core-kpi-lbl">Held / Parked (ہولڈ)</span>
-            <strong class="core-kpi-val" id="coreHeldVal">0 Bills</strong>
-          </div>
-        </div>
+      <!-- Live Terminal Status Pill Above Footer (Exact Match to Screenshot) -->
+      <div class="ibs-status-pill-row">
+        <span class="ibs-status-pill" id="launcherStatusPill">pos-2 online sql server no pole</span>
       </div>
+    </div>
 
-      <!-- Orbital / Radial Module Cards (8 Pro ERP Modules inspired by Screenshot 3) -->
-      <div class="launcher-radial-grid">
-        <!-- 1. Point of Sales -->
-        <div class="launcher-card hub-card-pos" onclick="switchToPosView()">
-          <div class="hub-icon-wrap">🛒</div>
-          <div class="hub-info-wrap">
-            <h3 class="hub-card-title">Point Of Sales</h3>
-            <div class="hub-card-sec">کاؤنٹر بلنگ و رسید</div>
-            <p class="hub-card-desc">Fast touchscreen billing, barcode scanner, instant WhatsApp receipts</p>
-          </div>
-          <span class="hub-arrow-cue">➔</span>
-        </div>
-
-        <!-- 2. Invoices & Sales -->
-        <div class="launcher-card" onclick="openModularHub('sales')">
-          <div class="hub-icon-wrap">🧾</div>
-          <div class="hub-info-wrap">
-            <h3 class="hub-card-title">Invoices & Sales Hub</h3>
-            <div class="hub-card-sec">سیلز انوائسز و ہسٹری</div>
-            <p class="hub-card-desc">Sales invoices, daily transactions, reprint, customer receipts</p>
-          </div>
-          <span class="hub-arrow-cue">➔</span>
-        </div>
-
-        <!-- 3. Customer Khata & Ledger -->
-        <div class="launcher-card" onclick="openModularHub('khata')">
-          <div class="hub-icon-wrap">📒</div>
-          <div class="hub-info-wrap">
-            <h3 class="hub-card-title">Ledger & Khata</h3>
-            <div class="hub-card-sec">ادھار کھاتہ و واٹس ایپ یاد دہانی</div>
-            <p class="hub-card-desc">Customer credit balance, payments, digital statements, WhatsApp reminders</p>
-          </div>
-          <span class="hub-arrow-cue">➔</span>
-        </div>
-
-        <!-- 4. Inventory & Stock -->
-        <div class="launcher-card" onclick="openModularHub('inventory')">
-          <div class="hub-icon-wrap">📦</div>
-          <div class="hub-info-wrap">
-            <h3 class="hub-card-title">Inventory & Stock</h3>
-            <div class="hub-card-sec">اسٹاک و زائد المعیاد انوینٹری</div>
-            <p class="hub-card-desc">Store items, low stock alerts, stock replenishment, batch expiry</p>
-          </div>
-          <span class="hub-arrow-cue">➔</span>
-        </div>
-
-        <!-- 5. Petty Cash & Drawer -->
-        <div class="launcher-card" onclick="openModularHub('accounts')">
-          <div class="hub-icon-wrap">💰</div>
-          <div class="hub-info-wrap">
-            <h3 class="hub-card-title">Petty Cash & Drawer</h3>
-            <div class="hub-card-sec">کیش دراز و یومیہ اخراجات</div>
-            <p class="hub-card-desc">Shift opening/closing cash, expense categories, daily cash reconciliation</p>
-          </div>
-          <span class="hub-arrow-cue">➔</span>
-        </div>
-
-        <!-- 6. Vouchers & Suppliers -->
-        <div class="launcher-card" onclick="openModularHub('suppliers')">
-          <div class="hub-icon-wrap">🚚</div>
-          <div class="hub-info-wrap">
-            <h3 class="hub-card-title">Vouchers & Suppliers</h3>
-            <div class="hub-card-sec">سپلائرز و خریداری بل</div>
-            <p class="hub-card-desc">Wholesale purchases, payment vouchers, supplier balance ledger</p>
-          </div>
-          <span class="hub-arrow-cue">➔</span>
-        </div>
-
-        <!-- 7. Payroll & Staff -->
-        <div class="launcher-card" onclick="openModularHub('users')">
-          <div class="hub-icon-wrap">👥</div>
-          <div class="hub-info-wrap">
-            <h3 class="hub-card-title">Payroll & Staff</h3>
-            <div class="hub-card-sec">عملہ، ملازمین و سیکیورٹی پن</div>
-            <p class="hub-card-desc">Cashier accounts, user roles, security PIN codes, shift logs</p>
-          </div>
-          <span class="hub-arrow-cue">➔</span>
-        </div>
-
-        <!-- 8. Chart of Accounts & Profit -->
-        <div class="launcher-card" onclick="openModularHub('profit')">
-          <div class="hub-icon-wrap">📈</div>
-          <div class="hub-info-wrap">
-            <h3 class="hub-card-title">Reports & Profit</h3>
-            <div class="hub-card-sec">نفع و نقصان اور چارٹ آف اکاؤنٹس</div>
-            <p class="hub-card-desc">Gross margin, net profit, revenue analytics, business growth trends</p>
-          </div>
-          <span class="hub-arrow-cue">➔</span>
-        </div>
+    <!-- Corporate Navy Footer Banner with Lime-Green Cuts -->
+    <div class="ibs-footer-banner">
+      <div class="ibs-footer-left">
+        <span style="color:#84cc16; font-size:14px;">■</span>
+        <span>INTEGRATED BUSINESS SOLUTION • ENTERPRISE EDITION</span>
+      </div>
+      <div class="ibs-footer-right">
+        Software by 0322-8030303
       </div>
     </div>
   </div>
@@ -2553,6 +3002,17 @@
       window.scrollTo(0, 0);
     }
 
+    
+    function pickLauncherDate(which) {
+      const el = document.getElementById(which === 'from' ? 'launcherDateFrom' : 'launcherDateTo');
+      if (!el) return;
+      const cur = el.value || '';
+      const promptVal = prompt(`Enter ${which.toUpperCase()} Date (DD/MM/YYYY):`, cur);
+      if (promptVal && promptVal.trim()) {
+        el.value = promptVal.trim();
+        updateLauncherKPIs();
+      }
+    }
     function setLauncherDateFilter(range) {
       document.querySelectorAll('.core-date-pill').forEach(el => el.classList.remove('active'));
       event.target.classList.add('active');
@@ -3531,6 +3991,16 @@
       applyCurrencyToUI();
       loadKhataDatalist();
       fetchSmartParsedReceipt();
+      // Set Launcher as Default Home Screen on initial visit
+      switchToLauncherHome();
+      const dNow = new Date();
+      const dd = String(dNow.getDate()).padStart(2, '0');
+      const mm = String(dNow.getMonth() + 1).padStart(2, '0');
+      const yyyy = dNow.getFullYear();
+      const dFrom = document.getElementById('launcherDateFrom');
+      if (dFrom) dFrom.value = `01/${mm}/${yyyy}`;
+      const dTo = document.getElementById('launcherDateTo');
+      if (dTo) dTo.value = `${dd}/${mm}/${yyyy}`;
     });
   </script>
 </body>
