@@ -58,6 +58,14 @@ connectToWhatsApp();
 // خالص Native HTTP Server (جو ونڈوز پر کبھی ساکٹ ڈراپ نہیں کرتا)
 const server = http.createServer(async (req, res) => {
     res.setHeader("Content-Type", "application/json");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    if (req.method === "OPTIONS") {
+        res.writeHead(200);
+        return res.end();
+    }
 
     if (req.method === "GET" && req.url === "/ping") {
         console.log("📡 Ping موصول ہوئی!");

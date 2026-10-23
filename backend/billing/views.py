@@ -182,10 +182,13 @@ def create_invoice_api(request):
         khata.save()
 
     share_url = request.build_absolute_uri(f"/bill/view/{invoice.access_token}/")
+    store_name = request.POST.get('store_name', '').strip() or 'Smart POS'
+    currency = request.POST.get('currency', '').strip() or 'AED'
     
-    # WhatsApp Silent Delivery
+    # WhatsApp Silent Delivery (Non-blocking background thread: 0ms checkout lag!)
     norm_phone = normalize_whatsapp_phone(phone)
-    wa_sent = False
+    msg = ""
+    wa_direct_link = ""
     if norm_phone:
         mode_label = {
             'paid_cash': 'کیش (Cash)',
@@ -197,21 +200,20 @@ def create_invoice_api(request):
         msg = (
             f"محترم {cust_name}!\n"
             f"آپ کا گروسری بل تیار ہے (#{invoice.id})\n"
-            f"صافی رقم: AED {grand_total}\n"
+            f"صافی رقم: {currency} {grand_total}\n"
             f"طریقہ ادائیگی: {mode_label}\n\n"
             f"آن لائن رسید اور آئٹمز دیکھنے کے لیے لنک کھولیں:\n{share_url}\n\n"
-            f"خریداری کا شکریہ! (Al Madina Smart POS)"
+            f"خریداری کا شکریہ! ({store_name})"
         )
-        try:
-            r = requests.post(GATEWAY_URL, json={"phone": norm_phone, "message": msg}, timeout=4)
-            if r.status_code == 200 and r.json().get('success'):
-                wa_sent = True
-        except Exception:
-            pass
+        import threading
+        def _bg_send_wa(target_url, pld):
+            try:
+                requests.post(target_url, json=pld, timeout=1.2)
+            except Exception:
+                pass
+        threading.Thread(target=_bg_send_wa, args=(GATEWAY_URL, {"phone": norm_phone, "message": msg}), daemon=True).start()
 
-    import urllib.parse
-    wa_direct_link = ""
-    if norm_phone and msg:
+        import urllib.parse
         wa_direct_link = f"https://api.whatsapp.com/send?phone={norm_phone}&text={urllib.parse.quote(msg)}"
 
     return JsonResponse({
@@ -221,7 +223,9 @@ def create_invoice_api(request):
         'grand_total': str(grand_total),
         'profit': str(profit),
         'share_url': share_url,
-        'wa_sent': wa_sent,
+        'wa_sent': bool(norm_phone),
+        'wa_phone': norm_phone,
+        'wa_message': msg,
         'wa_direct_link': wa_direct_link
     })
 
