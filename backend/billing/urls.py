@@ -45,4 +45,8 @@ urlpatterns = [
     # 7. Users & Permissions
     path('api/verify-pin/', views.verify_pin_api, name='verify_pin'),
     path('api/staff-list/', views.staff_list_api, name='staff_list'),
+    path('api/create-staff-user/', views.create_staff_user_api, name='create_staff_user'),
+
+    # 8. Excel Import
+    path('api/upload-inventory-excel/', views.upload_inventory_excel_api, name='upload_inventory_excel'),
 ]

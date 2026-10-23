@@ -21,7 +21,7 @@
   <div class="receipt">
     <div class="header">
       <h2 style="margin: 0; color: #0284c7;">{{ invoice.store_name }}</h2>
-      <p style="margin: 6px 0 0 0; color: #64748b; font-size: 12px;">Date & Time: {{ invoice.created_at|date:"d M Y, h:i A" }}</p>
+      <p style="margin: 6px 0 0 0; color: #64748b; font-size: 12px;">Date & Time: {% if invoice.created_at.strftime %}{{ invoice.created_at|date:"d M Y, h:i A" }}{% else %}{{ invoice.created_at }}{% endif %}</p>
       <small style="color: #059669; font-weight: bold;">
         {% if invoice.payment_mode == 'khata' %}
         📒 Khata / Customer Credit
@@ -55,17 +55,17 @@
     {% endif %}
 
     <div style="margin-top: 15px; border-top: 1px dashed #cbd5e1; padding-top: 8px;">
-      <div class="calc-row"><span>Subtotal:</span><span>AED {{ invoice.subtotal }}</span></div>
+      <div class="calc-row"><span>Subtotal:</span><span>{{ invoice.currency|default:"AED" }} {{ invoice.subtotal }}</span></div>
       {% if invoice.discount > 0 %}
-      <div class="calc-row" style="color: #ef4444;"><span>Discount:</span><span>- AED {{ invoice.discount }}</span></div>
+      <div class="calc-row" style="color: #ef4444;"><span>Discount:</span><span>- {{ invoice.currency|default:"AED" }} {{ invoice.discount }}</span></div>
       {% endif %}
       {% if invoice.round_off > 0 %}
-      <div class="calc-row" style="color: #ef4444;"><span>Round Off:</span><span>- AED {{ invoice.round_off }}</span></div>
+      <div class="calc-row" style="color: #ef4444;"><span>Round Off:</span><span>- {{ invoice.currency|default:"AED" }} {{ invoice.round_off }}</span></div>
       {% endif %}
     </div>
 
     <div class="total-box">
-      Net Payable:<br>AED {{ invoice.grand_total }}
+      Net Payable:<br>{{ invoice.currency|default:"AED" }} {{ invoice.grand_total }}
     </div>
 
     <div class="viral-footer">
