@@ -25,7 +25,8 @@
       overflow: hidden; display: flex; flex-direction: column; 
     }
     
-    .top-bar {
+    .top-bar { display: none !important; /* Removed redundant top header row */
+  
       display: flex; justify-content: space-between; align-items: center;
       background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(12px);
       padding: 6px 16px; border-bottom: 2px solid #1e293b; min-height: 56px; gap: 14px;
@@ -884,9 +885,10 @@
         inset 0 2px 2px rgba(255, 255, 255, 0.8),
         inset 0 -2px 3px rgba(0, 0, 0, 0.25);
       transition: transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.1s ease;
-      height: 74px;
-      min-height: 74px;
-      max-height: 74px;
+      height: 84px;
+      min-height: 84px;
+      max-height: 84px;
+      padding: 8px 10px;
       width: 100%;
       box-sizing: border-box;
       position: relative;
@@ -1030,16 +1032,28 @@
       flex-shrink: 0;
     }
     .key-name-dual {
-      font-size: 11px;
-      font-weight: 800;
-      color: #f8fafc;
+      font-size: 14.5px;
+      font-weight: 900;
+      color: #ffffff;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: calc(100% - 22px);
-      display: inline-block;
-      line-height: 1.25;
-      direction: ltr;
+      max-width: 100%;
+      display: block;
+      line-height: 1.2;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+      letter-spacing: 0.2px;
+    }
+    .key-name-sub {
+      font-size: 13px;
+      font-weight: 800;
+      color: #fef08a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      line-height: 1.15;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
     }
     .key-bottom-row {
       display: flex;
@@ -1386,7 +1400,8 @@
         overflow-y: auto !important;
         overflow-x: hidden !important;
       }
-      .top-bar {
+      .top-bar { display: none !important; /* Removed redundant top header row */
+  
         height: auto;
         flex-direction: column;
         align-items: stretch;
@@ -1450,7 +1465,189 @@
         grid-template-columns: repeat(3, 1fr);
       }
     }
-  </style>
+  
+    /* ================= UNIFIED POS TOP CONTROL BAR (HOME + FILLED CATEGORIES + ACTIONS) ================= */
+    .pos-top-control-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 6px 8px 6px;
+      margin-bottom: 6px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      background: #080f1d;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    .pos-top-control-bar::-webkit-scrollbar { height: 4px; }
+    .pos-top-control-bar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+    /* Home Button in Filter Bar */
+    .btn-pos-home {
+      background: linear-gradient(180deg, #334155 0%, #1e293b 55%, #0f172a 100%);
+      border: 1.5px solid #38bdf8;
+      border-bottom: 3.5px solid #0284c7;
+      border-radius: 12px;
+      color: #38bdf8;
+      font-size: 13px;
+      font-weight: 900;
+      padding: 8px 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.3);
+      transition: all 0.1s ease;
+      flex-shrink: 0;
+    }
+    .btn-pos-home:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.15);
+      border-color: #7dd3fc;
+    }
+    .btn-pos-home:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    /* SOLID FILLED 3D CATEGORY BUTTONS (VIBRANT & MATCHING) */
+    .pos-cat-group {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .cat-pill-tab {
+      border: 1.5px solid rgba(255,255,255,0.45);
+      border-radius: 12px;
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 8px 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      transition: all 0.1s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .cat-pill-tab:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.12);
+    }
+    .cat-pill-tab:active {
+      transform: translateY(3px);
+    }
+
+    /* All Category: Electric Royal Blue (Like Reference Image) */
+    .cat-tab-all {
+      background: linear-gradient(180deg, #38bdf8 0%, #2563eb 55%, #1d4ed8 100%) !important;
+      box-shadow: 0 4px 0 #1e3a8a, 0 6px 12px rgba(37,99,235,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
+    }
+    /* Veg & Fruit: Vibrant Emerald Jade */
+    .cat-tab-veg {
+      background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #059669 100%) !important;
+      box-shadow: 0 4px 0 #064e3b, 0 6px 12px rgba(16,185,129,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
+    }
+    /* Bakery & Dairy: Warm Golden Amber */
+    .cat-tab-bakery {
+      background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 55%, #d97706 100%) !important;
+      box-shadow: 0 4px 0 #78350f, 0 6px 12px rgba(245,158,11,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
+    }
+    /* Grocery: Rich Tangerine Orange */
+    .cat-tab-grocery {
+      background: linear-gradient(180deg, #fb923c 0%, #f97316 55%, #ea580c 100%) !important;
+      box-shadow: 0 4px 0 #7c2d12, 0 6px 12px rgba(249,115,22,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
+    }
+    /* Drinks: Cyan Sky Blue */
+    .cat-tab-drinks {
+      background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 55%, #0284c7 100%) !important;
+      box-shadow: 0 4px 0 #075985, 0 6px 12px rgba(14,165,233,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
+    }
+
+    /* Selected Active Category Glow & Raised Bevel */
+    .cat-pill-tab.active {
+      border: 2.5px solid #ffffff !important;
+      box-shadow: 0 0 15px rgba(255,255,255,0.6), 0 4px 0 rgba(0,0,0,0.5) !important;
+      transform: scale(1.03);
+    }
+
+    /* Fast Action Buttons in Filter Bar (Add Item & Add Stock) */
+    .pos-quick-actions-group {
+      display: flex;
+      gap: 5px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+    .btn-action-head {
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 8px 12px;
+      cursor: pointer;
+      color: #ffffff;
+      white-space: nowrap;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.1s ease;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+      flex-shrink: 0;
+    }
+    .btn-head-add {
+      background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+      border: 1.5px solid #6ee7b7;
+      box-shadow: 0 4px 0 #064e3b, 0 4px 10px rgba(16,185,129,0.35);
+    }
+    .btn-head-add:hover { transform: translateY(-1px); filter: brightness(1.15); }
+    .btn-head-add:active { transform: translateY(3px); }
+
+    .btn-head-stock {
+      background: linear-gradient(180deg, #8b5cf6 0%, #6d28d9 100%);
+      border: 1.5px solid #c4b5fd;
+      box-shadow: 0 4px 0 #4c1d95, 0 4px 10px rgba(139,92,246,0.35);
+    }
+    .btn-head-stock:hover { transform: translateY(-1px); filter: brightness(1.15); }
+    .btn-head-stock:active { transform: translateY(3px); }
+
+    /* Compact Language, Currency & Cashier PIN in POS Bar */
+    .pos-sys-group {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .pos-compact-select {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #38bdf8;
+      border-radius: 8px;
+      padding: 6px 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+    }
+    .btn-pos-pin {
+      background: #0f172a;
+      border: 1px solid #eab308;
+      color: #fde047;
+      border-radius: 8px;
+      padding: 6px 9px;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+</style>
 </head>
 <body>
 
@@ -1834,13 +2031,68 @@
     <div class="card-3d keypad-panel">
       
 
-      <!-- Category Filter Tabs Bar (Color Coded!) -->
-            <div class="category-tabs-bar" id="categoryTabsBar">
-        <button class="cat-pill-tab active" data-cat="all" onclick="setCategoryFilter('all')">✨ All (تمام)</button>
-        <button class="cat-pill-tab cat-tab-veg" data-cat="veg" onclick="setCategoryFilter('veg')">🥬 Veg & Fruit (سبزی و پھل)</button>
-        <button class="cat-pill-tab cat-tab-bakery" data-cat="bakery" onclick="setCategoryFilter('bakery')">🥖 Bakery & Dairy (بیکری و ڈیری)</button>
-        <button class="cat-pill-tab cat-tab-grocery" data-cat="grocery" onclick="setCategoryFilter('grocery')">🌾 Grocery (گروسری)</button>
-        <button class="cat-pill-tab cat-tab-drinks" data-cat="drinks" onclick="setCategoryFilter('drinks')">🥤 Drinks (مشروبات)</button>
+      <!-- Integrated POS Control Bar: Home + Filled 3D Categories + Add Item + Add Stock -->
+      <div class="pos-top-control-bar" id="categoryTabsBar">
+        <!-- 🏠 Home Button Shifted to Items Filter Line -->
+        <button class="btn-pos-home" id="navLauncherBtn" onclick="switchToLauncherHome()" title="Return to Central Launcher Hub">
+          🏠 <span>Home (ہوم)</span>
+        </button>
+
+        <!-- Solid Filled 3D Category Buttons (Vibrant Matching Colors) -->
+        <div class="pos-cat-group">
+          <button class="cat-pill-tab cat-tab-all active" data-cat="all" onclick="setCategoryFilter('all')">
+            ✨ All (تمام)
+          </button>
+          <button class="cat-pill-tab cat-tab-veg" data-cat="veg" onclick="setCategoryFilter('veg')">
+            🥬 Veg & Fruit (سبزی و پھل)
+          </button>
+          <button class="cat-pill-tab cat-tab-bakery" data-cat="bakery" onclick="setCategoryFilter('bakery')">
+            🍞 Bakery & Dairy (بیکری و ڈیری)
+          </button>
+          <button class="cat-pill-tab cat-tab-grocery" data-cat="grocery" onclick="setCategoryFilter('grocery')">
+            🍚 Grocery (گروسری)
+          </button>
+          <button class="cat-pill-tab cat-tab-drinks" data-cat="drinks" onclick="setCategoryFilter('drinks')">
+            🥤 Drinks (مشروبات)
+          </button>
+        </div>
+
+        <!-- ➕ Add Button & 📦 Add Stock Direct 1-Click Access -->
+        <div class="pos-quick-actions-group">
+          <button class="btn-action-head btn-head-add" onclick="openAddButtonModal()" title="Add custom item button (نیا بٹن شامل کریں)">
+            ➕ Add Item (نیا بٹن)
+          </button>
+          <button class="btn-action-head btn-head-stock" onclick="openStockEntryModal()" title="Quick stock replenish (مال درج کریں)">
+            📦 Add Stock (مال درج کریں)
+          </button>
+        </div>
+
+        <!-- Currency, Language, & PIN -->
+        <div class="pos-sys-group">
+          <select id="currencySelect" class="pos-compact-select" onchange="changeCurrency(this.value)" title="Change Currency">
+            <option value="AED">AED</option>
+            <option value="PKR">PKR</option>
+            <option value="SAR">SAR</option>
+            <option value="OMR">OMR</option>
+            <option value="QAR">QAR</option>
+            <option value="KWD">KWD</option>
+            <option value="USD">USD</option>
+            <option value="INR">INR</option>
+            <option value="LKR">LKR</option>
+          </select>
+          <select id="langSelect" class="pos-compact-select" onchange="changeSecondaryLanguage(this.value)" title="Change Language">
+            <option value="ur">Urdu (اردو)</option>
+            <option value="ar">Arabic (العربية)</option>
+            <option value="hi">Hindi (हिन्दी)</option>
+            <option value="ro">Roman Urdu</option>
+            <option value="si">Sinhala (සිංහල)</option>
+            <option value="ta">Tamil (தமிழ்)</option>
+            <option value="en">English</option>
+          </select>
+          <button class="btn-pos-pin" id="activeUserBadge" onclick="openPinModal()" title="Switch Cashier / PIN">
+            👑 <span id="cashierNameBadge">admin</span>
+          </button>
+        </div>
       </div>
 
       <!-- Quick Action Toolbar -->
@@ -2026,7 +2278,41 @@
     </div>
   </div>
 
-    <!-- Add Custom Product Key Modal -->
+    
+  <!-- ================= QUICK STOCK IN REPLENISH MODAL ================= -->
+  <div id="quickStockModal" class="modal">
+    <div class="dialog-box" style="width: 520px; max-width: 94vw; border: 2px solid #8b5cf6;">
+      <div class="dialog-header">
+        <h3 style="color: #c4b5fd; margin: 0; font-size: 17px; display: flex; align-items: center; gap: 8px;">
+          📦 <span>Add Stock / مال انوینٹری میں درج کریں (Stock In)</span>
+        </h3>
+        <button onclick="closeModal('quickStockModal')" style="background:none; border:none; color:#ef4444; font-size:20px; cursor:pointer;">✕</button>
+      </div>
+
+      <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 8px; padding: 10px; font-size: 12.5px; color: #cbd5e1;">
+          💡 <strong>Tip / طریقہ کار:</strong> Enter items below with quantity and cost/rate. Example:<br>
+          <code style="color: #38bdf8; font-weight: bold;">10 Milk 5</code> or <code style="color: #38bdf8; font-weight: bold;">20 Sugar 3.5</code> or <code style="color: #38bdf8; font-weight: bold;">50 Bread 4</code>
+        </div>
+
+        <div>
+          <label style="font-size: 12px; color: #94a3b8; font-weight: bold;">Items & Quantities / سامان اور تعداد (One per line):</label>
+          <textarea id="quickStockInput" rows="5" placeholder="10 Milk 5&#10;20 Bread 4&#10;50 Eggs 6&#10;15 Sugar 3.5" style="width: 100%; box-sizing: border-box; background: #0f172a; border: 1.5px solid #8b5cf6; color: #fff; padding: 10px; border-radius: 8px; font-family: monospace; font-size: 13.5px;"></textarea>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button onclick="submitStockReplenishFromModal()" style="flex: 1; background: linear-gradient(180deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 900; font-size: 14px; cursor: pointer; box-shadow: 0 4px 12px rgba(16,185,129,0.4);">
+            📥 Save Stock to Inventory / انوینٹری میں محفوظ کریں
+          </button>
+          <button onclick="openModularHub('inventory'); closeModal('quickStockModal');" style="background: #1e293b; color: #38bdf8; border: 1px solid #38bdf8; padding: 12px 14px; border-radius: 10px; font-weight: bold; font-size: 12px; cursor: pointer;">
+            📊 Full Warehouse
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Custom Product Key Modal -->
   <div id="addKeyModal" class="modal">
     <div class="dialog-box" style="width: 440px; max-width: 92vw; border: 2px solid #10b981;">
       <div class="dialog-header">
@@ -2930,9 +3216,12 @@
         const catClass = `key-cat-${item.cat || 'spices'}`;
         container.innerHTML += `
           <button class="btn-pos-key ${catClass}" onclick="addCatalogItem('${item.en}', ${item.price})">
-            <div class="key-top-row">
-              <span class="key-icon">${item.icon}</span>
-              <span class="key-name-dual">${item.en} / ${localName}</span>
+            <div class="key-top-row" style="flex-direction: column; align-items: flex-start; gap: 1px;">
+              <div style="display: flex; align-items: center; gap: 6px; width: 100%;">
+                <span class="key-icon">${item.icon}</span>
+                <span class="key-name-dual">${item.en}</span>
+              </div>
+              <span class="key-name-sub">${localName}</span>
             </div>
             <div class="key-bottom-row">
               <span class="key-unit">${item.unit}</span>
@@ -4203,6 +4492,38 @@
     }
 
     // ================= CUSTOM ITEM BUTTON CREATION =================
+    
+    // ================= QUICK STOCK IN MODAL HANDLER =================
+    function openStockEntryModal() {
+      document.getElementById('quickStockInput').value = '';
+      document.getElementById('quickStockModal').style.display = 'flex';
+    }
+
+    function submitStockReplenishFromModal() {
+      const text = document.getElementById('quickStockInput').value.trim();
+      if (!text) {
+        showToast('Please enter items to stock in!', 'برائے مہربانی نیا مال درج کریں', 'warning');
+        return;
+      }
+
+      const fd = new FormData();
+      fd.append('raw_text', text);
+
+      fetch('/api/quick-stock-in/', { method: 'POST', body: fd })
+      .then(r => r.json())
+      .then(d => {
+        if (d.success) {
+          closeModal('quickStockModal');
+          showToast(`✅ Added ${d.added_count || 0} items to Stock!`, `${d.added_count || 0} اشیاء انوینٹری میں کامیابی سے محفوظ ہو گئیں`, 'success');
+        } else {
+          alert('Error: ' + (d.error || 'Failed to save stock'));
+        }
+      })
+      .catch(e => {
+        alert('Network Error: ' + e);
+      });
+    }
+
     function openAddButtonModal() {
       document.getElementById('newKeyEnName').value = '';
       document.getElementById('newKeyLocalName').value = '';
@@ -4373,7 +4694,7 @@
       });
     }
 
-    function launchModalWhatsAppDirect() {
+        function launchModalWhatsAppDirect(forceWeb=false) {
       const inv = window.currentModalInvoice;
       if (!inv) return;
       let phone = (inv.customer_phone || '').replace(/[^0-9]/g, '');
@@ -4384,31 +4705,40 @@
       }
       const store = currentStoreName || 'Al Madina Grocery';
       const shareUrl = `${window.location.origin}/bill/view/${inv.token}/`;
-      const msg = `محترم ${inv.customer_name || 'گاہک'}!\nآپ کا گروسری بل تیار ہے (#${inv.id}) برائے ${store}\nصافی رقم: ${currentCurrency} ${inv.grand_total}\nآن لائن رسید دیکھیں:\n${shareUrl}\nخریداری کا شکریہ!`;
+      const msg = `محترم ${inv.customer_name || 'گاہک'}!
+آپ کا گروسری بل تیار ہے (#${inv.id}) برائے ${store}
+صافی رقم: ${currentCurrency} ${inv.grand_total}
+آن لائن رسید دیکھیں:
+${shareUrl}
+خریداری کا شکریہ!`;
 
-      showToast('Sending WhatsApp Silently...', 'واٹس ایپ خاموشی سے بھیجا جا رہا ہے...', 'info');
+      if (forceWeb) {
+        window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
+        return;
+      }
 
-      // 1. Silent Background API call (Zero redirection to WhatsApp web!)
-      fetch('/api/send-whatsapp-silent/', {
+      showToast('Dispatching WhatsApp...', 'واٹس ایپ روانہ کیا جا رہا ہے...', 'info');
+
+      // Try local gateway port 5005 directly from browser
+      fetch('http://127.0.0.1:5005/send-message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: phone, message: msg })
+        body: JSON.stringify({ phone: phone, message: msg }),
+        mode: 'cors'
       })
       .then(r => r.json())
       .then(res => {
         if (res.success) {
           showToast('✅ WhatsApp Sent Silently!', 'واٹس ایپ پر رسید پس منظر میں کامیابی سے بھیج دی گئی', 'success');
         } else {
-          // Fallback confirmation dialog instead of forcefully redirecting the page!
-          if (confirm(`⚠️ واٹس ایپ گیٹ وے منسلک نہیں ہے۔ کیا آپ دستی طور پر واٹس ایپ کھولنا چاہتے ہیں؟\n\n(Silent WhatsApp Gateway is offline. Open WhatsApp Web manually?)`)) {
-            window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
-          }
+          // Fallback to WhatsApp Web
+          window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
         }
       })
       .catch(() => {
-        if (confirm(`⚠️ کیا آپ دستی طور پر واٹس ایپ ویب کھولنا چاہتے ہیں؟ (Open WhatsApp Web manually?)`)) {
-          window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
-        }
+        // Local gateway offline -> smooth 1-click WhatsApp Web fallback without scary error!
+        window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
+        showToast('Opened in WhatsApp Web / App', 'واٹس ایپ ویب / ایپ میں رسید کھول دی گئی', 'success');
       });
     }
 
