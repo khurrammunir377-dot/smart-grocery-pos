@@ -1138,3 +1138,57 @@ def create_staff_user_api(request):
         'role': role,
         'pin': pin
     })
+
+
+@csrf_exempt
+def send_whatsapp_silent_api(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'POST only'}, status=405)
+
+    phone = request.POST.get('phone', '').strip()
+    message = request.POST.get('message', '').strip()
+
+    if not phone and request.body:
+        try:
+            body_data = json.loads(request.body.decode('utf-8'))
+            phone = str(body_data.get('phone', '')).strip()
+            message = str(body_data.get('message', '')).strip()
+        except Exception:
+            pass
+
+    norm_phone = normalize_whatsapp_phone(phone)
+    if not norm_phone:
+        return JsonResponse({'success': False, 'error': 'Invalid phone number / غلط فون نمبر'})
+
+    sent = False
+    err_detail = ""
+    gateways = [GATEWAY_URL, "http://127.0.0.1:5005/send-message", "http://localhost:5005/send-message"]
+    seen = set()
+    for g_url in gateways:
+        if g_url in seen:
+            continue
+        seen.add(g_url)
+        try:
+            resp = requests.post(g_url, json={"phone": norm_phone, "message": message}, timeout=2.5)
+            if resp.status_code == 200:
+                res_data = resp.json()
+                if res_data.get('success'):
+                    sent = True
+                    break
+            elif resp.status_code == 503:
+                err_detail = "WhatsApp Gateway not scanned / کیو آر کوڈ اسکین کریں"
+        except Exception as e:
+            err_detail = str(e)
+
+    import urllib.parse
+    fallback_link = f"https://api.whatsapp.com/send?phone={norm_phone}&text={urllib.parse.quote(message)}"
+
+    if sent:
+        return JsonResponse({'success': True, 'silent': True, 'message': 'WhatsApp delivered silently!'})
+    else:
+        return JsonResponse({
+            'success': False,
+            'silent': False,
+            'error': err_detail or 'Gateway offline',
+            'fallback_link': fallback_link
+        })

@@ -863,23 +863,27 @@
     .quick-grid::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
     .quick-grid::-webkit-scrollbar-thumb:hover { background: #0284c7; }
 
-    /* AUTHENTIC 3D TACTILE POS KEY DESIGN WITH SHARP BORDERS */
+    /* ULTRA-REALISTIC 3D TACTILE MECHANICAL KEYCAP BUTTONS (EXACT MATCH TO REFERENCE) */
     .btn-pos-key {
-      background: linear-gradient(180deg, #1e2c42 0%, #0d1726 100%);
-      border: 2px solid #38bdf8;
-      border-top: 2.5px solid #7dd3fc;
-      border-bottom: 4.5px solid #0284c7;
-      border-radius: 10px;
-      color: #fff;
-      padding: 6px 8px;
+      background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 28%, #2563eb 68%, #1d4ed8 100%);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+      border-radius: 16px;
+      color: #ffffff;
+      padding: 7px 9px;
       cursor: pointer;
       text-align: left;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       user-select: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.2);
-      transition: transform 0.05s ease, box-shadow 0.05s ease, border-color 0.1s ease;
+      box-shadow: 
+        0 6px 0 #1e3a8a,
+        0 8px 4px rgba(0, 0, 0, 0.3),
+        0 14px 22px rgba(37, 99, 235, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.25);
+      transition: transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.1s ease;
       height: 74px;
       min-height: 74px;
       max-height: 74px;
@@ -887,23 +891,131 @@
       box-sizing: border-box;
       position: relative;
       overflow: hidden;
+      margin-bottom: 2px;
     }
-    .key-cat-veg { border-color: #10b981 !important; border-top-color: #6ee7b7 !important; border-bottom-color: #047857 !important; }
-    .key-cat-bakery { border-color: #f59e0b !important; border-top-color: #fcd34d !important; border-bottom-color: #b45309 !important; }
-    .key-cat-grocery { border-color: #8b5cf6 !important; border-top-color: #c4b5fd !important; border-bottom-color: #6d28d9 !important; }
-    .key-cat-drinks { border-color: #06b6d4 !important; border-top-color: #67e8f9 !important; border-bottom-color: #0e7490 !important; }
     .btn-pos-key:hover {
-      background: linear-gradient(180deg, #253956 0%, #132238 100%);
-      border-color: #60a5fa;
-      border-top-color: #93c5fd;
-      border-bottom-color: #2563eb;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 14px rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+      box-shadow: 
+        0 8px 0 #1e3a8a,
+        0 11px 6px rgba(0, 0, 0, 0.3),
+        0 18px 28px rgba(37, 99, 235, 0.55),
+        inset 0 2.5px 2px rgba(255, 255, 255, 0.95),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.2);
     }
     .btn-pos-key:active {
-      transform: translateY(3px);
-      border-bottom-width: 1px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+      transform: translateY(5px);
+      box-shadow: 
+        0 1px 0 #1e3a8a,
+        0 2px 2px rgba(0, 0, 0, 0.25),
+        0 6px 12px rgba(37, 99, 235, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 4 Distinct Vibrant Category Themed 3D Keycaps */
+    .key-cat-veg {
+      background: linear-gradient(180deg, #34d399 0%, #10b981 30%, #059669 70%, #047857 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.5) !important;
+      box-shadow: 
+        0 6px 0 #064e3b,
+        0 8px 4px rgba(0, 0, 0, 0.3),
+        0 14px 22px rgba(16, 185, 129, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.25) !important;
+    }
+    .key-cat-veg:hover {
+      box-shadow: 
+        0 8px 0 #064e3b,
+        0 11px 6px rgba(0, 0, 0, 0.3),
+        0 18px 28px rgba(16, 185, 129, 0.55),
+        inset 0 2.5px 2px rgba(255, 255, 255, 0.95) !important;
+    }
+    .key-cat-veg:active {
+      transform: translateY(5px) !important;
+      box-shadow: 
+        0 1px 0 #064e3b,
+        0 2px 2px rgba(0, 0, 0, 0.25),
+        0 6px 12px rgba(16, 185, 129, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+    }
+
+    .key-cat-bakery {
+      background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 30%, #d97706 70%, #b45309 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.55) !important;
+      box-shadow: 
+        0 6px 0 #78350f,
+        0 8px 4px rgba(0, 0, 0, 0.3),
+        0 14px 22px rgba(245, 158, 11, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.25) !important;
+    }
+    .key-cat-bakery:hover {
+      box-shadow: 
+        0 8px 0 #78350f,
+        0 11px 6px rgba(0, 0, 0, 0.3),
+        0 18px 28px rgba(245, 158, 11, 0.55),
+        inset 0 2.5px 2px rgba(255, 255, 255, 0.95) !important;
+    }
+    .key-cat-bakery:active {
+      transform: translateY(5px) !important;
+      box-shadow: 
+        0 1px 0 #78350f,
+        0 2px 2px rgba(0, 0, 0, 0.25),
+        0 6px 12px rgba(245, 158, 11, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+    }
+
+    .key-cat-grocery {
+      background: linear-gradient(180deg, #fb923c 0%, #f97316 30%, #ea580c 70%, #c2410c 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.55) !important;
+      box-shadow: 
+        0 6px 0 #7c2d12,
+        0 8px 4px rgba(0, 0, 0, 0.3),
+        0 14px 22px rgba(249, 115, 22, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.25) !important;
+    }
+    .key-cat-grocery:hover {
+      box-shadow: 
+        0 8px 0 #7c2d12,
+        0 11px 6px rgba(0, 0, 0, 0.3),
+        0 18px 28px rgba(249, 115, 22, 0.55),
+        inset 0 2.5px 2px rgba(255, 255, 255, 0.95) !important;
+    }
+    .key-cat-grocery:active {
+      transform: translateY(5px) !important;
+      box-shadow: 
+        0 1px 0 #7c2d12,
+        0 2px 2px rgba(0, 0, 0, 0.25),
+        0 6px 12px rgba(249, 115, 22, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+    }
+
+    .key-cat-drinks {
+      background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 30%, #0284c7 70%, #0369a1 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.55) !important;
+      box-shadow: 
+        0 6px 0 #075985,
+        0 8px 4px rgba(0, 0, 0, 0.3),
+        0 14px 22px rgba(14, 165, 233, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.8),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.25) !important;
+    }
+    .key-cat-drinks:hover {
+      box-shadow: 
+        0 8px 0 #075985,
+        0 11px 6px rgba(0, 0, 0, 0.3),
+        0 18px 28px rgba(14, 165, 233, 0.55),
+        inset 0 2.5px 2px rgba(255, 255, 255, 0.95) !important;
+    }
+    .key-cat-drinks:active {
+      transform: translateY(5px) !important;
+      box-shadow: 
+        0 1px 0 #075985,
+        0 2px 2px rgba(0, 0, 0, 0.25),
+        0 6px 12px rgba(14, 165, 233, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
     }
     .key-top-row {
       display: flex;
@@ -937,22 +1049,26 @@
       margin-top: auto;
     }
     .key-unit {
-      font-size: 10.5px;
-      font-weight: 700;
-      color: #94a3b8;
-      background: rgba(15, 23, 42, 0.6);
-      padding: 1px 4px;
-      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 800;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 1px 6px;
+      border-radius: 10px;
+      backdrop-filter: blur(4px);
     }
     .key-price-badge {
-      background: linear-gradient(135deg, #0284c7, #0369a1);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      border-radius: 5px;
-      padding: 2px 6px;
-      font-size: 11px;
+      background: rgba(0, 0, 0, 0.32);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 11.5px;
       font-weight: 900;
       color: #ffffff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
     }
 
     .cust-row-right {
@@ -3087,13 +3203,12 @@
         if (data.success) {
           showToast('Invoice Saved Successfully!', 'بل کامیابی سے محفوظ ہو گیا!', 'success');
 
-          // Silent Background WhatsApp to local gateway (zero tabs/windows opened!)
+          // Silent Background WhatsApp (Zero tabs, zero page redirects!)
           if (data.wa_phone && data.wa_message) {
-            fetch('http://127.0.0.1:5005/send-message', {
+            fetch('/api/send-whatsapp-silent/', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ phone: data.wa_phone, message: data.wa_message }),
-              mode: 'cors'
+              body: JSON.stringify({ phone: data.wa_phone, message: data.wa_message })
             }).then(r => r.json()).then(res => {
               if (res.success) {
                 showToast('WhatsApp Sent Silently!', 'واٹس ایپ پر رسید پس منظر میں کامیابی سے بھیج دی گئی', 'success');
@@ -3849,8 +3964,29 @@
     }
 
     function sendKhataReminder(name, phone, balance) {
-      const msg = `محترم ${name}!\nآپ کا بقایا گروسری ادھار کھاتہ برائے ${currentStoreName} مبلغ ${currentCurrency} ${balance} ہے۔\nبرائے مہربانی ادائیگی فرمائیں۔ شکریہ!`;
-      window.open(`https://web.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
+      const cleanPhone = (phone || '').replace(/[^0-9]/g, '');
+      const msg = `محترم ${name}!\nآپ کا بقایا گروسری ادھار کھاتہ برائے ${currentStoreName} مبلغ ${currentCurrency} ${balance} ہے۔\nبرائے مہربانی جلد از جلد ادائیگی فرمائیں۔ شکریہ!`;
+      
+      showToast('Sending Reminder Silently...', 'ادھار یاد دہانی خاموشی سے بھیجی جا رہی ہے...', 'info');
+
+      fetch('/api/send-whatsapp-silent/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: cleanPhone, message: msg })
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) {
+          showToast('✅ Reminder Sent Silently!', `${name} کو واٹس ایپ پر ادھار کی یاد دہانی کامیابی سے چلی گئی`, 'success');
+        } else {
+          if (confirm(`⚠️ واٹس ایپ گیٹ وے آف لائن ہے۔ کیا آپ واٹس ایپ ویب کے ذریعے بھیجنا چاہتے ہیں؟`)) {
+            window.open(`https://web.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(msg)}`, '_blank');
+          }
+        }
+      })
+      .catch(() => {
+        window.open(`https://web.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(msg)}`, '_blank');
+      });
     }
 
     // 6. Accounts & Cash Drawer Tab
@@ -4240,18 +4376,40 @@
     function launchModalWhatsAppDirect() {
       const inv = window.currentModalInvoice;
       if (!inv) return;
-      const phone = (inv.customer_phone || '').replace(/[^0-9]/g, '');
-      const store = currentStoreName || 'Al Madina Grocery';
-      const msg = `محترم ${inv.customer_name || 'گاہک'}!\nآپ کا گروسری بل تیار ہے (#${inv.id}) برائے ${store}\nصافی رقم: ${currentCurrency} ${inv.grand_total}\nآن لائن رسید دیکھیں:\n${window.location.origin}/bill/view/${inv.token}/\nخریداری کا شکریہ!`;
-      if (phone) {
-        window.location.href = `https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`;
-      } else {
+      let phone = (inv.customer_phone || '').replace(/[^0-9]/g, '');
+      if (!phone) {
         const askPhone = prompt("گاہک کا فون نمبر درج کریں (Enter Phone / WhatsApp):");
-        if (askPhone) {
-          const clean = askPhone.replace(/[^0-9]/g, '');
-          window.location.href = `https://api.whatsapp.com/send?phone=${clean}&text=${encodeURIComponent(msg)}`;
-        }
+        if (!askPhone) return;
+        phone = askPhone.replace(/[^0-9]/g, '');
       }
+      const store = currentStoreName || 'Al Madina Grocery';
+      const shareUrl = `${window.location.origin}/bill/view/${inv.token}/`;
+      const msg = `محترم ${inv.customer_name || 'گاہک'}!\nآپ کا گروسری بل تیار ہے (#${inv.id}) برائے ${store}\nصافی رقم: ${currentCurrency} ${inv.grand_total}\nآن لائن رسید دیکھیں:\n${shareUrl}\nخریداری کا شکریہ!`;
+
+      showToast('Sending WhatsApp Silently...', 'واٹس ایپ خاموشی سے بھیجا جا رہا ہے...', 'info');
+
+      // 1. Silent Background API call (Zero redirection to WhatsApp web!)
+      fetch('/api/send-whatsapp-silent/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phone, message: msg })
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) {
+          showToast('✅ WhatsApp Sent Silently!', 'واٹس ایپ پر رسید پس منظر میں کامیابی سے بھیج دی گئی', 'success');
+        } else {
+          // Fallback confirmation dialog instead of forcefully redirecting the page!
+          if (confirm(`⚠️ واٹس ایپ گیٹ وے منسلک نہیں ہے۔ کیا آپ دستی طور پر واٹس ایپ کھولنا چاہتے ہیں؟\n\n(Silent WhatsApp Gateway is offline. Open WhatsApp Web manually?)`)) {
+            window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
+          }
+        }
+      })
+      .catch(() => {
+        if (confirm(`⚠️ کیا آپ دستی طور پر واٹس ایپ ویب کھولنا چاہتے ہیں؟ (Open WhatsApp Web manually?)`)) {
+          window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(msg)}`, '_blank');
+        }
+      });
     }
 
     function submitQuickStockIn() {

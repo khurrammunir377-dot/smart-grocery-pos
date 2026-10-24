@@ -49,4 +49,5 @@ urlpatterns = [
 
     # 8. Excel Import
     path('api/upload-inventory-excel/', views.upload_inventory_excel_api, name='upload_inventory_excel'),
+    path('api/send-whatsapp-silent/', views.send_whatsapp_silent_api, name='send_whatsapp_silent'),
 ]
