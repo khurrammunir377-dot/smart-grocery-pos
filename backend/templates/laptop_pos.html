@@ -254,12 +254,13 @@
       flex-direction: column;
       flex: 1;
       min-height: 100vh;
-      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 20%, #e0f2fe 65%, #bae6fd 100%);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at 50% 15%, #0f233d 0%, #070d18 70%);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       position: relative;
       overflow-x: hidden;
       box-sizing: border-box;
       user-select: none;
+      color: #f8fafc;
     }
 
     /* Top Lime Strip & Enterprise Navy Header Banner */
@@ -269,15 +270,16 @@
       width: 100%;
     }
     .ibs-header-banner {
-      background: linear-gradient(90deg, #0c2b4e 0%, #10345d 60%, #153e6d 100%);
+      background: rgba(11, 20, 36, 0.95);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.25);
       color: #ffffff;
-      padding: 10px 24px;
+      padding: 12px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(12, 43, 78, 0.35);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
     }
     /* Skyscraper / architectural pattern texture on right */
     .ibs-header-banner::before {
@@ -383,7 +385,13 @@
       top: 49%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 360px;
+      width: 380px;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.28);
+      border-radius: 20px;
+      padding: 16px 20px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.7), 0 0 30px rgba(56, 189, 248, 0.15);
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -913,117 +921,165 @@
         inset 0 1px 1px rgba(255, 255, 255, 0.35);
     }
 
-    /* 4 DISTINCT SOBER & REFINED 3D KEYCAPS (COMFORTABLE FOR CASHIER'S EYES) */
-    /* Veg & Fruit: Sober Sage / Forest Slate */
-    .key-cat-veg {
-      background: linear-gradient(180deg, #3a6b52 0%, #2c5440 55%, #1e3c2d 100%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    /* VIBRANT & BRIGHT 3D KEYCAPS (PLEASANT, NOT DARK, MAXIMUM VISIBILITY) */
+    /* All/Default: Bright Azure Royal Blue */
+    .btn-pos-key {
+      background: linear-gradient(180deg, #3b82f6 0%, #2563eb 55%, #1d4ed8 100%);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 16px;
+      color: #ffffff;
+      padding: 8px 10px;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
       box-shadow: 
-        0 5px 0 #13261d,
-        0 7px 4px rgba(0, 0, 0, 0.35),
-        0 12px 18px rgba(19, 38, 29, 0.35),
-        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
-        inset 0 -2px 3px rgba(0, 0, 0, 0.3) !important;
+        0 5px 0 #1e3a8a,
+        0 7px 4px rgba(0, 0, 0, 0.25),
+        0 12px 18px rgba(37, 99, 235, 0.35),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.2);
+      transition: transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.1s ease;
+      height: 84px;
+      min-height: 84px;
+      max-height: 84px;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 2px;
+    }
+    .btn-pos-key:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+      box-shadow: 
+        0 7px 0 #1e3a8a,
+        0 10px 6px rgba(0, 0, 0, 0.25),
+        0 16px 24px rgba(37, 99, 235, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.85);
+    }
+    .btn-pos-key:active {
+      transform: translateY(4px);
+      box-shadow: 
+        0 1px 0 #1e3a8a,
+        0 2px 3px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(37, 99, 235, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Veg & Fruit: Bright Fresh Mint Emerald */
+    .key-cat-veg {
+      background: linear-gradient(180deg, #10b981 0%, #059669 55%, #047857 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.45) !important;
+      box-shadow: 
+        0 5px 0 #064e3b,
+        0 7px 4px rgba(0, 0, 0, 0.25),
+        0 12px 18px rgba(16, 185, 129, 0.35),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.2) !important;
     }
     .key-cat-veg:hover {
-      filter: brightness(1.12);
+      filter: brightness(1.1);
       box-shadow: 
-        0 7px 0 #13261d,
-        0 10px 6px rgba(0, 0, 0, 0.35),
-        0 16px 22px rgba(19, 38, 29, 0.45),
-        inset 0 2px 2px rgba(255, 255, 255, 0.6) !important;
+        0 7px 0 #064e3b,
+        0 10px 6px rgba(0, 0, 0, 0.25),
+        0 16px 24px rgba(16, 185, 129, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.85) !important;
     }
     .key-cat-veg:active {
       transform: translateY(4px) !important;
       box-shadow: 
-        0 1px 0 #13261d,
-        0 2px 3px rgba(0, 0, 0, 0.3),
-        0 4px 8px rgba(19, 38, 29, 0.3),
-        inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
+        0 1px 0 #064e3b,
+        0 2px 3px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(16, 185, 129, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
     }
 
-    /* Bakery & Dairy: Sober Warm Camel / Toasted Latte */
+    /* Bakery & Dairy: Warm Golden Honey Amber */
     .key-cat-bakery {
-      background: linear-gradient(180deg, #7a6348 0%, #635039 55%, #4c3c2a 100%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      background: linear-gradient(180deg, #f59e0b 0%, #d97706 55%, #b45309 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.45) !important;
       box-shadow: 
-        0 5px 0 #31261a,
-        0 7px 4px rgba(0, 0, 0, 0.35),
-        0 12px 18px rgba(49, 38, 26, 0.35),
-        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
-        inset 0 -2px 3px rgba(0, 0, 0, 0.3) !important;
+        0 5px 0 #78350f,
+        0 7px 4px rgba(0, 0, 0, 0.25),
+        0 12px 18px rgba(245, 158, 11, 0.35),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.2) !important;
     }
     .key-cat-bakery:hover {
-      filter: brightness(1.12);
+      filter: brightness(1.1);
       box-shadow: 
-        0 7px 0 #31261a,
-        0 10px 6px rgba(0, 0, 0, 0.35),
-        0 16px 22px rgba(49, 38, 26, 0.45),
-        inset 0 2px 2px rgba(255, 255, 255, 0.6) !important;
+        0 7px 0 #78350f,
+        0 10px 6px rgba(0, 0, 0, 0.25),
+        0 16px 24px rgba(245, 158, 11, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.85) !important;
     }
     .key-cat-bakery:active {
       transform: translateY(4px) !important;
       box-shadow: 
-        0 1px 0 #31261a,
-        0 2px 3px rgba(0, 0, 0, 0.3),
-        0 4px 8px rgba(49, 38, 26, 0.3),
-        inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
+        0 1px 0 #78350f,
+        0 2px 3px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(245, 158, 11, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
     }
 
-    /* Grocery: Sober Dusty Cedar / Terracotta Slate */
+    /* Grocery: Bright Warm Terracotta Orange */
     .key-cat-grocery {
-      background: linear-gradient(180deg, #7d5248 0%, #664139 55%, #4f312a 100%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      background: linear-gradient(180deg, #f97316 0%, #ea580c 55%, #c2410c 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.45) !important;
       box-shadow: 
-        0 5px 0 #331f1a,
-        0 7px 4px rgba(0, 0, 0, 0.35),
-        0 12px 18px rgba(51, 31, 26, 0.35),
-        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
-        inset 0 -2px 3px rgba(0, 0, 0, 0.3) !important;
+        0 5px 0 #7c2d12,
+        0 7px 4px rgba(0, 0, 0, 0.25),
+        0 12px 18px rgba(249, 115, 22, 0.35),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.2) !important;
     }
     .key-cat-grocery:hover {
-      filter: brightness(1.12);
+      filter: brightness(1.1);
       box-shadow: 
-        0 7px 0 #331f1a,
-        0 10px 6px rgba(0, 0, 0, 0.35),
-        0 16px 22px rgba(51, 31, 26, 0.45),
-        inset 0 2px 2px rgba(255, 255, 255, 0.6) !important;
+        0 7px 0 #7c2d12,
+        0 10px 6px rgba(0, 0, 0, 0.25),
+        0 16px 24px rgba(249, 115, 22, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.85) !important;
     }
     .key-cat-grocery:active {
       transform: translateY(4px) !important;
       box-shadow: 
-        0 1px 0 #331f1a,
-        0 2px 3px rgba(0, 0, 0, 0.3),
-        0 4px 8px rgba(51, 31, 26, 0.3),
-        inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
+        0 1px 0 #7c2d12,
+        0 2px 3px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(249, 115, 22, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
     }
 
-    /* Drinks: Sober Slate Teal / Ocean Slate */
+    /* Drinks: Radiant Refreshing Cyan Sky */
     .key-cat-drinks {
-      background: linear-gradient(180deg, #2d5d6e 0%, #224957 55%, #183540 100%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 55%, #0369a1 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.45) !important;
       box-shadow: 
-        0 5px 0 #0e2229,
-        0 7px 4px rgba(0, 0, 0, 0.35),
-        0 12px 18px rgba(14, 34, 41, 0.35),
-        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
-        inset 0 -2px 3px rgba(0, 0, 0, 0.3) !important;
+        0 5px 0 #075985,
+        0 7px 4px rgba(0, 0, 0, 0.25),
+        0 12px 18px rgba(14, 165, 233, 0.35),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.7),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.2) !important;
     }
     .key-cat-drinks:hover {
-      filter: brightness(1.12);
+      filter: brightness(1.1);
       box-shadow: 
-        0 7px 0 #0e2229,
-        0 10px 6px rgba(0, 0, 0, 0.35),
-        0 16px 22px rgba(14, 34, 41, 0.45),
-        inset 0 2px 2px rgba(255, 255, 255, 0.6) !important;
+        0 7px 0 #075985,
+        0 10px 6px rgba(0, 0, 0, 0.25),
+        0 16px 24px rgba(14, 165, 233, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.85) !important;
     }
     .key-cat-drinks:active {
       transform: translateY(4px) !important;
       box-shadow: 
-        0 1px 0 #0e2229,
-        0 2px 3px rgba(0, 0, 0, 0.3),
-        0 4px 8px rgba(14, 34, 41, 0.3),
-        inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
+        0 1px 0 #075985,
+        0 2px 3px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(14, 165, 233, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
     }
     .key-top-row {
       display: flex;
@@ -1551,31 +1607,26 @@
       transform: translateY(3px);
     }
 
-    /* SOBER REFINED CATEGORY FILTER TABS */
-    /* All Category: Sober Steel Slate */
+    /* VIBRANT & BRIGHT CATEGORY FILTER TABS */
     .cat-tab-all {
-      background: linear-gradient(180deg, #3b536b 0%, #293a4b 55%, #1c2733 100%) !important;
-      box-shadow: 0 4px 0 #101820, 0 6px 12px rgba(16,24,32,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.45) !important;
+      background: linear-gradient(180deg, #3b82f6 0%, #2563eb 55%, #1d4ed8 100%) !important;
+      box-shadow: 0 4px 0 #1e3a8a, 0 6px 12px rgba(37,99,235,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
     }
-    /* Veg & Fruit: Sober Sage Green */
     .cat-tab-veg {
-      background: linear-gradient(180deg, #3a6b52 0%, #2c5440 55%, #1e3c2d 100%) !important;
-      box-shadow: 0 4px 0 #13261d, 0 6px 12px rgba(19,38,29,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.45) !important;
+      background: linear-gradient(180deg, #10b981 0%, #059669 55%, #047857 100%) !important;
+      box-shadow: 0 4px 0 #064e3b, 0 6px 12px rgba(16,185,129,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
     }
-    /* Bakery & Dairy: Sober Warm Camel */
     .cat-tab-bakery {
-      background: linear-gradient(180deg, #7a6348 0%, #635039 55%, #4c3c2a 100%) !important;
-      box-shadow: 0 4px 0 #31261a, 0 6px 12px rgba(49,38,26,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.45) !important;
+      background: linear-gradient(180deg, #f59e0b 0%, #d97706 55%, #b45309 100%) !important;
+      box-shadow: 0 4px 0 #78350f, 0 6px 12px rgba(245,158,11,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
     }
-    /* Grocery: Sober Dusty Cedar */
     .cat-tab-grocery {
-      background: linear-gradient(180deg, #7d5248 0%, #664139 55%, #4f312a 100%) !important;
-      box-shadow: 0 4px 0 #331f1a, 0 6px 12px rgba(51,31,26,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.45) !important;
+      background: linear-gradient(180deg, #f97316 0%, #ea580c 55%, #c2410c 100%) !important;
+      box-shadow: 0 4px 0 #7c2d12, 0 6px 12px rgba(249,115,22,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
     }
-    /* Drinks: Sober Slate Teal */
     .cat-tab-drinks {
-      background: linear-gradient(180deg, #2d5d6e 0%, #224957 55%, #183540 100%) !important;
-      box-shadow: 0 4px 0 #0e2229, 0 6px 12px rgba(14,34,41,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.45) !important;
+      background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 55%, #0369a1 100%) !important;
+      box-shadow: 0 4px 0 #075985, 0 6px 12px rgba(14,165,233,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
     }
 
     /* Selected Active Category Glow & Raised Bevel */
@@ -1768,10 +1819,10 @@
         <svg class="ibs-starburst-bg" viewBox="-150 -150 300 300" aria-hidden="true">
           <defs>
             <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
-              <stop offset="30%" stop-color="#a7f3d0" stop-opacity="0.5" />
-              <stop offset="65%" stop-color="#bae6fd" stop-opacity="0.35" />
-              <stop offset="90%" stop-color="#e0f2fe" stop-opacity="0" />
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35" />
+              <stop offset="35%" stop-color="#0284c7" stop-opacity="0.2" />
+              <stop offset="70%" stop-color="#070d18" stop-opacity="0.05" />
+              <stop offset="100%" stop-color="#070d18" stop-opacity="0" />
             </radialGradient>
           </defs>
           <polygon points="0,0 -18,-140 18,-140" fill="url(#sunGlow)" transform="rotate(0)" />
@@ -1932,11 +1983,8 @@
     <!-- Corporate Navy Footer Banner with Lime-Green Cuts -->
     <div class="ibs-footer-banner">
       <div class="ibs-footer-left">
-        <span style="color:#84cc16; font-size:14px;">■</span>
-        <span>INTEGRATED BUSINESS SOLUTION • KMB APPS ENTERPRISE</span>
-      </div>
-      <div class="ibs-footer-right">
-        Software by KMB Apps (0322-8030303)
+        <span style="color:#10b981; font-size:14px;">●</span>
+        <span>INTEGRATED BUSINESS SOLUTION • SMART GROCERY & RETAIL ENTERPRISE</span>
       </div>
     </div>
   </div>
@@ -2039,64 +2087,44 @@
     <div class="card-3d keypad-panel">
       
 
-      <!-- Integrated POS Control Bar: Home + Filled 3D Categories + Add Item + Add Stock -->
+      <!-- Integrated POS Control Bar: Home Icon + Filter Categories + Add Item + Add Stock + Cashier PIN -->
       <div class="pos-top-control-bar" id="categoryTabsBar">
-        <!-- 🏠 Home Button Shifted to Items Filter Line -->
-        <button class="btn-pos-home" id="navLauncherBtn" onclick="switchToLauncherHome()" title="Return to Central Launcher Hub">
-          🏠 <span>Home (ہوم)</span>
+        <!-- 🏠 Home Button (Only Icon) -->
+        <button class="btn-pos-home" id="navLauncherBtn" onclick="switchToLauncherHome()" title="Home Launcher (ہوم مینو)" style="padding: 8px 12px; font-size: 16px;">
+          🏠
         </button>
 
-        <!-- Solid Filled 3D Category Buttons (Vibrant Matching Colors) -->
+        <!-- Solid Filled 3D Category Buttons (✨ Icon for All, English only without 2nd language) -->
         <div class="pos-cat-group">
-          <button class="cat-pill-tab cat-tab-all active" data-cat="all" onclick="setCategoryFilter('all')">
-            ✨ All (تمام)
+          <button class="cat-pill-tab cat-tab-all active" data-cat="all" onclick="setCategoryFilter('all')" title="All Products" style="padding: 8px 14px; font-size: 15px;">
+            ✨
           </button>
           <button class="cat-pill-tab cat-tab-veg" data-cat="veg" onclick="setCategoryFilter('veg')">
-            🥬 Veg & Fruit (سبزی و پھل)
+            🥬 Veg & Fruit
           </button>
           <button class="cat-pill-tab cat-tab-bakery" data-cat="bakery" onclick="setCategoryFilter('bakery')">
-            🍞 Bakery & Dairy (بیکری و ڈیری)
+            🍞 Bakery & Dairy
           </button>
           <button class="cat-pill-tab cat-tab-grocery" data-cat="grocery" onclick="setCategoryFilter('grocery')">
-            🍚 Grocery (گروسری)
+            🍚 Grocery
           </button>
           <button class="cat-pill-tab cat-tab-drinks" data-cat="drinks" onclick="setCategoryFilter('drinks')">
-            🥤 Drinks (مشروبات)
+            🥤 Drinks
           </button>
         </div>
 
-        <!-- ➕ Add Button & 📦 Add Stock Direct 1-Click Access -->
+        <!-- ➕ Add Item & 📦 Add Stock Direct 1-Click Access (English Only) -->
         <div class="pos-quick-actions-group">
-          <button class="btn-action-head btn-head-add" onclick="openAddButtonModal()" title="Add custom item button (نیا بٹن شامل کریں)">
-            ➕ Add Item (نیا بٹن)
+          <button class="btn-action-head btn-head-add" onclick="openAddButtonModal()" title="Add Custom Item Button">
+            ➕ Add Item
           </button>
-          <button class="btn-action-head btn-head-stock" onclick="openStockEntryModal()" title="Quick stock replenish (مال درج کریں)">
-            📦 Add Stock (مال درج کریں)
+          <button class="btn-action-head btn-head-stock" onclick="openStockEntryModal()" title="Quick Stock Replenish">
+            📦 Add Stock
           </button>
         </div>
 
-        <!-- Currency, Language, & PIN -->
+        <!-- Cashier PIN Badge (Currency & Language Dropdowns Removed as they were set on signup) -->
         <div class="pos-sys-group">
-          <select id="currencySelect" class="pos-compact-select" onchange="changeCurrency(this.value)" title="Change Currency">
-            <option value="AED">AED</option>
-            <option value="PKR">PKR</option>
-            <option value="SAR">SAR</option>
-            <option value="OMR">OMR</option>
-            <option value="QAR">QAR</option>
-            <option value="KWD">KWD</option>
-            <option value="USD">USD</option>
-            <option value="INR">INR</option>
-            <option value="LKR">LKR</option>
-          </select>
-          <select id="langSelect" class="pos-compact-select" onchange="changeSecondaryLanguage(this.value)" title="Change Language">
-            <option value="ur">Urdu (اردو)</option>
-            <option value="ar">Arabic (العربية)</option>
-            <option value="hi">Hindi (हिन्दी)</option>
-            <option value="ro">Roman Urdu</option>
-            <option value="si">Sinhala (සිංහල)</option>
-            <option value="ta">Tamil (தமிழ்)</option>
-            <option value="en">English</option>
-          </select>
           <button class="btn-pos-pin" id="activeUserBadge" onclick="openPinModal()" title="Switch Cashier / PIN">
             👑 <span id="cashierNameBadge">admin</span>
           </button>
@@ -3589,12 +3617,12 @@
     }
 
     function updateLauncherKPIs() {
-      const heldBills = JSON.parse(localStorage.getItem('pos_held_bills') || '[]');
+      const heldBills = JSON.parse(localStorage.getItem(getStoreStorageKey('pos_held_bills')) || '[]');
       const hEl = document.getElementById('coreHeldVal');
       if (hEl) hEl.innerText = `${heldBills.length} Bills`;
 
       // Fetch live reports
-      fetch('/api/sales-report/?range=today')
+      fetch(`/api/sales-report/?range=today&store_name=${encodeURIComponent(currentStoreName)}`)
       .then(r => r.json())
       .then(d => {
         if (d.success) {
@@ -3605,7 +3633,7 @@
         }
       }).catch(() => {});
 
-      fetch('/api/cash-drawer-status/')
+      fetch(`/api/cash-drawer-status/?store_name=${encodeURIComponent(currentStoreName)}`)
       .then(r => r.json())
       .then(d => {
         if (d.success) {
@@ -3616,7 +3644,7 @@
     }
 
     // ================= HOLD BILL & RECALL BILL LOGIC =================
-    let heldBills = JSON.parse(localStorage.getItem('pos_held_bills') || '[]');
+    let heldBills = JSON.parse(localStorage.getItem(getStoreStorageKey('pos_held_bills')) || '[]');
 
     function updateRecallBadge() {
       const bTxt = document.getElementById('btnRecallText');
@@ -3646,7 +3674,7 @@
       };
 
       heldBills.push(newHold);
-      localStorage.setItem('pos_held_bills', JSON.stringify(heldBills));
+      localStorage.setItem(getStoreStorageKey('pos_held_bills'), JSON.stringify(heldBills));
       updateRecallBadge();
 
       // Clear active cart
@@ -3705,7 +3733,7 @@
       if (document.getElementById('discount')) document.getElementById('discount').value = b.discount || '0';
 
       heldBills.splice(idx, 1);
-      localStorage.setItem('pos_held_bills', JSON.stringify(heldBills));
+      localStorage.setItem(getStoreStorageKey('pos_held_bills'), JSON.stringify(heldBills));
       updateRecallBadge();
 
       closeModal('recallModal');
@@ -3718,7 +3746,7 @@
 
     function deleteHeldBill(idx) {
       heldBills.splice(idx, 1);
-      localStorage.setItem('pos_held_bills', JSON.stringify(heldBills));
+      localStorage.setItem(getStoreStorageKey('pos_held_bills'), JSON.stringify(heldBills));
       updateRecallBadge();
       openRecallModal();
     }
@@ -4075,7 +4103,7 @@
 
     // 4. Purchases & Suppliers Tab
     function renderSuppliersTab() {
-      fetch('/api/suppliers-list/')
+      fetch(`/api/suppliers-list/?store_name=${encodeURIComponent(currentStoreName)}`)
       .then(res => res.json())
       .then(d => {
         allSuppliers = d.suppliers;
@@ -4191,7 +4219,7 @@
 
     // 5. Customer Khata Tab
     function renderKhataTab() {
-      fetch('/api/khata-list/')
+      fetch(`/api/khata-list/?store_name=${encodeURIComponent(currentStoreName)}`)
       .then(res => res.json())
       .then(data => {
         khataData = data.customers;
@@ -4289,8 +4317,8 @@
     // 6. Accounts & Cash Drawer Tab
     function renderAccountsTab() {
       Promise.all([
-        fetch('/api/cash-drawer-status/').then(r => r.json()),
-        fetch('/api/expenses-list/').then(r => r.json())
+        fetch(`/api/cash-drawer-status/?store_name=${encodeURIComponent(currentStoreName)}`).then(r => r.json()),
+        fetch(`/api/expenses-list/?store_name=${encodeURIComponent(currentStoreName)}`).then(r => r.json())
       ]).then(([drawer, expData]) => {
         let html = `
           <div style="background:#0f172a; border:1px solid #1e293b; border-radius:10px; padding:14px; margin-bottom:16px;">
@@ -4355,7 +4383,7 @@
     }
 
     function openAddExpenseModal(categories) {
-      fetch('/api/expenses-list/')
+      fetch(`/api/expenses-list/?store_name=${encodeURIComponent(currentStoreName)}`)
       .then(r => r.json())
       .then(d => {
         const sel = document.getElementById('expCatSelect');
@@ -4572,9 +4600,9 @@
       };
 
       catalogItems.unshift(newItem);
-      const savedCustom = JSON.parse(localStorage.getItem('pos_custom_items') || '[]');
+      const savedCustom = JSON.parse(localStorage.getItem(getStoreStorageKey('pos_custom_items')) || '[]');
       savedCustom.unshift(newItem);
-      localStorage.setItem('pos_custom_items', JSON.stringify(savedCustom));
+      localStorage.setItem(getStoreStorageKey('pos_custom_items'), JSON.stringify(savedCustom));
 
       closeModal('addKeyModal');
       renderQuickButtons();
@@ -4583,7 +4611,7 @@
 
     function loadCustomProductButtons() {
       try {
-        const saved = JSON.parse(localStorage.getItem('pos_custom_items') || '[]');
+        const saved = JSON.parse(localStorage.getItem(getStoreStorageKey('pos_custom_items')) || '[]');
         if (saved && saved.length) {
           saved.forEach(it => {
             if (!catalogItems.find(c => c.id === it.id)) {
@@ -4785,7 +4813,7 @@ ${shareUrl}
     }
 
     function loadKhataDatalist() {
-      fetch('/api/khata-list/')
+      fetch(`/api/khata-list/?store_name=${encodeURIComponent(currentStoreName)}`)
       .then(res => res.json())
       .then(data => {
         khataData = data.customers;

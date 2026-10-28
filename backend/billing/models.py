@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 # 1. INVENTORY & PRODUCTS MODULE
 # ==========================================
 class Product(models.Model):
+    store_name = models.CharField(max_length=150, default="", blank=True, db_index=True)
     name = models.CharField(max_length=150, unique=True)
     barcode = models.CharField(max_length=50, blank=True, null=True, unique=True)
     category = models.CharField(max_length=100, default='General Grocery')
@@ -66,6 +67,7 @@ class StockAdjustment(models.Model):
 # 2. PURCHASE & SUPPLIERS MODULE
 # ==========================================
 class Supplier(models.Model):
+    store_name = models.CharField(max_length=150, default="", blank=True, db_index=True)
     name = models.CharField(max_length=150)
     company_name = models.CharField(max_length=150, blank=True)
     phone = models.CharField(max_length=30)
@@ -111,6 +113,7 @@ class SupplierPayment(models.Model):
 # 3. CUSTOMERS & KHATA MODULE
 # ==========================================
 class CustomerKhata(models.Model):
+    store_name = models.CharField(max_length=150, default="", blank=True, db_index=True)
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20, unique=True)
     address = models.TextField(blank=True)
@@ -194,6 +197,7 @@ class ExpenseCategory(models.Model):
         return self.name
 
 class Expense(models.Model):
+    store_name = models.CharField(max_length=150, default="", blank=True, db_index=True)
     category = models.ForeignKey(ExpenseCategory, on_delete=models.SET_NULL, null=True, related_name="expenses")
     title = models.CharField(max_length=150)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -207,6 +211,7 @@ class Expense(models.Model):
         return f"{self.title} - {self.amount}"
 
 class CashRegisterSession(models.Model):
+    store_name = models.CharField(max_length=150, default="", blank=True, db_index=True)
     cashier_name = models.CharField(max_length=100, default="Cashier")
     opening_cash = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     closing_cash = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)

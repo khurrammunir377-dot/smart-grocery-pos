@@ -24,6 +24,26 @@ from .models import (
 WA_BASE_URL = os.environ.get("WA_GATEWAY_URL", "http://127.0.0.1:5005").rstrip('/')
 GATEWAY_URL = f"{WA_BASE_URL}/send-message"
 
+
+def get_request_store(request):
+    """
+    Extracts the active store name for the current request.
+    Guarantees strict multi-store data isolation.
+    """
+    if request.user.is_authenticated:
+        try:
+            merchant = getattr(request.user, 'merchant_profile', None)
+            if merchant and merchant.store_name:
+                return merchant.store_name.strip()
+        except Exception:
+            pass
+    
+    store = request.POST.get('store_name') or request.GET.get('store_name') or request.headers.get('X-Store-Name')
+    if store and store.strip():
+        return store.strip()
+    
+    return request.session.get('store_name', '')
+
 def normalize_whatsapp_phone(raw_phone):
     clean = "".join(filter(str.isdigit, raw_phone or ""))
     if not clean:
@@ -587,7 +607,8 @@ def pay_supplier_api(request):
 # ==========================================
 
 def khata_list_api(request):
-    customers = CustomerKhata.objects.all().order_by('-outstanding_balance')
+    store = get_request_store(request)
+    customers = CustomerKhata.objects.filter(store_name=store).order_by('-outstanding_balance') if store else CustomerKhata.objects.all().order_by('-outstanding_balance')
     return JsonResponse({
         'customers': [
             {
