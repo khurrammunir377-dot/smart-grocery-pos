@@ -253,14 +253,15 @@
       display: none;
       flex-direction: column;
       flex: 1;
-      min-height: 100vh;
-      background: radial-gradient(circle at 50% 15%, #0f233d 0%, #070d18 70%);
+      height: 100vh;
+      max-height: 100vh;
+      background: radial-gradient(circle at 50% 25%, #e0f2fe 0%, #bae6fd 40%, #7dd3fc 75%, #38bdf8 100%);
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       position: relative;
-      overflow-x: hidden;
+      overflow: hidden;
       box-sizing: border-box;
       user-select: none;
-      color: #f8fafc;
+      color: #0c2b4e;
     }
 
     /* Top Lime Strip & Enterprise Navy Header Banner */
@@ -367,14 +368,14 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 10px 16px;
+      padding: 4px 16px;
       position: relative;
-      min-height: 520px;
+      overflow: hidden;
     }
     .ibs-radial-canvas {
       width: 100%;
-      max-width: 1100px;
-      height: 510px;
+      max-width: 1080px;
+      height: 470px;
       position: relative;
       margin: 0 auto;
     }
@@ -385,19 +386,20 @@
       top: 49%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 380px;
-      background: rgba(15, 23, 42, 0.88);
-      border: 1.5px solid rgba(56, 189, 248, 0.28);
-      border-radius: 20px;
-      padding: 16px 20px;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 20px 45px rgba(0,0,0,0.7), 0 0 30px rgba(56, 189, 248, 0.15);
+      width: 440px;
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      backdrop-filter: none !important;
+      box-shadow: none !important;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 5;
+      pointer-events: none;
     }
     .ibs-starburst-bg {
       position: absolute;
@@ -1804,10 +1806,10 @@
         </div>
       </div>
       <div class="ibs-header-right">
-        <!-- Direct POS Billing Counter Launch Button -->
-        <button class="btn-launch-pos-hero" onclick="switchToPosView()" title="Launch POS Billing Counter">
-          🛒 <span>POINT OF SALES (بلنگ کاؤنٹر)</span>
-        </button>
+        <!-- Direct Website Link Button (Replaces top right POS button as requested) -->
+        <a href="/" class="btn-website-link" title="Visit Main Website" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 8px 18px; border-radius: 8px; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: #ffffff; font-weight: 800; font-size: 13px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35); border: 1.5px solid rgba(255,255,255,0.4); transition: all 0.2s ease;">
+          🌐 <span>WEBSITE (مین ویب سائٹ)</span>
+        </a>
       </div>
     </div>
 
@@ -1819,10 +1821,10 @@
         <svg class="ibs-starburst-bg" viewBox="-150 -150 300 300" aria-hidden="true">
           <defs>
             <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35" />
-              <stop offset="35%" stop-color="#0284c7" stop-opacity="0.2" />
-              <stop offset="70%" stop-color="#070d18" stop-opacity="0.05" />
-              <stop offset="100%" stop-color="#070d18" stop-opacity="0" />
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+              <stop offset="30%" stop-color="#38bdf8" stop-opacity="0.6" />
+              <stop offset="70%" stop-color="#0284c7" stop-opacity="0.25" />
+              <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0" />
             </radialGradient>
           </defs>
           <polygon points="0,0 -18,-140 18,-140" fill="url(#sunGlow)" transform="rotate(0)" />
@@ -1838,12 +1840,12 @@
 
         <!-- Center Hub Core: Clean Brand Identity (Date Pickers Removed as requested) -->
         <div class="ibs-center-hub">
-          <div class="ibs-brand-row" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-            <div class="ibs-hub-icon-pill" style="width: 62px; height: 62px; border-radius: 50%; background: linear-gradient(135deg, #10b981 0%, #0284c7 100%); display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 0 25px rgba(56, 189, 248, 0.5); border: 2.5px solid rgba(255, 255, 255, 0.5);">🏬</div>
-            <h1 class="ibs-brand-main-title" id="launcherStoreMainTitle" style="margin: 0; font-size: 26px; font-weight: 900; color: #ffffff; text-shadow: 0 2px 14px rgba(56, 189, 248, 0.6); letter-spacing: 0.5px; text-align: center;">{{ store_name|default:"Smart Grocery POS" }}</h1>
-            <div class="ibs-brand-sub-title" style="color: #38bdf8; font-size: 12px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">SMART BUSINESS SOLUTION • BY KMB APPS</div>
-            <div class="ibs-hub-status-pill" style="margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; background: rgba(16, 185, 129, 0.18); border: 1.5px solid rgba(16, 185, 129, 0.45); border-radius: 20px; padding: 4px 16px; color: #34d399; font-size: 11.5px; font-weight: 800; box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);">
-              <span style="color: #34d399; font-size: 13px;">●</span> ACTIVE STORE TERMINAL (آن لائن بلنگ کاؤنٹر)
+          <div class="ibs-brand-row" style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div class="ibs-hub-icon-pill" style="width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 20px rgba(2, 132, 199, 0.45); border: 2.5px solid #ffffff;">🏬</div>
+            <h1 class="ibs-brand-main-title" id="launcherStoreMainTitle" style="margin: 0; font-size: 26px; font-weight: 900; color: #082f49; text-shadow: 0 2px 10px rgba(255, 255, 255, 0.95), 0 0 18px #bae6fd; letter-spacing: 0.5px; text-align: center;">{{ store_name|default:"Smart Grocery POS" }}</h1>
+            <div class="ibs-brand-sub-title" style="color: #0369a1; font-size: 12px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);">SMART BUSINESS SOLUTION • BY KMB APPS</div>
+            <div class="ibs-hub-status-pill" style="margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.9); border: 1.5px solid #0284c7; border-radius: 20px; padding: 3px 16px; color: #0369a1; font-size: 11.5px; font-weight: 800; box-shadow: 0 2px 10px rgba(2, 132, 199, 0.2);">
+              <span style="color: #10b981; font-size: 13px;">●</span> ACTIVE STORE TERMINAL (آن لائن بلنگ کاؤنٹر)
             </div>
           </div>
         </div>
@@ -2107,11 +2109,7 @@
         </div>
 
         <!-- Cashier PIN Badge (Currency & Language Dropdowns Removed as they were set on signup) -->
-        <div class="pos-sys-group">
-          <button class="btn-pos-pin" id="activeUserBadge" onclick="openPinModal()" title="Switch Cashier / PIN">
-            👑 <span id="cashierNameBadge">admin</span>
-          </button>
-        </div>
+        <div class="pos-sys-group" style="display:none;"></div>
       </div>
 
       <!-- Quick Action Toolbar -->
@@ -2286,13 +2284,7 @@
           </div>
         </a>
 
-        <a href="/admin-panel/" target="_blank" class="menu-card-item" style="text-decoration: none;">
-          <div class="menu-card-icon">📊</div>
-          <div class="menu-card-info">
-            <div class="menu-card-title">Admin Panel / ایڈمن پینل</div>
-            <div class="menu-card-desc">Full Django backend database & administration</div>
-          </div>
-        </a>
+        
       </div>
     </div>
   </div>
@@ -2755,6 +2747,11 @@
     let currentCurrency = (serverCurrency && serverCurrency !== '') ? serverCurrency : (localStorage.getItem('pos_currency') || 'AED');
     let currentSecondaryLang = (serverLanguage && serverLanguage !== '') ? serverLanguage : (localStorage.getItem('pos_sec_lang') || 'ur');
     let appMode = 'sales';
+
+    function getStoreStorageKey(prefix) {
+      const cleanStore = (currentStoreName || 'default').trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
+      return `${prefix}_${cleanStore}`;
+    }
 
     let currentUser = {
       username: '{{ user_name|default:"admin"|escapejs }}',
@@ -3247,31 +3244,33 @@
     function renderQuickButtons() {
       const container = document.getElementById('quickButtonsContainer');
       if (!container) return;
-      container.innerHTML = '';
       
       const filtered = (currentCategory === 'all') 
         ? catalogItems 
         : catalogItems.filter(it => (it.cat || 'spices') === currentCategory);
 
+      let html = '';
       filtered.forEach(item => {
-        const localName = item[currentSecondaryLang] || item['ur'];
+        const localName = item[currentSecondaryLang] || item['ur'] || '';
         const catClass = `key-cat-${item.cat || 'spices'}`;
-        container.innerHTML += `
-          <button class="btn-pos-key ${catClass}" onclick="addCatalogItem('${item.en}', ${item.price})">
+        const escapedEn = (item.en || '').replace(/'/g, "\\'");
+        html += `
+          <button class="btn-pos-key ${catClass}" onclick="addCatalogItem('${escapedEn}', ${item.price})">
             <div class="key-top-row" style="flex-direction: column; align-items: flex-start; gap: 1px;">
               <div style="display: flex; align-items: center; gap: 6px; width: 100%;">
-                <span class="key-icon">${item.icon}</span>
+                <span class="key-icon">${item.icon || '📦'}</span>
                 <span class="key-name-dual">${item.en}</span>
               </div>
               <span class="key-name-sub">${localName}</span>
             </div>
             <div class="key-bottom-row">
-              <span class="key-unit">${item.unit}</span>
+              <span class="key-unit">${item.unit || '1 Pc'}</span>
               <span class="key-price-badge">${currentCurrency} ${parseFloat(item.price).toFixed(2)}</span>
             </div>
           </button>
         `;
       });
+      container.innerHTML = html;
     }
 
     // ================= INSTANT 0-MS CLIENT-SIDE BILLING =================
