@@ -253,8 +253,8 @@
       display: none;
       flex-direction: column;
       flex: 1;
-      min-height: calc(100vh - 55px);
-      background: #dce5ee;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 20%, #e0f2fe 65%, #bae6fd 100%);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       position: relative;
       overflow-x: hidden;
@@ -866,12 +866,12 @@
 
     /* ULTRA-REALISTIC 3D TACTILE MECHANICAL KEYCAP BUTTONS (EXACT MATCH TO REFERENCE) */
     .btn-pos-key {
-      background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 28%, #2563eb 68%, #1d4ed8 100%);
-      border: 1px solid rgba(255, 255, 255, 0.45);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+      background: linear-gradient(180deg, #3b536b 0%, #293a4b 55%, #1c2733 100%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.4);
       border-radius: 16px;
       color: #ffffff;
-      padding: 7px 9px;
+      padding: 8px 10px;
       cursor: pointer;
       text-align: left;
       display: flex;
@@ -879,16 +879,15 @@
       justify-content: space-between;
       user-select: none;
       box-shadow: 
-        0 6px 0 #1e3a8a,
-        0 8px 4px rgba(0, 0, 0, 0.3),
-        0 14px 22px rgba(37, 99, 235, 0.45),
-        inset 0 2px 2px rgba(255, 255, 255, 0.8),
-        inset 0 -2px 3px rgba(0, 0, 0, 0.25);
+        0 5px 0 #101820,
+        0 7px 4px rgba(0, 0, 0, 0.35),
+        0 12px 18px rgba(16, 24, 32, 0.4),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.3);
       transition: transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.1s ease;
       height: 84px;
       min-height: 84px;
       max-height: 84px;
-      padding: 8px 10px;
       width: 100%;
       box-sizing: border-box;
       position: relative;
@@ -897,127 +896,134 @@
     }
     .btn-pos-key:hover {
       transform: translateY(-2px);
-      filter: brightness(1.08);
+      filter: brightness(1.12);
       box-shadow: 
-        0 8px 0 #1e3a8a,
-        0 11px 6px rgba(0, 0, 0, 0.3),
-        0 18px 28px rgba(37, 99, 235, 0.55),
-        inset 0 2.5px 2px rgba(255, 255, 255, 0.95),
-        inset 0 -2px 3px rgba(0, 0, 0, 0.2);
+        0 7px 0 #101820,
+        0 10px 6px rgba(0, 0, 0, 0.35),
+        0 16px 22px rgba(16, 24, 32, 0.5),
+        inset 0 2px 2px rgba(255, 255, 255, 0.6),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.25);
     }
     .btn-pos-key:active {
-      transform: translateY(5px);
+      transform: translateY(4px);
       box-shadow: 
-        0 1px 0 #1e3a8a,
-        0 2px 2px rgba(0, 0, 0, 0.25),
-        0 6px 12px rgba(37, 99, 235, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.5),
-        inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+        0 1px 0 #101820,
+        0 2px 3px rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(16, 24, 32, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35);
     }
 
-    /* 4 Distinct Vibrant Category Themed 3D Keycaps */
+    /* 4 DISTINCT SOBER & REFINED 3D KEYCAPS (COMFORTABLE FOR CASHIER'S EYES) */
+    /* Veg & Fruit: Sober Sage / Forest Slate */
     .key-cat-veg {
-      background: linear-gradient(180deg, #34d399 0%, #10b981 30%, #059669 70%, #047857 100%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.5) !important;
+      background: linear-gradient(180deg, #3a6b52 0%, #2c5440 55%, #1e3c2d 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
       box-shadow: 
-        0 6px 0 #064e3b,
-        0 8px 4px rgba(0, 0, 0, 0.3),
-        0 14px 22px rgba(16, 185, 129, 0.45),
-        inset 0 2px 2px rgba(255, 255, 255, 0.8),
-        inset 0 -2px 3px rgba(0, 0, 0, 0.25) !important;
+        0 5px 0 #13261d,
+        0 7px 4px rgba(0, 0, 0, 0.35),
+        0 12px 18px rgba(19, 38, 29, 0.35),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.3) !important;
     }
     .key-cat-veg:hover {
+      filter: brightness(1.12);
       box-shadow: 
-        0 8px 0 #064e3b,
-        0 11px 6px rgba(0, 0, 0, 0.3),
-        0 18px 28px rgba(16, 185, 129, 0.55),
-        inset 0 2.5px 2px rgba(255, 255, 255, 0.95) !important;
+        0 7px 0 #13261d,
+        0 10px 6px rgba(0, 0, 0, 0.35),
+        0 16px 22px rgba(19, 38, 29, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.6) !important;
     }
     .key-cat-veg:active {
-      transform: translateY(5px) !important;
+      transform: translateY(4px) !important;
       box-shadow: 
-        0 1px 0 #064e3b,
-        0 2px 2px rgba(0, 0, 0, 0.25),
-        0 6px 12px rgba(16, 185, 129, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+        0 1px 0 #13261d,
+        0 2px 3px rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(19, 38, 29, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
     }
 
+    /* Bakery & Dairy: Sober Warm Camel / Toasted Latte */
     .key-cat-bakery {
-      background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 30%, #d97706 70%, #b45309 100%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.55) !important;
+      background: linear-gradient(180deg, #7a6348 0%, #635039 55%, #4c3c2a 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
       box-shadow: 
-        0 6px 0 #78350f,
-        0 8px 4px rgba(0, 0, 0, 0.3),
-        0 14px 22px rgba(245, 158, 11, 0.45),
-        inset 0 2px 2px rgba(255, 255, 255, 0.8),
-        inset 0 -2px 3px rgba(0, 0, 0, 0.25) !important;
+        0 5px 0 #31261a,
+        0 7px 4px rgba(0, 0, 0, 0.35),
+        0 12px 18px rgba(49, 38, 26, 0.35),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.3) !important;
     }
     .key-cat-bakery:hover {
+      filter: brightness(1.12);
       box-shadow: 
-        0 8px 0 #78350f,
-        0 11px 6px rgba(0, 0, 0, 0.3),
-        0 18px 28px rgba(245, 158, 11, 0.55),
-        inset 0 2.5px 2px rgba(255, 255, 255, 0.95) !important;
+        0 7px 0 #31261a,
+        0 10px 6px rgba(0, 0, 0, 0.35),
+        0 16px 22px rgba(49, 38, 26, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.6) !important;
     }
     .key-cat-bakery:active {
-      transform: translateY(5px) !important;
+      transform: translateY(4px) !important;
       box-shadow: 
-        0 1px 0 #78350f,
-        0 2px 2px rgba(0, 0, 0, 0.25),
-        0 6px 12px rgba(245, 158, 11, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+        0 1px 0 #31261a,
+        0 2px 3px rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(49, 38, 26, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
     }
 
+    /* Grocery: Sober Dusty Cedar / Terracotta Slate */
     .key-cat-grocery {
-      background: linear-gradient(180deg, #fb923c 0%, #f97316 30%, #ea580c 70%, #c2410c 100%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.55) !important;
+      background: linear-gradient(180deg, #7d5248 0%, #664139 55%, #4f312a 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
       box-shadow: 
-        0 6px 0 #7c2d12,
-        0 8px 4px rgba(0, 0, 0, 0.3),
-        0 14px 22px rgba(249, 115, 22, 0.45),
-        inset 0 2px 2px rgba(255, 255, 255, 0.8),
-        inset 0 -2px 3px rgba(0, 0, 0, 0.25) !important;
+        0 5px 0 #331f1a,
+        0 7px 4px rgba(0, 0, 0, 0.35),
+        0 12px 18px rgba(51, 31, 26, 0.35),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.3) !important;
     }
     .key-cat-grocery:hover {
+      filter: brightness(1.12);
       box-shadow: 
-        0 8px 0 #7c2d12,
-        0 11px 6px rgba(0, 0, 0, 0.3),
-        0 18px 28px rgba(249, 115, 22, 0.55),
-        inset 0 2.5px 2px rgba(255, 255, 255, 0.95) !important;
+        0 7px 0 #331f1a,
+        0 10px 6px rgba(0, 0, 0, 0.35),
+        0 16px 22px rgba(51, 31, 26, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.6) !important;
     }
     .key-cat-grocery:active {
-      transform: translateY(5px) !important;
+      transform: translateY(4px) !important;
       box-shadow: 
-        0 1px 0 #7c2d12,
-        0 2px 2px rgba(0, 0, 0, 0.25),
-        0 6px 12px rgba(249, 115, 22, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+        0 1px 0 #331f1a,
+        0 2px 3px rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(51, 31, 26, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
     }
 
+    /* Drinks: Sober Slate Teal / Ocean Slate */
     .key-cat-drinks {
-      background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 30%, #0284c7 70%, #0369a1 100%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.55) !important;
+      background: linear-gradient(180deg, #2d5d6e 0%, #224957 55%, #183540 100%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.25) !important;
       box-shadow: 
-        0 6px 0 #075985,
-        0 8px 4px rgba(0, 0, 0, 0.3),
-        0 14px 22px rgba(14, 165, 233, 0.45),
-        inset 0 2px 2px rgba(255, 255, 255, 0.8),
-        inset 0 -2px 3px rgba(0, 0, 0, 0.25) !important;
+        0 5px 0 #0e2229,
+        0 7px 4px rgba(0, 0, 0, 0.35),
+        0 12px 18px rgba(14, 34, 41, 0.35),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.3) !important;
     }
     .key-cat-drinks:hover {
+      filter: brightness(1.12);
       box-shadow: 
-        0 8px 0 #075985,
-        0 11px 6px rgba(0, 0, 0, 0.3),
-        0 18px 28px rgba(14, 165, 233, 0.55),
-        inset 0 2.5px 2px rgba(255, 255, 255, 0.95) !important;
+        0 7px 0 #0e2229,
+        0 10px 6px rgba(0, 0, 0, 0.35),
+        0 16px 22px rgba(14, 34, 41, 0.45),
+        inset 0 2px 2px rgba(255, 255, 255, 0.6) !important;
     }
     .key-cat-drinks:active {
-      transform: translateY(5px) !important;
+      transform: translateY(4px) !important;
       box-shadow: 
-        0 1px 0 #075985,
-        0 2px 2px rgba(0, 0, 0, 0.25),
-        0 6px 12px rgba(14, 165, 233, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+        0 1px 0 #0e2229,
+        0 2px 3px rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(14, 34, 41, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
     }
     .key-top-row {
       display: flex;
@@ -1545,30 +1551,31 @@
       transform: translateY(3px);
     }
 
-    /* All Category: Electric Royal Blue (Like Reference Image) */
+    /* SOBER REFINED CATEGORY FILTER TABS */
+    /* All Category: Sober Steel Slate */
     .cat-tab-all {
-      background: linear-gradient(180deg, #38bdf8 0%, #2563eb 55%, #1d4ed8 100%) !important;
-      box-shadow: 0 4px 0 #1e3a8a, 0 6px 12px rgba(37,99,235,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
+      background: linear-gradient(180deg, #3b536b 0%, #293a4b 55%, #1c2733 100%) !important;
+      box-shadow: 0 4px 0 #101820, 0 6px 12px rgba(16,24,32,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.45) !important;
     }
-    /* Veg & Fruit: Vibrant Emerald Jade */
+    /* Veg & Fruit: Sober Sage Green */
     .cat-tab-veg {
-      background: linear-gradient(180deg, #34d399 0%, #10b981 55%, #059669 100%) !important;
-      box-shadow: 0 4px 0 #064e3b, 0 6px 12px rgba(16,185,129,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
+      background: linear-gradient(180deg, #3a6b52 0%, #2c5440 55%, #1e3c2d 100%) !important;
+      box-shadow: 0 4px 0 #13261d, 0 6px 12px rgba(19,38,29,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.45) !important;
     }
-    /* Bakery & Dairy: Warm Golden Amber */
+    /* Bakery & Dairy: Sober Warm Camel */
     .cat-tab-bakery {
-      background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 55%, #d97706 100%) !important;
-      box-shadow: 0 4px 0 #78350f, 0 6px 12px rgba(245,158,11,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
+      background: linear-gradient(180deg, #7a6348 0%, #635039 55%, #4c3c2a 100%) !important;
+      box-shadow: 0 4px 0 #31261a, 0 6px 12px rgba(49,38,26,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.45) !important;
     }
-    /* Grocery: Rich Tangerine Orange */
+    /* Grocery: Sober Dusty Cedar */
     .cat-tab-grocery {
-      background: linear-gradient(180deg, #fb923c 0%, #f97316 55%, #ea580c 100%) !important;
-      box-shadow: 0 4px 0 #7c2d12, 0 6px 12px rgba(249,115,22,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
+      background: linear-gradient(180deg, #7d5248 0%, #664139 55%, #4f312a 100%) !important;
+      box-shadow: 0 4px 0 #331f1a, 0 6px 12px rgba(51,31,26,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.45) !important;
     }
-    /* Drinks: Cyan Sky Blue */
+    /* Drinks: Sober Slate Teal */
     .cat-tab-drinks {
-      background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 55%, #0284c7 100%) !important;
-      box-shadow: 0 4px 0 #075985, 0 6px 12px rgba(14,165,233,0.4), inset 0 1.5px 1.5px rgba(255,255,255,0.7) !important;
+      background: linear-gradient(180deg, #2d5d6e 0%, #224957 55%, #183540 100%) !important;
+      box-shadow: 0 4px 0 #0e2229, 0 6px 12px rgba(14,34,41,0.35), inset 0 1.5px 1.5px rgba(255,255,255,0.45) !important;
     }
 
     /* Selected Active Category Glow & Raised Bevel */
@@ -1762,8 +1769,9 @@
           <defs>
             <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
-              <stop offset="35%" stop-color="#fef08a" stop-opacity="0.4" />
-              <stop offset="75%" stop-color="#dce5ee" stop-opacity="0" />
+              <stop offset="30%" stop-color="#a7f3d0" stop-opacity="0.5" />
+              <stop offset="65%" stop-color="#bae6fd" stop-opacity="0.35" />
+              <stop offset="90%" stop-color="#e0f2fe" stop-opacity="0" />
             </radialGradient>
           </defs>
           <polygon points="0,0 -18,-140 18,-140" fill="url(#sunGlow)" transform="rotate(0)" />
